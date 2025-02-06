@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Dungeon
+    internal class Battle
     {
-        public Dungeon()
-        {
-            Console.WriteLine("Dungeon created!");
-        }
     }
-
 }
