@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Euemy
+    internal class Euemy : IStatus
     {
+        int IStatus.hp { get ; set ; }
+        int IStatus.mp { get ; set ; }
+        int IStatus.atk { get; set; }
+        int IStatus.def { get ; set; }
     }
 }

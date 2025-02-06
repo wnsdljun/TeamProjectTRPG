@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Item
+    internal class Item : IStatus
     {
+        int IStatus.hp { get; set; }
+        int IStatus.mp { get; set; }
+        int IStatus.atk { get; set; }
+        int IStatus.def { get; set; }
     }
 
     enum ItemType

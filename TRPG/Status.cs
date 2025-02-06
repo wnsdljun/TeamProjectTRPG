@@ -8,9 +8,9 @@ namespace TRPG
 {
     internal interface IStatus
     {
-        int hp { get; }
-        int mp { get; }
-        int atk { get; }
-        int def { get; }
+        int hp { get; set; }
+        int mp { get; set; }
+        int atk { get; set; }
+        int def { get; set; }
     }
 }

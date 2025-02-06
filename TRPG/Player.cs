@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Player : Character
+    internal class Player : Champion
     {
         string name;
         int level;
