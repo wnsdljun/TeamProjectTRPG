@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Charhcter
+    internal class Character
     {
     }
 }
