@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Character
+    internal class Champion
     {
+        int hp;
+        int mp;
+        int atk;
+        int def;
     }
+
 }

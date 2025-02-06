@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace TRPG
 {
-    internal class Player
+    internal class Player : Character
     {
         string name;
         int level;
         int exp;
-        int hp;
-        int mp;
-        int atk;
-        int def;
         int gold;
     }
 }
