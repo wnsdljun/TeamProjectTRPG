@@ -9,4 +9,12 @@ namespace TRPG
     internal class Item
     {
     }
+
+    enum ItemType
+    {
+        Weapon,
+        Armor,
+        Shoes,
+        Potion
+    }
 }
