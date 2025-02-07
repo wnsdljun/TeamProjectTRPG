@@ -27,7 +27,7 @@ namespace TRPG
         }
         public void PlayerTurn()
         {
-            int input = 0;
+            int input = int.Parse(Console.ReadLine());
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i].hp > 0)
@@ -48,11 +48,11 @@ namespace TRPG
 
             switch (input)//플레이어의 행동을 받아오는 부분
             {
-                case 1://스킬 선택 메소드
+                case 0://스킬 선택 메소드
                     break;
-                case 2://인벤토리 메소드
+                case 1://인벤토리 메소드
                     break;
-                case 3://도망가기 메소드
+                case 2://도망가기 메소드
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -74,11 +74,23 @@ namespace TRPG
         }
         public void GameOver()
         {
-            Console.WriteLine("패배…");
+            Console.WriteLine("패배….");
         }
         public void StageClear()
         {
-            Console.WriteLine("전장의 지배자!");
+            Random random = new Random();
+            int goldAdd = 0;
+            int comment = random.Next(0, 6);
+            foreach (var enemy in enemies)
+            {
+                goldAdd += enemy.gold;
+            }
+            if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
+            else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
+            else if (comment == 2) { Console.WriteLine("도저히 막을 수 없습니다."); }
+            else if (comment == 3) { Console.WriteLine("전설의 출현."); }
+            else if (comment == 4) { Console.WriteLine("미쳐 날뛰고 있습니다."); }
+            else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
         }
         public void DungeonClear()
