@@ -111,8 +111,7 @@
 
         private void UpdateSelecedState()
         {
-            int index = selectableIndex[currentSelectdLineIndex];
-            if (currentSelectdLineIndex != -1) UIObject[index].isSelected = true;
+            if (currentSelectdLineIndex != -1) UIObject[selectableIndex[currentSelectdLineIndex]].isSelected = true;
         }
 
     }
@@ -120,7 +119,7 @@
     /// <summary>
     /// ui를 만들때 필요한 데이터가 담겨있는 구조체.
     /// </summary>
-    public struct ColorString
+    public class ColorString
     {
         public ConsoleColor backColor;
         public ConsoleColor foreColor;
