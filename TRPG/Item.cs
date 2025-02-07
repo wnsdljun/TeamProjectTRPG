@@ -9,8 +9,9 @@ namespace TRPG
     internal class Item : IStatus
     {
         public Item(string _itemName, int itemPrice, ItemType _itemType, int _hp,
-            int _mp, int _atk, int _def, bool installed)
+            int _mp, int _atk, int _def, bool installed, bool purchase)
         {
+            this.purchase = purchase;
             this.Installed = installed;
             this.itemName = _itemName;
             this.itemPrice = itemPrice;
@@ -20,8 +21,9 @@ namespace TRPG
             ((IStatus)this).atk = _atk;
             ((IStatus)this).def = _def;
         }
+        public bool purchase { get; set; }
         public bool Installed { get; set; }
-        public string itemName { get; }
+        public string itemName { get; set; }
         public int itemPrice { get; }
         public ItemType itemType { get; }
         int IStatus.hp { get; set; }

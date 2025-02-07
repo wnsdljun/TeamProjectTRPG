@@ -8,19 +8,19 @@ namespace TRPG
 {
     internal class Inven
     {
-        List<Item> inven_list = new List<Item>();
+        public List<Item> inven_list = new List<Item>();
 
         public Inven()
         {
             List<Item> newitems = new List<Item>()
             { 
                 //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
-                new Item("삼위일체",3000,ItemType.Weapon,30,0,15,15,false),
-                new Item("몰락한왕의검",3000,ItemType.Weapon,0,0,40,0,false),
-                new Item("얼어붙은심장",2000,ItemType.Armor,50,0,0,30,false),
-                new Item("가시갑옷",2500,ItemType.Armor,40,0,0,40, false),
-                new Item("광전사의군화",1500,ItemType.Shoes,0,0,15,0, false),
-                new Item("판금장화",1500,ItemType.Weapon,0,0,0,18, false)
+                new Item("삼위일체",3000,ItemType.Weapon,30,0,15,15,false,false),
+                new Item("몰락한왕의검",3000,ItemType.Weapon,0,0,40,0,false,false),
+                new Item("얼어붙은심장",2000,ItemType.Armor,50,0,0,30,false,false),
+                new Item("가시갑옷",2500,ItemType.Armor,40,0,0,40, false, false),
+                new Item("광전사의군화",1500,ItemType.Shoes,0,0,15,0, false, false),
+                new Item("판금장화",1500,ItemType.Weapon,0,0,0,18, false, false)
             };
             foreach (var _item in newitems)
             {
