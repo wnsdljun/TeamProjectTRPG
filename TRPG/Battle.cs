@@ -8,45 +8,62 @@ namespace TRPG
 {
     internal class Battle
     {
-        BattleEnemies battleEnemies = new BattleEnemies();
-        private Enemyskill enemyskill = new Enemyskill();
+        public BattleEnemies battleEnemies = new BattleEnemies();
+        public Enemyskill enemyskill = new Enemyskill();
     }
     internal class BattleSystem : Battle
     {
-        int StageWave = 1;
+        public int StageWave = 1;
         List<Enemy> enemies;
         public void BattleStart()
         {
-            Console.WriteLine("적과 조우 했다!");
-
+            Console.WriteLine("적이 나타났다!");
+            StageSet();
             while (true)
             {
                 PlayerTurn();
                 EnemyTurn();
             }
         }
-        public void PlayerTurn() 
-        { }
-        public void EnemyTurn() 
-        { }
+        public void PlayerTurn()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].hp > 0)
+                {
+                    Console.WriteLine($"{i + 1}. {enemies[i].name} | HP: {enemies[i].hp}");
+                }
+            }   
+        }
+        public void EnemyTurn()
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.hp > 0)
+                {
+                    enemyskill.EnemyAttack(enemy); //EnemyAttack() 공격 멘트가 나오고 이어지는 Damage() 에서 피해량 멘트가 나옴.
+                }
+            }
+        }
         public void StageSet()
         {
+
             switch (StageWave)
             {
                 case 1:
-                    vatenemies = battleEnemies.wave1;
+                    enemies = battleEnemies.wave1;
                     break;
                 case 2:
-                    battleEnemies.wave2;
+                    enemies = battleEnemies.wave2;
                     break;
                 case 3:
-                    battleEnemies.wave3;
+                    enemies = battleEnemies.wave3;
                     break;
                 case 4:
-                    battleEnemies.wave4;
+                    enemies = battleEnemies.wave4;
                     break;
                 case 5:
-                    battleEnemies.wave5;
+                    enemies = battleEnemies.wave5;
                     break;
             }
         }
@@ -64,32 +81,32 @@ namespace TRPG
         {
             wave1 = new List<Enemy>
             {
-                enemyfactory.MeleeMinion,
+                enemyfactory.MeleeMinion(),
             };
 
             wave1 = new List<Enemy>
             {
-                enemyfactory.MeleeMinion,
-                enemyfactory.CasterMinion
+                enemyfactory.MeleeMinion(),
+                enemyfactory.CasterMinion()
             };
 
             wave1 = new List<Enemy>
             {
-                enemyfactory.MeleeMinion,
-                enemyfactory.MeleeMinion,
-                enemyfactory.CasterMinion
+                enemyfactory.MeleeMinion(),
+                enemyfactory.MeleeMinion(),
+                enemyfactory.CasterMinion()
             };
 
             wave1 = new List<Enemy>
             {
-                enemyfactory.SuperMinion,
-                enemyfactory.MeleeMinion,
-                enemyfactory.CasterMinion
+                enemyfactory.SuperMinion(),
+                enemyfactory.MeleeMinion(),
+                enemyfactory.CasterMinion()
             };
 
             wave1 = new List<Enemy>
             {
-                enemyfactory.TurretTower
+                enemyfactory.TurretTower()
             };
         }
     }
