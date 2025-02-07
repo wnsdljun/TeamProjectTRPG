@@ -8,7 +8,7 @@ namespace TRPG
 {
     internal class Player : Champion
     {
-        string name;
+        //string name;
         int level;
         int exp;
         int gold;

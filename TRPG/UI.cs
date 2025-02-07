@@ -1,53 +1,24 @@
 ﻿namespace TRPG
 {
-    internal class UI
-    {
-        public void WriteColor(List<ColorString> str)
-        {
-            foreach (var s in str)
-            {
-                WriteColor(str);
-            }
-        }
-        public void WriteColor(ColorString colorString)
-        {
-            if (!colorString.isSelectable)
-            {
-                Console.BackgroundColor = colorString.backColor;
-                Console.ForegroundColor = colorString.foreColor;
-                Console.Write(colorString.str);
-                Console.ResetColor();
-                return;
-            }
-            if (colorString.isSelected)
-            {
-                Console.BackgroundColor = ConsoleColor.Yellow;
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.Write(colorString.str);
-                Console.ResetColor();
-                return;
-            }
-            else
-            {
-                Console.BackgroundColor = colorString.backColor;
-                Console.ForegroundColor = colorString.foreColor;
-                Console.Write(colorString.str);
-                Console.ResetColor();
-                return;
-            }
-        }
-    }
-
     public class UIDesign
     {
         public List<ColorString> UIObject;
-        private int currentSelectdLineIndex = -1; //-1이면 선택되지 않음, esc를 눌러 선택을 없애기.
+        private int currentSelectedLineIndex = -1; //-1이면 선택되지 않음, esc를 눌러 선택을 없애기.
         private int lastSelectedLineIndex = -1;
-        private int[] selectableIndex;
+        private int selectableCount = 0;
+        private List<ColorString> selectablesList = new List<ColorString>();
 
-        public void Write()
+        public void WriteAll()
         {
-
+            Console.Clear();
+            foreach (var v in UIObject)
+            {
+                Console.BackgroundColor = v.backColor;
+                Console.ForegroundColor = v.foreColor;
+                Console.Write(v.str);
+                Console.ResetColor();
+                if (v.lineChange) Console.Write('\n');
+            }
         }
 
         public int PlayerUIControl()
@@ -61,7 +32,7 @@
                 if (key == ConsoleKey.DownArrow) MoveSelection(1);
                 //if (key == ConsoleKey.RightArrow) ;
                 //if (key == ConsoleKey.LeftArrow) ;
-                //if (key == ConsoleKey.Enter) ;
+                if (key == ConsoleKey.Enter) return currentSelectedLineIndex;
                 //if (key == ConsoleKey.Escape) ;
             }
         }
@@ -69,55 +40,75 @@
         public UIDesign(List<ColorString> uIObject)
         {
             UIObject = uIObject;
-            int selectableCount = 0;
-            foreach (var obj in UIObject) //선택 가능한 줄의 갯수
-            {
-                if (obj.isSelectable) selectableCount++;
-            }
-            selectableIndex = new int[selectableCount]; //선택 가능한 줄 갯수로 배열 초기화.
             int j = 0;
             for (int i = 0; i < UIObject.Count; i++)
             {
-                if (UIObject[i].isSelectable) selectableIndex[j++] = i; //선택 가능한 줄을 배열에 저장. 인덱스에 실제 줄 위치가 들어있는 형태.
+                UIObject[i].lineIndex = i;
+                //그리고 이벤트 구독
+                UIObject[i].SelectedChange += SelectedStateChanged;
+
+                if (UIObject[i].isSelectable)
+                {
+                    selectableCount++;
+                    UIObject[i].selectableIndex = j++;
+                    selectablesList.Add(UIObject[i]);
+                }
+                //각 줄이 활성 상태에 따라 스스로 색을 바꿈.
             }
         }
 
         private void MoveSelection(int direction)
         {
-            if (currentSelectdLineIndex == -1) //아무것도 선택되지 않았을경우
+            lastSelectedLineIndex = currentSelectedLineIndex;
+            if (currentSelectedLineIndex == -1) //아무것도 선택되지 않았을경우
             {
                 if (direction == -1) //윗방향키 누르면 거꾸로, 밑에서 위로.
                 {
-                    currentSelectdLineIndex = selectableIndex.Length - 1;
+                    currentSelectedLineIndex = 0;
                 }
                 else if (direction == 1)
                 {
-                    currentSelectdLineIndex = 0;
+                    currentSelectedLineIndex = selectableCount - 1;
                 }
             }
             //선택이 있는 경우. 일반적인 상황.
-            if (currentSelectdLineIndex == 0) //첫번째 줄일때 거꾸로 가게
-            {
-                lastSelectedLineIndex = currentSelectdLineIndex;
-                currentSelectdLineIndex = selectableIndex.Length - 1;
-            }
-            else if (currentSelectdLineIndex == selectableIndex.Length - 1) //마지막 줄에 있었으니까
-            {
-                lastSelectedLineIndex = currentSelectdLineIndex;
-                currentSelectdLineIndex = 0;
-            }
-
+            currentSelectedLineIndex = (currentSelectedLineIndex + direction + selectableCount) % selectableCount;
+            UpdateSelecedState();
         }
 
         private void UpdateSelecedState()
         {
-            if (currentSelectdLineIndex != -1) UIObject[selectableIndex[currentSelectdLineIndex]].isSelected = true;
+            if (currentSelectedLineIndex != -1) UIObject[selectablesList[currentSelectedLineIndex].lineIndex].IsSelected = true;
+            if (lastSelectedLineIndex != -1) UIObject[selectablesList[lastSelectedLineIndex].lineIndex].IsSelected = false;
+
         }
 
+        private void SelectedStateChanged(object? obj, EventArgs e)
+        {
+            if (obj is ColorString o)
+            {
+                //활성 상태가 바뀌었으니 그에 맞게 다시 색 입혀줌.
+                Console.SetCursorPosition(0, o.lineIndex);
+                if (o.IsSelected)
+                {
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
+                Console.Write(o.str);
+                if (o.lineChange) Console.Write("\b");
+                Console.ResetColor();
+            }
+        }
     }
 
+
+
     /// <summary>
-    /// ui를 만들때 필요한 데이터가 담겨있는 구조체.
+    /// 한 줄의 정보가 담겨있는 클래스.
     /// </summary>
     public class ColorString
     {
@@ -126,9 +117,36 @@
         public string str;
         public string tip;
         public bool isSelectable;
-        public bool isSelected { get; set; }
+
+
         public bool showTip;
         public bool lineChange;
+        private bool isSelected;
+        public int lineIndex;
+        public int selectableIndex;
+
+        public event EventHandler? SelectedChange;
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    SelectedChange?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// 정보를 담아 객체를 생성합니다.
@@ -142,7 +160,7 @@
         /// <param name="showTip">설명을 보여줄 지 여부입니다.</param>
         /// <param name="lineChange">기본값은 줄 바꿈이 일어납니다.</param>
         public ColorString
-            (
+        (
             string str,
             ConsoleColor? backColor = null,
             ConsoleColor? textColor = null,
@@ -150,9 +168,10 @@
             bool selected = false,
             string tip = "지정된 설명이 없습니다.",
             bool showTip = false,
-            bool lineChange = true)
+            bool lineChange = true
+            )
         {
-            this.str = str + (lineChange ? "\n" : "");
+            this.str = str;
             this.tip = tip;
             this.backColor = backColor ?? Console.BackgroundColor;
             this.foreColor = textColor ?? Console.ForegroundColor;
@@ -173,13 +192,13 @@
         /// </summary>
         public ColorString()
         {
-            str = "\n";
+            str = "";
             this.tip = "";
             this.backColor = Console.BackgroundColor;
             this.foreColor = Console.ForegroundColor;
             this.isSelectable = false;
             this.isSelected = false;
-            this.lineChange = false;
+            this.lineChange = true;
             this.showTip = false;
         }
     }
