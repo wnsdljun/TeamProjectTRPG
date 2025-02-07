@@ -8,7 +8,7 @@ namespace TRPG
 {
     internal class Champion : IStatus
     {
-        public string Name { get; }  
+        public string Name { get; private set; }  
         public int hp { get; set; }
         public int mp { get; set; }
         public int atk { get; set; }
@@ -23,14 +23,11 @@ namespace TRPG
             this.def = def;
         }
 
-        public Champion(Champion champion)
-        {
-            Name = champion.Name;
-            this.hp =champion.hp;
-            this.mp = champion.mp;
-            this.atk = champion.atk;
-            this.def = champion.def;
-        }
+        public static Champion missfortune = new Champion("미스 포춘", 120, 100, 100, 50);
+
+        public static Champion Teemo = new Champion("티모", 110, 120, 110, 40);
+
+        public static Champion Vladimir = new Champion("블라디미르", 140, 100, 40, 60);
 
 
 

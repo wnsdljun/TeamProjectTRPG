@@ -12,13 +12,12 @@ namespace TRPG
         public int Level { get; private set; }
         public int Exp { get; private set; }
         public int Gold { get; private set; }
-
-        public Champion champion { get; private set; }
+        public Champion championclass { get; private set; }
 
         public Player(string playername,Champion champion)
         {
             PlayerName = playername;
-            this.champion = champion;
+            championclass = champion;
             Level = 1;
             Exp = 0;
             Gold = 1500;
