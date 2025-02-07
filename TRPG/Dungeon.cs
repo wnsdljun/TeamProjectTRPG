@@ -10,7 +10,7 @@ namespace TRPG
     {
         public Dungeon()
         {
-            Console.WriteLine("Dungeon created!");
+            Console.WriteLine("협곡에 입장하셨습니다.");
         }
     }
 }
