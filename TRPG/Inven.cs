@@ -8,19 +8,162 @@ namespace TRPG
 {
     internal class Inven
     {
-        List<Item> items =new List<Item>();
+        List<Item> inven_list = new List<Item>();
+
+        public Inven()
+        {
+            List<Item> newitems = new List<Item>()
+            { 
+                //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
+                new Item("삼위일체",3000,ItemType.Weapon,30,0,15,15,false),
+                new Item("몰락한왕의검",3000,ItemType.Weapon,0,0,40,0,false),
+                new Item("얼어붙은심장",2000,ItemType.Armor,50,0,0,30,false),
+                new Item("가시갑옷",2500,ItemType.Armor,40,0,0,40, false),
+                new Item("광전사의군화",1500,ItemType.Shoes,0,0,15,0, false),
+                new Item("판금장화",1500,ItemType.Weapon,0,0,0,18, false)
+            };
+            foreach (var _item in newitems)
+            {
+                inven_list.Add(_item);
+            }
+        }
+
+        public void ShowInven(List<Item> _item, Player _player)
+        {
+            bool bool_showinven =false;
+            while (!bool_showinven)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("인벤토리");
+                Console.ResetColor();
+                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+
+                Item_list_show(_item);
+
+                Console.WriteLine("1. 장착 관리");
+                Console.WriteLine("0. 나가기");
+                Console.WriteLine();
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">>");
+
+
+                //그럼 가방에서 삭제를 안하는시스템? > ok
+
+                int input;
+                if (int.TryParse(Console.ReadLine(), out input))
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            //나가기 
+                            bool_showinven = true;
+                            break;
+                        case 1:
+                            //장착관리 
+                            Install_item(_item, _player);
+
+                            break;
+
+                        default:
+                            Console.WriteLine("아이템을 가방에서 가져오는 도중에 오류가 발생했습니다");
+                            Thread.Sleep(1000);
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("숫자를 입력하세요");
+                    Thread.Sleep(1000);
+                }
+            }
+            
+
+        }
+
+        private void Install_item(List<Item> _item, Player _player)
+        {
+            bool bool_1 = false;
+            while (!bool_1)
+            {
+                Console.Clear();
+                Item_list_show(_item);
+                Console.WriteLine("장착하거나 해제하고 싶은 아이템 이름을 입력해주세요 (나가기 :0):");
+                Console.Write(">>>");
+                string answer = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(answer) && _item.Any(x => x.itemName == answer))
+                {
+                    var item_Find = _item.Find(x => x.itemName == answer);
+
+                    //장착
+                    if (item_Find.Installed == false)
+                    {
+                        //장착하면 E 버튼 생성 
+                        item_Find.Installed = true;
+                        //아이템 스텟에 추가    
+                        StatusSetting(item_Find, _player, '+');
+                    }
+                    else  // 해제
+                    {
+                        //해제하면 E버튼 없애기
+                        item_Find.Installed = false;
+                        //아이템 스텟 해제
+                        StatusSetting(item_Find, _player, '-');
+                    }
+
+
+                }
+                else if (int.Parse(answer) == 0)
+                {
+                    bool_1 = true;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 문자 입니다 다시 입력해주세요");
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+
+        private static void Item_list_show(List<Item> _item)
+        {
+            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("============================================================");
+            Console.WriteLine($"{"이름",-17}{"종류",-10}{"가격",-5}{"HP",-5}{"MP",-6}{"공격력",-7}{"방어력",-4}");
+
+            foreach (var x in _item)
+            {
+                IStatus status = x;
+                string install = x.Installed ? "E" : " ";
+
+                if (install == "E")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"[{install}]{x.itemName,-14}{x.itemType,-10}{x.itemPrice,-8}{status.hp,-6}{status.mp,-6}{status.atk,-8}{status.def,-6}");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"[{install}]{x.itemName,-14}{x.itemType,-10}{x.itemPrice,-8}{status.hp,-6}{status.mp,-6}{status.atk,-8}{status.def,-6}");
+                }
+
+            }
+            Console.WriteLine("============================================================");
+        }
+
 
         /// <summary>
-        /// 스텟을 줄이고 + 가방에서 그 아이템 삭제
+        /// 스텟을 줄이기
         /// </summary>
         /// <param name="itemName"></param>
-        public void ItemDelete(string itemName,Player player)
+        public void ItemDelete(string itemName, Player player)
         {
-            Item foundItem =items.Find(Item => Item.itemName == itemName);
+            Item foundItem = inven_list.Find(Item => Item.itemName == itemName);
             //스텟을 감소시키기
-            StatusDecrease(foundItem,player);
+            StatusSetting(foundItem, player, '-');
             //삭제
-            items.Remove(foundItem);
+            //items.Remove(foundItem);
         }
 
         /// <summary>
@@ -29,15 +172,27 @@ namespace TRPG
         /// <param name="_item"></param>
         public void ItemAdd(Item _item)
         {
-            items.Add(_item);
+            inven_list.Add(_item);
         }
         /// <summary>
-        /// 아이템에 대한 수치마큼 스텟에서 제외시켜줘
+        /// 아이템에 대한 수치마큼 스텟에서  '+' or '-'
         /// </summary>
         /// <param name="foundItem"></param>
-        public void StatusDecrease(Item? foundItem,Player player)
+        public void StatusSetting(Item? foundItem, Player player, char _char)
         {
             //player의 스텟이 구성되면 그 구성된 수치에서 제외시켜주기 
+            if (_char == '+')
+            {
+
+            }
+            else if (_char == '-')
+            {
+
+            }
+            else
+            {
+
+            }
 
         }
     }
