@@ -71,6 +71,19 @@ namespace TRPG
                 }
             }
         }
+        public void GameOver()
+        {
+            Console.WriteLine("패배…");
+        }
+        public void StageClear()
+        {
+            Console.WriteLine("전장의 지배자!");
+            StageWave++;
+        }
+        public void DungeonClear()
+        {
+            Console.WriteLine("승리!");
+        }
         public void StageSet()
         {
 
