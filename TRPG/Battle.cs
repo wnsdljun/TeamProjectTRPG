@@ -37,7 +37,7 @@ namespace TRPG
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망");//사망한 적은 회색으로 표시
+                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.");//사망한 적은 회색으로 표시
                     Console.ResetColor();
                 }
             }
@@ -48,17 +48,17 @@ namespace TRPG
 
             switch (input)//플레이어의 행동을 받아오는 부분
             {
-                case 1:
+                case 1://스킬 선택 메소드
                     break;
-                case 2:
+                case 2://인벤토리 메소드
                     break;
-                case 3:
+                case 3://도망가기 메소드
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("잘못된 입력입니다.");
                     Console.ResetColor();
-                    break;
+                    break;//잘못된 입력 넣으면 턴이 넘어감
             }
         }
         public void EnemyTurn()
@@ -69,6 +69,7 @@ namespace TRPG
                 {
                     enemyskill.EnemyAttack(enemy); //EnemyAttack() 공격 멘트가 나오고 이어지는 Damage() 에서 피해량 멘트가 나옴.
                 }
+                //플레이어가 죽었을 때 GameOver() 메소드 호출
             }
         }
         public void GameOver()
@@ -123,27 +124,27 @@ namespace TRPG
                 enemyfactory.MeleeMinion(),
             };
 
-            wave1 = new List<Enemy>
+            wave2 = new List<Enemy>
             {
                 enemyfactory.MeleeMinion(),
                 enemyfactory.CasterMinion()
             };
 
-            wave1 = new List<Enemy>
+            wave3 = new List<Enemy>
             {
                 enemyfactory.MeleeMinion(),
                 enemyfactory.MeleeMinion(),
                 enemyfactory.CasterMinion()
             };
 
-            wave1 = new List<Enemy>
+            wave4 = new List<Enemy>
             {
                 enemyfactory.SuperMinion(),
                 enemyfactory.MeleeMinion(),
                 enemyfactory.CasterMinion()
             };
 
-            wave1 = new List<Enemy>
+            wave5 = new List<Enemy>
             {
                 enemyfactory.TurretTower()
             };
