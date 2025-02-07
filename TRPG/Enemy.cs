@@ -30,10 +30,10 @@ namespace TRPG
 
     internal class EnemyFactory
     {
-        Enemy MeleeMinion = new Enemy("전사 미니언", 47, 0, 12, 1, 21, 1);
-        Enemy CasterMinion = new Enemy("마법사 미니언", 29, 0, 24, 1, 14, 2);
-        Enemy SuperMinion = new Enemy("슈퍼 미니언", 160, 0, 47, 10, 60, 3);
-        Enemy TurretTower = new Enemy("포탑", 500, 0, 18, 5, 420, 11);
+        public Enemy MeleeMinion => new Enemy("전사 미니언", 47, 0, 12, 1, 21, 1);
+        public Enemy CasterMinion => new Enemy("마법사 미니언", 29, 0, 24, 1, 14, 2);
+        public Enemy SuperMinion => new Enemy("슈퍼 미니언", 160, 0, 47, 10, 60, 3);
+        public Enemy TurretTower => new Enemy("포탑", 500, 0, 18, 5, 420, 11);
     }
 
     internal class Enemyskill
