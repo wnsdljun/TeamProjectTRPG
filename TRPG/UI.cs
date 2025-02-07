@@ -8,6 +8,15 @@
         private int selectableCount = 0;
         private List<ColorString> selectablesList = new List<ColorString>();
 
+        public void Write(ColorString cs, ConsoleColor fore, ConsoleColor back)
+        {
+            Console.SetCursorPosition(0, cs.lineIndex);
+            Console.ForegroundColor = fore;
+            Console.BackgroundColor = back;
+            Console.Write(cs.str);
+            //if (cs.lineChange) Console.Write("\b");
+            Console.ResetColor();
+        }
         public void WriteAll()
         {
             Console.Clear();
@@ -23,6 +32,7 @@
 
         public int PlayerUIControl()
         {
+            Console.CursorVisible = false;
             //사용자 방향키 입력으로 항목을 선택하는 부분
             while (true)
             {
@@ -32,8 +42,13 @@
                 if (key == ConsoleKey.DownArrow) MoveSelection(1);
                 //if (key == ConsoleKey.RightArrow) ;
                 //if (key == ConsoleKey.LeftArrow) ;
-                if (key == ConsoleKey.Enter) return currentSelectedLineIndex;
-                //if (key == ConsoleKey.Escape) ;
+                if (key == ConsoleKey.Enter) return ConfirmAnim(currentSelectedLineIndex);
+                if (currentSelectedLineIndex != -1 && key == ConsoleKey.Escape)
+                {
+                    selectablesList[currentSelectedLineIndex].IsSelected = false;
+                    currentSelectedLineIndex = -1;
+                    lastSelectedLineIndex = -1;
+                }
             }
         }
 
@@ -102,6 +117,31 @@
                 if (o.lineChange) Console.Write("\b");
                 Console.ResetColor();
             }
+        }
+        private int ConfirmAnim(int returnValue)
+        {
+            int blinkCount = 3;
+            int blinkTime = 200;
+            ConsoleColor confirmForeColor = ConsoleColor.Black;
+            ConsoleColor confirmBackColor = ConsoleColor.Green;
+            ColorString cs = selectablesList[currentSelectedLineIndex];
+            bool b = false;
+            for (int i = 0; i < blinkCount * 2 - 1; i++)
+            {
+                if (b)
+                {
+                    b = false;
+                    Write(cs, cs.foreColor, cs.backColor);
+                }
+                else
+                {
+                    b = true;
+                    Write(cs, confirmForeColor, confirmBackColor);
+                }
+                Thread.Sleep(blinkTime/2);
+            }
+            Thread.Sleep(blinkTime * 2);
+            return returnValue;
         }
     }
 
