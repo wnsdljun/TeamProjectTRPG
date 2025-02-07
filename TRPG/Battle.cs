@@ -13,11 +13,11 @@ namespace TRPG
     }
     internal class BattleSystem : Battle
     {
-        public int StageWave = 1;
+        public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
         List<Enemy> enemies;
         public void BattleStart()
         {
-            Console.WriteLine("적이 나타났다!");
+            Console.WriteLine("적이 나타났다! \n");
             StageSet();
             while (true)
             {
@@ -27,13 +27,39 @@ namespace TRPG
         }
         public void PlayerTurn()
         {
+            int input = 0;
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i].hp > 0)
                 {
                     Console.WriteLine($"{i + 1}. {enemies[i].name} | HP: {enemies[i].hp}");
                 }
-            }   
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망");//사망한 적은 회색으로 표시
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine("\n\n플레이어 상태" +
+                "\n1. 전투하기" +
+                "\n2. 인벤토리" +
+                "\n3. 도망가기");
+
+            switch (input)//플레이어의 행동을 받아오는 부분
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                    break;
+            }
         }
         public void EnemyTurn()
         {
@@ -48,7 +74,7 @@ namespace TRPG
         public void StageSet()
         {
 
-            switch (StageWave)
+            switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
                     enemies = battleEnemies.wave1;
@@ -77,7 +103,7 @@ namespace TRPG
         public List<Enemy> wave4 { get; set; }
         public List<Enemy> wave5 { get; set; }
 
-        public BattleEnemies()
+        public BattleEnemies()// 웨이브별 적 배치도
         {
             wave1 = new List<Enemy>
             {
