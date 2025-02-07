@@ -19,15 +19,22 @@ namespace TRPG
         {
             Console.WriteLine("적이 나타났다! \n");
             StageSet();
-            while (true)
+            while (enemies.Exists(e => e.hp >0))
             {
                 PlayerTurn();
                 EnemyTurn();
             }
+            if (enemies.Exists(e => e.hp > 0) == false)
+            {
+                StageClear();
+            }
+            else
+            {
+                GameOver();
+            }
         }
         public void PlayerTurn()
         {
-            int input = int.Parse(Console.ReadLine());
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i].hp > 0)
@@ -36,23 +43,26 @@ namespace TRPG
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.");//사망한 적은 회색으로 표시
-                    Console.ResetColor();
+                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
                 }
             }
-            Console.WriteLine("\n\n플레이어 상태" +
+            Console.WriteLine("\n플레이어 상태\n" +
                 "\n1. 전투하기" +
                 "\n2. 인벤토리" +
                 "\n3. 도망가기");
-
+            int input = int.Parse(Console.ReadLine());
             switch (input)//플레이어의 행동을 받아오는 부분
             {
-                case 0://스킬 선택 메소드
+                case 1://스킬 선택 메소드
+                    Console.WriteLine("어떤 적을 공격하시겠습니까?");
+                    int target = int.Parse(Console.ReadLine());
+                    Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                    Console.WriteLine($"{Target.name}은 100의 피해를 입었다!");//디버깅용 임시 스크립트
+                    Target.hp -= 100;
                     break;
-                case 1://인벤토리 메소드
+                case 2://인벤토리 메소드
                     break;
-                case 2://도망가기 메소드
+                case 3://도망가기 메소드
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
