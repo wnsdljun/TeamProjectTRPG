@@ -35,6 +35,8 @@ namespace TRPG
             // 회복량은 입힌 피해량의 50%
             int healAmount = (int)(totalDamage * 0.5);
 
+            hp += healAmount;
+
             Console.WriteLine($"{Name}이(가) '수혈' 스킬을 사용합니다!");
             Console.WriteLine($"적에게 {totalDamage}의 피해를 주고, 자신은 {healAmount}의 체력을 회복합니다.");
         }
@@ -65,6 +67,8 @@ namespace TRPG
 
             // 회복량은 입힌 피해의 40%
             int healAmount = (int)(totalDamage * 0.4);
+
+            hp += healAmount;
 
             Console.WriteLine($"{Name}이(가) '혈사병' 스킬을 사용합니다!");
             Console.WriteLine($"적 전체에게 {totalDamage}의 피해를 입히고, 자신은 {healAmount}의 체력을 회복합니다.");
