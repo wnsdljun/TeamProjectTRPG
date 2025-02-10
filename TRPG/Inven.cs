@@ -8,27 +8,27 @@ namespace TRPG
 {
     internal class Inven
     {
-        public List<Item> inven_list = new List<Item>();
+        public List<InvenItem> inven_list = new List<InvenItem>();
 
         public Inven()
         {
-            List<Item> newitems = new List<Item>()
-            { 
-                //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
-                new Item("삼위일체",3000,ItemType.Weapon,30,0,15,15,false,false),
-                new Item("몰락한왕의검",3000,ItemType.Weapon,0,0,40,0,false,false),
-                new Item("얼어붙은심장",2000,ItemType.Armor,50,0,0,30,false,false),
-                new Item("가시갑옷",2500,ItemType.Armor,40,0,0,40, false, false),
-                new Item("광전사의군화",1500,ItemType.Shoes,0,0,15,0, false, false),
-                new Item("판금장화",1500,ItemType.Weapon,0,0,0,18, false, false)
-            };
-            foreach (var _item in newitems)
-            {
-                inven_list.Add(_item);
-            }
+            //List<InvenItem> newitems = new List<InvenItem>()
+            //{ 
+            //    //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
+            //    new InvenItem(false,"삼위일체",3000,ItemType.Weapon,30,0,15,15),
+            //    new InvenItem(false,"몰락한왕의검",3000,ItemType.Weapon,0,0,40,0),
+            //    new InvenItem(false,"얼어붙은심장",2000,ItemType.Armor,50,0,0,30),
+            //    new InvenItem(false,"가시갑옷",2500,ItemType.Armor,40,0,0,40),
+            //    new InvenItem(false,"광전사의군화",1500,ItemType.Shoes,0,0,15,0),
+            //    new InvenItem(false,"판금장화",1500,ItemType.Weapon,0,0,0,18)
+            //};
+            //foreach (var _item in newitems)
+            //{
+            //    inven_list.Add(_item);
+            //}
         }
 
-        public void ShowInven(List<Item> _item, Player _player)
+        public void ShowInven( Player _player)
         {
             bool bool_showinven =false;
             while (!bool_showinven)
@@ -39,7 +39,7 @@ namespace TRPG
                 Console.ResetColor();
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
 
-                Item_list_show(_item);
+                Item_list_show(inven_list);
 
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("0. 나가기");
@@ -61,7 +61,7 @@ namespace TRPG
                             break;
                         case 1:
                             //장착관리 
-                            Install_item(_item, _player);
+                            Install_item(_player);
 
                             break;
 
@@ -81,20 +81,20 @@ namespace TRPG
 
         }
 
-        private void Install_item(List<Item> _item, Player _player)
+        private void Install_item(Player _player)
         {
             bool bool_1 = false;
             while (!bool_1)
             {
                 Console.Clear();
-                Item_list_show(_item);
+                Item_list_show(inven_list);
                 Console.WriteLine("장착하거나 해제하고 싶은 아이템 이름을 입력해주세요 (나가기 :0):");
                 Console.Write(">>>");
                 string answer = Console.ReadLine();
-
-                if (!string.IsNullOrEmpty(answer) && _item.Any(x => x.itemName == answer))
+                int number;
+                if (!string.IsNullOrEmpty(answer) && inven_list.Any(x => x.itemName == answer))
                 {
-                    var item_Find = _item.Find(x => x.itemName == answer);
+                    var item_Find = inven_list.Find(x => x.itemName == answer);
 
                     //장착
                     if (item_Find.Installed == false)
@@ -114,7 +114,7 @@ namespace TRPG
 
 
                 }
-                else if (int.Parse(answer) == 0)
+                else if (int.TryParse(answer,out number))
                 {
                     bool_1 = true;
                 }
@@ -126,13 +126,13 @@ namespace TRPG
             }
         }
 
-        private static void Item_list_show(List<Item> _item)
+        private static void Item_list_show(List<InvenItem> inven_list)
         {
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine("============================================================");
             Console.WriteLine($"{"이름",-17}{"종류",-10}{"가격",-5}{"HP",-5}{"MP",-6}{"공격력",-7}{"방어력",-4}");
 
-            foreach (var x in _item)
+            foreach (var x in inven_list)
             {
                 IStatus status = x;
                 string install = x.Installed ? "E" : " ";
@@ -170,9 +170,14 @@ namespace TRPG
         /// 가방에 아이템 추가 
         /// </summary>
         /// <param name="_item"></param>
-        public void ItemAdd(Item _item)
+        public void ItemAdd(InvenItem _item)
         {
             inven_list.Add(_item);
+        }
+        public void ItemAdd(bool installed, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
+        {
+            InvenItem newItem_inven=new InvenItem(installed, itemName, itemPrice, itemType, hp, mp, atk, def);
+            inven_list.Add(newItem_inven);
         }
         /// <summary>
         /// 아이템에 대한 수치마큼 스텟에서  '+' or '-'

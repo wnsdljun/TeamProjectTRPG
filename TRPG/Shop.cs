@@ -17,8 +17,9 @@ namespace TRPG
 
         }
 
-        public void ShowShop(List<Item> newitems_inven, Player _player)
+        public void ShowShop(Player _player,Inven _inven)
         {
+            inven = _inven;
             bool bool_showShop = false;
             while (!bool_showShop)
             {
@@ -30,7 +31,7 @@ namespace TRPG
                     Console.ResetColor();
                     Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
 
-                    Item_list_show(items_list_shop, inven.inven_list, false);
+                    Item_list_show(items_list_shop,  false);
 
                     Console.WriteLine("1. 아이템구매");
                     Console.WriteLine("0. 나가기");
@@ -49,7 +50,7 @@ namespace TRPG
                             break;
                         case 1:
                             //아이템구매 
-                            Buy_item(_player, items_list_shop, newitems_inven);
+                            Buy_item(_player, items_list_shop);
 
                             break;
 
@@ -68,39 +69,49 @@ namespace TRPG
 
         }
 
-        private void Buy_item(object player, List<ShopItem> items_list_shop, List<Item> inven_list)
+        private void Buy_item(object player, List<ShopItem> items_list_shop)
         {
             //player의 골드를 가져와서 구매해서 가방에 넣고 상점에서는 노란색으로 표시하기 그리고 구매못하게
             bool boolbuyShop = false;
+            int number;
             while (!boolbuyShop)
             {
                 //반복문장
-                { 
-                Console.Clear();
-                Console.WriteLine($"[보유한 골드] : {"player.gold"} G");
-                Console.WriteLine();
-                Item_list_show(items_list_shop, inven_list, true);
-                Console.WriteLine();
-                Console.WriteLine("구해하실 아이템의 이름를 입력해주세요");
-                Console.Write(">>>");
+                {
+                    Console.Clear();
+                    Console.WriteLine($"[보유한 골드] : {"player.gold"} G");
+                    Console.WriteLine();
+                    Item_list_show(items_list_shop, true);
+                    Console.WriteLine();
+                    Console.WriteLine("구해하실 아이템의 이름를 입력해주세요");
+                    Console.Write(">>>");
                 }
                 string answer = Console.ReadLine();
                 if (!string.IsNullOrEmpty(answer) && items_list_shop.Any(x => x.itemName == answer))
                 {
-                    var Buyitem=items_list_shop.Find(x =>x.itemName ==answer);
+                    var Buyitem = items_list_shop.Find(x => x.itemName == answer);
+                    //구매완료인템 
+                    if (Buyitem.purchase == true)
+                    {
+                        Console.WriteLine("구매 완료된 템입니다. 다른 아이템을 구매해주세요");
+                        Thread.Sleep(1500);
+                    }
+                    else
+                    {
+                        //상점에 표시
+                        Buyitem.purchase = true;
+                    }
+
                     //골드 차감
                     //미구현 
                     //가방에 넣기
-                    //inven_list.Add();
+                    inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
                     
-                    // 상점에서 구매한 아이템
-                    Buyitem.purchase = true;
-                    // 상점에 표시하기  
-
+                   
                 }
-                else if (int.Parse(answer) ==0)
+                else if (int.TryParse(answer,out number))
                 {
-                    boolbuyShop= true;
+                    boolbuyShop = true;
                 }
                 else
                 {
@@ -111,7 +122,7 @@ namespace TRPG
             }
         }
 
-        private void Item_list_show(List<ShopItem> items_list_shop, List<Item> inven_list, bool buybool)
+        private void Item_list_show(List<ShopItem> items_list_shop,  bool buybool)
         {
 
             Console.WriteLine("[아이템 목록]");
@@ -122,11 +133,11 @@ namespace TRPG
             foreach (var x in items_list_shop)
             {
                 IStatus status = x;
-                string purchase=x.purchase ? "구매완료" : "";
-                 //구매완료 ==노란색 
+                string purchase = x.purchase ? "구매완료" : "";
+                //구매완료 ==노란색 
                 if (purchase == "구매완료")
                 {
-
+                    // 클릭을 못하게 해야됨 
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"[{purchase}]{x.itemName,-14}{x.itemType,-10}{x.itemPrice,-8}{status.hp,-6}{status.mp,-6}{status.atk,-8}{status.def,-6}");
                     Console.ResetColor();
@@ -148,6 +159,12 @@ namespace TRPG
         public void Add(ShopItem item)
         {
             items_list_shop.Add(item);
+        }
+        public void Add(bool purchase, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
+        {
+            //음 어덯게 하는게 좋을까?
+            ShopItem newitem = new ShopItem(purchase, itemName, itemPrice, itemType, hp, mp, atk, def);
+            items_list_shop.Add(newitem);
         }
     }
 }

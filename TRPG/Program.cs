@@ -9,14 +9,16 @@
             Shop shop = new Shop();
             Inven inven = new Inven();
             Player player = new Player();
-            List<Item> newitems_inven = new List<Item>()
+
+            List<InvenItem> newitems_inven = new List<InvenItem>()
             { 
                 //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
-                new Item("삼위일체",3000,ItemType.Weapon,30,0,15,15,false,false),
-                new Item("몰락한왕의검",3000,ItemType.Weapon,0,0,40,0,false,false),
-                new Item("얼어붙은심장",2000,ItemType.Armor,50,0,0,30,false,false),
-                new Item("가시갑옷",2500,ItemType.Armor,40,0,0,40, false, false),
+                new InvenItem(false,"삼위일체",3000,ItemType.Weapon,30,0,15,15),
+                new InvenItem(false,"몰락한왕의검",3000,ItemType.Weapon,0,0,40,0),
+                new InvenItem(false,"얼어붙은심장",2000,ItemType.Armor,50,0,0,30),
+                new InvenItem(false,"가시갑옷",2500,ItemType.Armor,40,0,0,40)
             };
+
 
             List<ShopItem> newitems_shop = new List<ShopItem>()
             { 
@@ -33,10 +35,14 @@
             {
                 shop.Add(item);
             }
+            foreach (var item in newitems_inven)
+            {
+                inven.ItemAdd(item);
+            }
             while (true)
             {
-                inven.ShowInven(newitems_inven, player);
-                shop.ShowShop(newitems_inven, player);
+                inven.ShowInven(player);
+                shop.ShowShop(player,inven);
 
 
             }
