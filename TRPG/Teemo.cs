@@ -30,9 +30,21 @@ namespace TRPG
             int scalingDamage = (int)(atk * qScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage;
 
-            Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");
-            Console.WriteLine($"적에게 {totalDamage}의 피해를 입히고, 3초 동안 독 효과를 적용합니다.");
+            int damagePerTurn = totalDamage / 3;
+            int remainder = totalDamage % 3;
+
+            Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");            
             Console.WriteLine("독 효과: 매 초마다 추가 피해가 발생합니다.");
+
+            for (int turn = 1; turn <= 3; turn++)
+            {
+                int damageThisTurn = damagePerTurn;
+                if (turn == 3)
+                {
+                    damageThisTurn += remainder;  // 마지막 턴에 남은 피해 추가
+                }
+                Console.WriteLine($"  {turn}턴째: {damageThisTurn}의 독 피해");
+            }
         }
 
         // W 스킬: 실명다트 지만 그냥 강한 공격
