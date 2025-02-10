@@ -33,10 +33,6 @@ namespace TRPG
             {
                 StageClear();
             }
-            else
-            {
-                GameOver();
-            }
         }
         public void PlayerTurn()
         {
