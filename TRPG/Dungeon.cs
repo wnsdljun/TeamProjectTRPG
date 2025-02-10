@@ -36,16 +36,16 @@ namespace TRPG
             switch (input)
             {
                 case 0:
-                    Console.WriteLine("적을 만났습니다. 전투를 시작합니다.");
+                    
                     break;
                 case 1:
-                    Console.WriteLine("인벤토리를 엽니다.");
+                  
                     break;
                 case 2:
-                    Console.WriteLine("휴식을 취합니다.");
+                   
                     break;
                 case 3:
-                    Console.WriteLine("협곡을 빠져나갑니다.");
+
                     break;
             }
         }
