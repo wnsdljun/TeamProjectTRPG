@@ -10,15 +10,24 @@ namespace TRPG
     {
         public void DungeonStart()
         {
+            int input = 1;
             Console.WriteLine("협곡에 오신 것을 환영합니다." +
                 "\n앞으로 나아가시겠습니까?" +
-                "\n\n1. 전진하기" +
+                "\n\n1. 들어가기" +
                 "\n2. 나가기");
-
+            switch(input)
+            {
+                case 1:
+                    Console.WriteLine("협곡으로 들어갑니다.");
+                    break;
+                case 2:
+                    Console.WriteLine("협곡을 빠져나갑니다.");
+                    break;
+            }
         }
         public void DungeonForward()
         {
-            int input = 0;
+            int input = 1;
             Console.WriteLine("적이 곳 몰려옵니다. 어떻게 하시겠습니까?" +
                 "\n\n1. 전진하기" +
                 "\n2. 인벤토리" +
