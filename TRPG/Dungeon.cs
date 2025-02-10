@@ -8,6 +8,7 @@ namespace TRPG
 {
     internal class Dungeon
     {
+        public BattleSystem battleSystem = new BattleSystem();
         public void DungeonStart()
         {
             int input = 1;
@@ -17,10 +18,10 @@ namespace TRPG
                 "\n2. 나가기");
             switch(input)
             {
-                case 1:
+                case 0:
                     Console.WriteLine("협곡으로 들어갑니다.");
                     break;
-                case 2:
+                case 1:
                     Console.WriteLine("협곡을 빠져나갑니다.");
                     break;
             }
@@ -36,7 +37,7 @@ namespace TRPG
             switch (input)
             {
                 case 0:
-                    
+                    battleSystem.BattleStart();
                     break;
                 case 1:
                   

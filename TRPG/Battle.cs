@@ -58,7 +58,7 @@ namespace TRPG
                     int target = int.Parse(Console.ReadLine());
                     Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
                     Console.WriteLine($"{Target.name}은 100의 피해를 입었다!");//디버깅용 임시 스크립트
-                    Target.hp -= 100;
+                    Target.hp -= 500;
                     break;
                 case 1://인벤토리 메소드
                     break;
@@ -104,6 +104,17 @@ namespace TRPG
             else if (comment == 4) { Console.WriteLine("미쳐 날뛰고 있습니다."); }
             else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
+            Console.WriteLine($"골드 {goldAdd} 획득, 경험치 {expAdd} 획득\n");
+            if (StageWave == 6)
+            {
+                DungeonClear();
+            }
+            else
+            {
+                Dungeon dungeon = new Dungeon();
+                dungeon.DungeonForward();
+            }
+
         }
         public void DungeonClear()
         {
