@@ -2,6 +2,7 @@
 {
     internal class SampleClass
     {
+        /*
         public static void ShowSample()
         {
 
@@ -37,6 +38,7 @@
 
             Console.WriteLine(input);
         }
+        */
 
         public static void ShowSample2()
         {
@@ -57,7 +59,91 @@
             });
 
             ui.WriteAll();
-            ui.PlayerUIControl();
+            ui.UserUIControl();
+        }
+
+        public static void SampleScene()
+        {
+            //최초 시작 화면의 샘플 씬
+            string playerName = "";
+
+
+
+            while (true)
+            {
+                UI ui_Welcome = new UI(new List<UIElement>
+                {
+                    new("소환사의 협곡에 오신 것을 환영합니다."),
+                    new("닉네임을 입력해 주십시오.")
+                });
+
+                ui_Welcome.WriteAll();
+                playerName = ui_Welcome.GetUserInput("닉네임으로 사용할 문자열 입력을 받습니다.");
+
+                UI ui_ConfirmNick = new UI(new List<UIElement>
+                {
+                    new($"닉네임을 {playerName}(으)로 하시겠습니까?"),
+                    new(),
+                    new("네",selectable:true, tip:$"{playerName}을 닉네임으로 확정합니다."),
+                    new("아니오",selectable:true, tip:"닉네임을 다시 입력합니다."),
+                });
+
+
+                ui_ConfirmNick.WriteAll();
+                int input = ui_ConfirmNick.UserUIControl();
+
+                if (input == 0) break; //0번 선택시 - 네
+
+            }
+            ////////////////////////////////////////////////////
+
+            //챔피언 선택 화면
+            Champion selectedChampion;
+
+            while (true)
+            {
+                UI ui_SelectChmp = new UI(new List<UIElement>
+                {
+                    new("챔피언을 선택하여 주십시오."),
+                    new(),
+                    new("1. 티모",selectable: true ,tip: "버섯깔기!"),
+                    new("2. 미스 포춘",selectable: true ,tip: "미스 포춘 쿠키"),
+                    new("3. 블라디미르",selectable: true ,tip: "블라디미르")
+                });
+
+                ui_SelectChmp.WriteAll();
+                int input = ui_SelectChmp.UserUIControl();
+
+                selectedChampion = input switch
+                {
+                    0 => new Teemo(),
+                    1 => new MissFortune(),
+                    2 => new Vladimir(),
+                    _ => throw new Exception()
+                };
+
+                UI ui_ConfirmChmp = new UI(new List<UIElement>
+                {
+                    new($"{selectedChampion.Name}(을)를 선택하셨습니다."),
+                    new(),
+                    // skill info 
+                    new(),
+                    new("이 챔피언을 사용하시겠습니까?"),
+                    new(),
+                    new("네",selectable: true ,tip: $"{selectedChampion.Name}을(를) 챔피언으로 확정합니다."),
+                    new("아니오",selectable: true ,tip: "챔피언을 다시 선택합니다."),
+                });
+
+                ui_ConfirmChmp.WriteAll();
+                input = ui_ConfirmChmp.UserUIControl();
+
+                if (input == 0) break;
+            }
+
+            BattleSystem bs = new BattleSystem(//참조를 전달);
+
+
+
         }
     }
 }

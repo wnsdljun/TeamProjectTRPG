@@ -54,6 +54,11 @@
             this.tip = tip;
         }
 
+        public UIElement()
+        {
+            tip = "";
+        }
+
 
         public void Write()
         {
