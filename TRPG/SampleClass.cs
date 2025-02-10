@@ -46,11 +46,13 @@
             {
                 new("텍스 트"),
                 new("샘플?입니다.",ConsoleColor.Green, ConsoleColor.Red),
-                new("색을지정할수있는", new List<Tuple<int,ConsoleColor,ConsoleColor>> {
+                new("색을지정할수있는", new List<UIColorIndex>
+                {
                     new(1, ConsoleColor.Red, ConsoleColor.Green),
                     new(2, ConsoleColor.Green, ConsoleColor.Red)
                 }),
-                new("색을지정할수있는선택가능한", new List<Tuple<int,ConsoleColor,ConsoleColor>> {
+                new("색을지정할수있는선택가능한", new List<UIColorIndex> 
+                {
                     new(7, ConsoleColor.Red, ConsoleColor.Green),
                     new(8, ConsoleColor.Green, ConsoleColor.Red)
                 }, selectable: true,tip: "선택가능한첫번째의설명"),
@@ -139,11 +141,6 @@
 
                 if (input == 0) break;
             }
-
-            BattleSystem bs = new BattleSystem(//참조를 전달);
-
-
-
         }
     }
 }
