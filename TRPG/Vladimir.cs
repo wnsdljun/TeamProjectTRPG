@@ -1,5 +1,4 @@
-﻿using System;
-//
+﻿//
 namespace TRPG
 {
     internal class Vladimir : Champion
@@ -115,5 +114,12 @@ namespace TRPG
             Console.WriteLine("   기본 데미지: 60/90/120/150/180, 공격력 계수: 0.8");
             Console.WriteLine("================================");
         }
+
+        public override string skillInfoQ => "Q - 수혈: 적에게 데미지를 주고, 입힌 데미지의 50%만큼 체력을 회복한다.";
+        public override string skillInfoQDetail => "   기본 데미지: 80/100/120/140/160, 공격력 계수: 0.6";
+        public override string skillInfoW => "W - 혈사병: 적 전체에게 데미지를 입히고, 입힌 데미지의 40%만큼 체력을 회복한다.";
+        public override string skillInfoWDetail => "   기본 데미지: 50/75/100/125/150, 공격력 계수: 0.7";
+        public override string skillInfoE => "E - 선혈의 파도: 적 전체에게 광역 피해를 입힌다.";
+        public override string skillInfoEDetail => "   기본 데미지: 60/90/120/150/180, 공격력 계수: 0.8";
     }
 }

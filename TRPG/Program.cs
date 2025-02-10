@@ -6,6 +6,7 @@ namespace TRPG
     {
         static void Main(string[] args)
         {
+            SampleClass.SampleScene();
             string playerName = "";
             while (true)
             {
@@ -135,7 +136,7 @@ namespace TRPG
                 }
             }
         }
-        static void ShowStatus(Player player)
+        public static void ShowStatus(Player player)
             {
                 Console.Clear();
                 Console.WriteLine("===== 플레이어 스테이터스 =====");

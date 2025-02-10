@@ -109,5 +109,12 @@ namespace TRPG
             Console.WriteLine("   기본 데미지: 80/110/140/170/200, 공격력 계수: 0.3");
             Console.WriteLine("===========================");
         }
+
+        public override string skillInfoQ => "Q - 맹독 다트: 단일 대상에게 피해를 입히고, 일정 시간 동안 독 효과를 부여한다.";
+        public override string skillInfoQDetail => "   기본 데미지: 30/50/70/90/110, 공격력 계수: 0.5";
+        public override string skillInfoW => "W - 실명다트: 단일 대상에게 피해를 입힌다.";
+        public override string skillInfoWDetail => "   기본 데미지: 40/60/80/100/120, 공격력 계수: 0.4";
+        public override string skillInfoE => "E - 유독성 함정: 적 전체에게 광역 피해를 입힌다.";
+        public override string skillInfoEDetail => "   기본 데미지: 80/110/140/170/200, 공격력 계수: 0.3";
     }
 }
