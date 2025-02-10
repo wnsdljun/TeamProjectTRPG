@@ -11,7 +11,10 @@ namespace TRPG
         public string itemName { get; set; }
         public int itemPrice { get; }
         public ItemType itemType { get; }
-        
+        int hp { get; set; }
+        int mp { get; set; }
+        int atk { get; set; }
+        int def { get; set; }
 
         /// <summary>
         /// 아이템을 장착 메소드 
