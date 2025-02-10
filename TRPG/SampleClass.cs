@@ -140,8 +140,7 @@
                 if (input == 0) break;
             }
 
-            BattleSystem bs = new BattleSystem(//참조를 전달);
-
+            
 
 
         }
