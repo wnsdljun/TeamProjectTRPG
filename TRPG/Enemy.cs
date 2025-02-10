@@ -41,6 +41,7 @@ namespace TRPG
     internal class Enemyskill
     {
         public int damage;
+        Damage diedamgae = new Damage();
 
         public void EnemyAttack(Enemy enemy)
         {
@@ -57,7 +58,7 @@ namespace TRPG
         {
             Console.WriteLine($"{enemy.name}의 공격!");
             damage = enemy.atk;
-            Damage(enemy);
+            diedamgae.EnemtAttackDamage(enemy, damage);
         }
         public void OnlyTurretskill(Enemy enemy)
         {
@@ -66,18 +67,13 @@ namespace TRPG
                 Console.WriteLine($"{enemy.name}의 강화 포격!");
                 damage = enemy.atk * 2;
                 enemy.mp -= 5;
-                Damage(enemy);
+                diedamgae.EnemtAttackDamage(enemy, damage);
             }
             else
             {
                 normalskill(enemy);
             }
         }
-        public void Damage(Enemy enemy)
-        { 
-            Random random = new Random();
-            int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
-            Console.WriteLine($"플레이어는 {Randomdamage}의 피해를 입었다!\n");
-        }
+       
     }
 }

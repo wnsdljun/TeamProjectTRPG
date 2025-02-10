@@ -10,7 +10,11 @@ namespace TRPG
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-        public Champion Player = new Champion();
+        public Player player;
+        public Vladimir vladimir = new Vladimir();
+        public Teemo teemo = new Teemo();
+        public MissFortune missFortune = new MissFortune();
+        public Champion champion { get; set; }
     }
     internal class BattleSystem : Battle
     {
@@ -64,6 +68,8 @@ namespace TRPG
                 case 1://인벤토리 메소드
                     break;
                 case 2://도망가기 메소드
+                    Dungeon dungeon = new Dungeon();
+                    dungeon.DungeonEnd();
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -105,6 +111,8 @@ namespace TRPG
                 goldAdd += enemy.gold;
                 expAdd += enemy.exp;
             }
+            player.Gold += goldAdd;
+            player.Exp += expAdd;
             if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
             else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
             else if (comment == 2) { Console.WriteLine("도저히 막을 수 없습니다."); }
