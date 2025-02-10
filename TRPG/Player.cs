@@ -14,6 +14,7 @@ namespace TRPG
         public int Gold { get; private set; } = 1500;
         public Champion Championclass { get; private set; }
 
+        public Player() { }
         public Player(string playerName, Champion champion)
         {
             PlayerName = playerName;

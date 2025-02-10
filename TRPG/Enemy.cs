@@ -74,7 +74,7 @@ namespace TRPG
             }
         }
         public void Damage(Enemy enemy)
-        {
+        { 
             Random random = new Random();
             int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
             Console.WriteLine($"플레이어는 {Randomdamage}의 피해를 입었다!\n");
