@@ -90,10 +90,12 @@ namespace TRPG
         {
             Random random = new Random();
             int goldAdd = 0;
+            int expAdd = 0;
             int comment = random.Next(0, 6);
             foreach (var enemy in enemies)
             {
                 goldAdd += enemy.gold;
+                expAdd += enemy.exp;
             }
             if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
             else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
