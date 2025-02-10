@@ -4,7 +4,8 @@ namespace TRPG
 {
     internal class MissFortune : Champion
     {
-        public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4)
+        Enemy? enemy;
+        public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4, 3)
         {
         }
 
@@ -24,7 +25,7 @@ namespace TRPG
             int[] baseDamageValues = { 20, 45, 70, 95, 120 };
             int baseDamage = baseDamageValues[Math.Min(SkillLevelQ - 1, baseDamageValues.Length - 1)];
             // 여기서는 플레이어 레벨 대신 기본 배수를 1로 사용합니다.
-            int totalDamage = baseDamage + (int)(atk * 1.0 * 1);
+            int totalDamage = baseDamage + (int)(atk * 1.0 * 1) - enemy.def;
             Console.WriteLine($"{Name}이(가) '한 발에 두 놈' 스킬을 사용합니다!");
             Console.WriteLine($"첫 번째 적에게 {totalDamage} 데미지를 입힙니다.");
 
@@ -56,7 +57,7 @@ namespace TRPG
             atk += (int)attackBoost;
             Console.WriteLine($"{Name}이(가) '사랑의 한 방' 스킬을 사용합니다!");
             Console.WriteLine($"공격력이 {attackBoost} 만큼 증가하고 즉시 기본 공격을 수행합니다.");
-            BaseAttack();
+            BaseAttack(enemy);
             atk = originalAtk;
             Console.WriteLine("공격력이 원래 상태로 돌아갑니다.");
         }
@@ -76,9 +77,9 @@ namespace TRPG
             mp -= E_MANA_COST;
             int[] baseDamageValues = { 70, 80, 90, 100, 110, 120 };
             int baseDamage = baseDamageValues[Math.Min(SkillLevelE - 1, baseDamageValues.Length - 1)];
-            int totalDamage = baseDamage * 1;
+            int totalDamage = baseDamage * 1 - enemy.def;
             Console.WriteLine($"{Name}이(가) '총알은 비를 타고' 스킬을 사용합니다!");
-            Console.WriteLine($"적 전체에게 {totalDamage}의 광역 데미지를 입힙니다.");
+            damage.PlayerAllSkillDamage(totalDamage);
         }
         public override void DisplaySkillInfo()
         {

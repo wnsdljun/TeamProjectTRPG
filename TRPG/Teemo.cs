@@ -4,7 +4,8 @@ namespace TRPG
 {
     internal class Teemo : Champion
     {
-        public Teemo() : base("티모", 615, 334, 54, 24, 104, 25, 3, 5)
+        Enemy enemy;
+        public Teemo() : base("티모", 615, 334, 54, 24, 104, 25, 3, 5, 2)
         {
         }
 
@@ -28,12 +29,13 @@ namespace TRPG
             double qScalingCoefficient = 0.5; // 공격력의 50% 추가
             int baseDamage = qBaseDamageValues[Math.Min(SkillLevelQ - 1, qBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * qScalingCoefficient);
-            int totalDamage = baseDamage + scalingDamage;
+            int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             int damagePerTurn = totalDamage / 3;
             int remainder = totalDamage % 3;
 
-            Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");            
+            Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");
+            damage.PlayerSkillDamage(totalDamage, enemy);
             Console.WriteLine("독 효과: 매 초마다 추가 피해가 발생합니다.");
 
             for (int turn = 1; turn <= 3; turn++)
@@ -66,10 +68,10 @@ namespace TRPG
             double wScalingCoefficient = 0.4; // 공격력의 40% 추가
             int baseDamage = wBaseDamageValues[Math.Min(SkillLevelW - 1, wBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * wScalingCoefficient);
-            int totalDamage = baseDamage + scalingDamage;
+            int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '실명다트' 스킬을 사용합니다!");
-            Console.WriteLine($"적에게 {totalDamage}의 피해를 입힙니다.");
+            damage.PlayerSkillDamage(totalDamage, enemy);
         }
 
         // E 스킬: 유독성 함정 → 사용 시 즉시 광역 피해 적용
@@ -91,10 +93,10 @@ namespace TRPG
             double eScalingCoefficient = 0.3; // 공격력의 30% 추가
             int baseDamage = eBaseDamageValues[Math.Min(SkillLevelE - 1, eBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * eScalingCoefficient);
-            int totalDamage = baseDamage + scalingDamage;
+            int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '유독성 함정' 스킬을 사용합니다!");
-            Console.WriteLine($"적들에게 {totalDamage}의 광역 피해를 입힙니다.");
+            damage.PlayerAllSkillDamage(totalDamage);
         }
         public override void DisplaySkillInfo()
         {

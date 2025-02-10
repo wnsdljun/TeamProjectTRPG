@@ -1,12 +1,11 @@
-﻿using System;
-//
+﻿using System.Numerics;
+
 namespace TRPG
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            SampleClass.SampleScene();
             string playerName = "";
             while (true)
             {
@@ -90,13 +89,73 @@ namespace TRPG
 
             Player player = new Player(playerName, selectedChampion);
             Console.WriteLine($"\n플레이어 '{player.PlayerName}'이(가) '{player.Championclass.Name}' 챔피언으로 확정되었습니다!");
+            Console.WriteLine("엔터 키를 눌러 메인 메뉴로 이동합니다.");
+            Console.ReadLine();
 
+            Inven inven = new Inven();
+            Shop shop = new Shop();
+
+            bool exitMenu = false;
+            while (!exitMenu)
+            {
+                Console.Clear();
+                Console.WriteLine("메인 메뉴를 선택하세요:");
+                Console.WriteLine("1. 스테이터스 확인");
+                Console.WriteLine("2. 인벤토리 확인");
+                Console.WriteLine("3. 상점");
+                Console.WriteLine("4. 협곡 (미구현)");
+                Console.WriteLine("0. 종료");
+                Console.Write("\n>>> ");
+                string menuChoice = Console.ReadLine();
+
+                switch (menuChoice)
+                {
+                    case "1":
+                        ShowStatus(player);
+                        break;
+                    case "2":
+                        inven.ShowInven(player);
+                        break;
+                    case "3":
+                        shop.ShowShop(player, inven);
+                        break;
+                    case "4":
+                        Console.Clear();
+                        Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
+                        Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
+                        break;
+                    case "0":
+                        exitMenu = true;
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
+                        break;
+                }
+            }
         }
+        static void ShowStatus(Player player)
+            {
+                Console.Clear();
+                Console.WriteLine("===== 플레이어 스테이터스 =====");
+                Console.WriteLine($"플레이어 이름: {player.PlayerName}");
+                Console.WriteLine($"챔피언: {player.Championclass.Name}");
+                Console.WriteLine($"레벨: {player.Level}");
+                Console.WriteLine($"경험치: {player.Exp}");
+                Console.WriteLine($"골드: {player.Gold}");
+                Console.WriteLine();
+                Console.WriteLine("--- 챔피언 스탯 ---");
+                Console.WriteLine($"HP: {player.Championclass.hp}");
+                Console.WriteLine($"MP: {player.Championclass.mp}");
+                Console.WriteLine($"ATK: {player.Championclass.atk}");
+                Console.WriteLine($"DEF: {player.Championclass.def}");
+                Console.WriteLine("=============================");
+                Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                Console.ReadLine();
+            }
     }
+
 }
-
-
-
-
 
 

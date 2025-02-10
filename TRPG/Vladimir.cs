@@ -4,7 +4,8 @@ namespace TRPG
 {
     internal class Vladimir : Champion
     {
-        public Vladimir() : base("블라디미르", 607, 320, 55, 27, 110, 30, 3, 5)
+        Enemy? enemy;
+        public Vladimir() : base("블라디미르", 607, 320, 55, 27, 110, 30, 3, 5, 1)
         {
         }
 
@@ -38,7 +39,8 @@ namespace TRPG
             hp += healAmount;
 
             Console.WriteLine($"{Name}이(가) '수혈' 스킬을 사용합니다!");
-            Console.WriteLine($"적에게 {totalDamage}의 피해를 주고, 자신은 {healAmount}의 체력을 회복합니다.");
+            damage.PlayerSkillDamage(totalDamage, enemy);
+            Console.WriteLine($"자신은 {healAmount}의 체력을 회복합니다.");
         }
 
         // W 스킬: 혈사병
@@ -71,7 +73,8 @@ namespace TRPG
             hp += healAmount;
 
             Console.WriteLine($"{Name}이(가) '혈사병' 스킬을 사용합니다!");
-            Console.WriteLine($"적 전체에게 {totalDamage}의 피해를 입히고, 자신은 {healAmount}의 체력을 회복합니다.");
+            damage.PlayerAllSkillDamage(totalDamage);
+            Console.WriteLine($"자신은 {healAmount}의 체력을 회복합니다.");
         }
 
         // E 스킬: 선혈의 파도
@@ -99,7 +102,7 @@ namespace TRPG
             int totalDamage = baseDamage + scalingDamage;
 
             Console.WriteLine($"{Name}이(가) '선혈의 파도' 스킬을 사용합니다!");
-            Console.WriteLine($"적 전체에게 {totalDamage}의 광역 피해를 입힙니다.");
+            damage.PlayerAllSkillDamage(totalDamage);
         }
         public override void DisplaySkillInfo()
         {
