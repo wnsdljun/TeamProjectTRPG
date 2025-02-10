@@ -8,7 +8,6 @@ namespace TRPG
 {
     internal class Enemy : IStatus
     {
-
         public string? name { get; set; }
         public int hp { get; set; }
         public int mp { get; set; }
