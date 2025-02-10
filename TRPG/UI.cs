@@ -39,7 +39,7 @@ namespace TRPG
                 if (key == ConsoleKey.DownArrow) MoveSelection(1);
                 //if (key == ConsoleKey.RightArrow) ;
                 //if (key == ConsoleKey.LeftArrow) ;
-                //if (key == ConsoleKey.Enter) return ConfirmAnim(currentSelectedLineIndex);
+                if (key == ConsoleKey.Enter) return ConfirmAnim(selectedLine);
                 if (selectedLine != -1 && key == ConsoleKey.Escape)
                 {
                     selectableE[selectedLine].isHighlighted = false;
@@ -64,13 +64,35 @@ namespace TRPG
             }
             //선택이 있는 경우. 일반적인 상황.
             selectedLine = (selectedLine + direction + selectableE.Count) % selectableE.Count;
-            UpdateSelecedState();
-        }
-        private void UpdateSelecedState()
-        {
+
             if (selectedLine != -1) selectableE[selectedLine].isHighlighted = true;
             if (lastSelectedLine != -1) selectableE[lastSelectedLine].isHighlighted = false;
+        }
 
+        private int ConfirmAnim(int returnValue)
+        {
+            int blinkCount = 3;
+            int blinkTime = 200;
+            ConsoleColor confirmForeColor = ConsoleColor.Black;
+            ConsoleColor confirmBackColor = ConsoleColor.Green;
+            UIElement element = selectableE[selectedLine];
+            bool b = false;
+            for (int i = 0; i < blinkCount * 2 - 1; i++)
+            {
+                if (b)
+                {
+                    b = false;
+                    element.Write();
+                }
+                else
+                {
+                    b = true;
+                    element.WriteOverrideColor(confirmBackColor, confirmForeColor);
+                }
+                Thread.Sleep(blinkTime / 2);
+            }
+            Thread.Sleep(blinkTime * 2);
+            return returnValue;
         }
     }
 
