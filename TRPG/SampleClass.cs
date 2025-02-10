@@ -14,9 +14,11 @@
                 new ColorString("인벤토리", ConsoleColor.Green, ConsoleColor.Black),
                 new ColorString("인벤토리를 볼 수 있읍니다."),
                 new ColorString(),
-                new ColorString("1. 선택 가능한 옵션",tip: "1번 옵션에 대한 설명입니다.", selectable:true),
-                new ColorString("2. 선택 가능한 옵션",tip: "2번 옵션에 대한 설명입니다.", selectable:true),
-                new ColorString("3. 선택 가능한 옵션",tip: "3번 옵션에 대한 설명입니다.", selectable:true)
+                new ColorString("1. 선택 가능한 옵션", tip: "1번 옵션에 대한 설명입니다.", selectable:true),
+                new ColorString("2. 선택 가능한 옵션", tip: "2번 옵션에 대한 설명입니다.", selectable:true),
+                new ColorString("3. 선택 가능한 옵션", ConsoleColor.Blue, ConsoleColor.Red , tip: "3번 옵션에 대한 설명입니다.", selectable:true),
+                new ColorString("4. 색깔 입히기", selectable: true, lineChange: false),
+                new ColorString("으히힝", selectable:true, lineChange: true)
             };
 
             //사용법 2: UIDesign 객체를 하나 만듭니다.
@@ -33,7 +35,29 @@
 
             Console.Clear();
 
-                Console.WriteLine(input);
+            Console.WriteLine(input);
+        }
+
+        public static void ShowSample2()
+        {
+            UI ui = new UI(new List<UIElement>
+            {
+                new("텍스 트"),
+                new("샘플?입니다.",ConsoleColor.Green, ConsoleColor.Red),
+                new("색을지정할수있는", new List<Tuple<int,ConsoleColor,ConsoleColor>> {
+                    new(1, ConsoleColor.Red, ConsoleColor.Green),
+                    new(2, ConsoleColor.Green, ConsoleColor.Red)
+                }),
+                new("색을지정할수있는선택가능한", new List<Tuple<int,ConsoleColor,ConsoleColor>> {
+                    new(7, ConsoleColor.Red, ConsoleColor.Green),
+                    new(8, ConsoleColor.Green, ConsoleColor.Red)
+                }, selectable: true,tip: "선택가능한첫번째의설명"),
+                new("그냥선택만되는", tip: "그냥선택가능한두번째의설명", selectable: true)
+
+            });
+
+            ui.WriteAll();
+            ui.PlayerUIControl();
         }
     }
 }

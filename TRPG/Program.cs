@@ -6,7 +6,8 @@
         {
             //Console.BackgroundColor = ConsoleColor.Green;
             //Console.WriteLine("Hello, World! 지환!");
-            SampleClass.ShowSample();
+            //SampleClass.ShowSample();
+            SampleClass.ShowSample2();
         }
     }
 }
