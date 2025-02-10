@@ -14,7 +14,7 @@ namespace TRPG
         public Vladimir vladimir = new Vladimir();
         public Teemo teemo = new Teemo();
         public MissFortune missFortune = new MissFortune();
-        public Champion champion { get; set; }
+        public Champion? champion { get; set; }
     }
     internal class BattleSystem : Battle
     {

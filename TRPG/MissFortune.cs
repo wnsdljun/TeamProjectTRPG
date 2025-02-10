@@ -4,7 +4,7 @@ namespace TRPG
 {
     internal class MissFortune : Champion
     {
-        Enemy enemy;
+        Enemy? enemy;
         public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4, 3)
         {
         }
