@@ -10,11 +10,16 @@ namespace TRPG
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
+        public Player player;
+        public Vladimir vladimir = new Vladimir();
+        public Teemo teemo = new Teemo();
+        public MissFortune missFortune = new MissFortune();
+        public Champion champion { get; set; }
     }
     internal class BattleSystem : Battle
     {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
-        List<Enemy> enemies;
+        public List<Enemy> enemies;
         public void BattleStart()
         {
             Console.WriteLine("적이 나타났다! \n");
@@ -54,7 +59,7 @@ namespace TRPG
             switch (input)//플레이어의 행동을 받아오는 부분
             {
                 case 0://스킬 선택 메소드
-                    Console.WriteLine("어떤 적을 공격하시겠습니까?");
+                    PlayerAttack();
                     int target = int.Parse(Console.ReadLine());
                     Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
                     Console.WriteLine($"{Target.name}은 100의 피해를 입었다!");//디버깅용 임시 스크립트
@@ -63,6 +68,8 @@ namespace TRPG
                 case 1://인벤토리 메소드
                     break;
                 case 2://도망가기 메소드
+                    Dungeon dungeon = new Dungeon();
+                    dungeon.DungeonEnd();
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -70,6 +77,13 @@ namespace TRPG
                     Console.ResetColor();
                     break;//잘못된 입력 넣으면 턴이 넘어감
             }
+        }
+        public void PlayerAttack()
+        {
+            Console.WriteLine("1. 기본 공격" +
+                "\n2. Q스킬" +
+                "\n3. E스킬" +
+                "\n4. W스킬");
         }
         public void EnemyTurn()
         {
@@ -97,6 +111,8 @@ namespace TRPG
                 goldAdd += enemy.gold;
                 expAdd += enemy.exp;
             }
+            player.Gold += goldAdd;
+            player.Exp += expAdd;
             if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
             else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
             else if (comment == 2) { Console.WriteLine("도저히 막을 수 없습니다."); }
