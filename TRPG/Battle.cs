@@ -10,7 +10,7 @@ namespace TRPG
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-        public Player player;
+        public Player? player;
         public Vladimir vladimir = new Vladimir();
         public Teemo teemo = new Teemo();
         public MissFortune missFortune = new MissFortune();
