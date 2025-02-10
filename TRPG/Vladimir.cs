@@ -1,5 +1,5 @@
 ﻿using System;
-
+//
 namespace TRPG
 {
     internal class Vladimir : Champion
