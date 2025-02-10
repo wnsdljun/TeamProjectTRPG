@@ -10,7 +10,7 @@ namespace TRPG
 
     internal abstract class Champion : IStatus
     {
-        //public Enemy enemy;
+        public Damage damage = new Damage();
         public string Name { get; private set; }
         public int hp { get; set; }
         public int mp { get; set; }
@@ -70,7 +70,6 @@ namespace TRPG
         //기본공격(하위 클래스에서 오버라이드 가능)
         public virtual void BaseAttack(Enemy enemy)
         {
-            Damage damage = new Damage();
             damage.PlayerAttackDamage(Name, enemy);
         }
 
