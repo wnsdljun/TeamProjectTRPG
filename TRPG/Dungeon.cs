@@ -27,7 +27,7 @@ namespace TRPG
         }
         public void DungeonForward()
         {
-            int input = 1;
+            int input = 0;
             Console.WriteLine("적이 곳 몰려옵니다. 어떻게 하시겠습니까?" +
                 "\n\n1. 전진하기" +
                 "\n2. 인벤토리" +
@@ -35,16 +35,16 @@ namespace TRPG
                 "\n4. 나가기");
             switch (input)
             {
-                case 1:
+                case 0:
                     Console.WriteLine("적을 만났습니다. 전투를 시작합니다.");
                     break;
-                case 2:
+                case 1:
                     Console.WriteLine("인벤토리를 엽니다.");
                     break;
-                case 3:
+                case 2:
                     Console.WriteLine("휴식을 취합니다.");
                     break;
-                case 4:
+                case 3:
                     Console.WriteLine("협곡을 빠져나갑니다.");
                     break;
             }
