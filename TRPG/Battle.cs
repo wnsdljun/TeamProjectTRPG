@@ -19,7 +19,7 @@ namespace TRPG
     internal class BattleSystem : Battle
     {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
-        List<Enemy> enemies;
+        public List<Enemy> enemies;
         public void BattleStart()
         {
             Console.WriteLine("적이 나타났다! \n");
