@@ -2,7 +2,7 @@
 
 namespace TRPG
 {
-    public class UI
+    public partial class UI
     {
         public List<UIElement> elements;
         List<UIElement> selectableE = new();
@@ -22,12 +22,13 @@ namespace TRPG
 
         public void WriteAll()
         {
+            Console.Clear();
             foreach (UIElement element in elements)
             {
                 element.Write();
             }
         }
-        public int PlayerUIControl()
+        public int UserUIControl()
         {
             Console.CursorVisible = false;
             //사용자 방향키 입력으로 항목을 선택하는 부분

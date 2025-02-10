@@ -6,6 +6,7 @@ namespace TRPG
     {
         static void Main(string[] args)
         {
+            SampleClass.SampleScene();
             string playerName = "";
             while (true)
             {
