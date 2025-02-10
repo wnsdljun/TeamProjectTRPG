@@ -62,8 +62,6 @@ namespace TRPG
                     PlayerAttack();
                     int target = int.Parse(Console.ReadLine());
                     Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
-                    Console.WriteLine($"{Target.name}은 100의 피해를 입었다!");//디버깅용 임시 스크립트
-                    Target.hp -= 500;
                     break;
                 case 1://인벤토리 메소드
                     break;
@@ -84,6 +82,80 @@ namespace TRPG
                 "\n2. Q스킬" +
                 "\n3. E스킬" +
                 "\n4. W스킬");
+            int input = int.Parse(Console.ReadLine());
+            switch (input)
+            {
+                case 0:
+                    int target = int.Parse(Console.ReadLine());
+                    Enemy Target = enemies[target - 1];
+                    player.Championclass.BaseAttack(Target);
+                    break;
+                case 1:
+                    if (player.Championclass.Championcode == 1)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        vladimir.UseSkill_Q(Target);
+                    }
+                    else if (player.Championclass.Championcode == 2)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        teemo.UseSkill_Q(Target);
+                    }
+                    else if (player.Championclass.Championcode == 3)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        missFortune.UseSkill_Q(Target);
+                    }
+                    break;
+                case 2:
+                    if (player.Championclass.Championcode == 1)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        vladimir.UseSkill_E(Target);
+                    }
+                    else if (player.Championclass.Championcode == 2)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        teemo.UseSkill_E(Target);
+                    }
+                    else if (player.Championclass.Championcode == 3)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        missFortune.UseSkill_E(Target);
+                    }
+                    break;
+                case 3:
+                    if (player.Championclass.Championcode == 1)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        vladimir.UseSkill_W(Target);
+                    }
+                    else if (player.Championclass.Championcode == 2)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        teemo.UseSkill_W(Target);
+                    }
+                    else if (player.Championclass.Championcode == 3)
+                    {
+                        target = int.Parse(Console.ReadLine());
+                        Target = enemies[target - 1];
+                        missFortune.UseSkill_W(Target);
+                    }
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                    break;
+            }
         }
         public void EnemyTurn()
         {
@@ -93,7 +165,11 @@ namespace TRPG
                 {
                     enemyskill.EnemyAttack(enemy); //EnemyAttack() 공격 멘트가 나오고 이어지는 Damage() 에서 피해량 멘트가 나옴.
                 }
-                //플레이어가 죽었을 때 GameOver() 메소드 호출
+                if (player.Championclass.hp <= 0)
+                {
+                    GameOver();
+                    break;
+                }
             }
         }
         public void GameOver()
