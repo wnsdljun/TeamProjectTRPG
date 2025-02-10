@@ -10,6 +10,7 @@ namespace TRPG
 
     internal abstract class Champion : IStatus
     {
+        //public Enemy enemy;
         public string Name { get; private set; }
         public int hp { get; set; }
         public int mp { get; set; }
@@ -67,9 +68,10 @@ namespace TRPG
         public void LevelUpSkillE() => SkillLevelE = Math.Min(SkillLevelE + 1, MAX_SKILL_LEVEL_E);
 
         //기본공격(하위 클래스에서 오버라이드 가능)
-        public virtual void BaseAttack()
+        public virtual void BaseAttack(Enemy enemy)
         {
-            
+            Damage damage = new Damage();
+            damage.PlayerAttackDamage(Name, enemy);
         }
 
         //각 챔피언마다 고유의 스킬 구현

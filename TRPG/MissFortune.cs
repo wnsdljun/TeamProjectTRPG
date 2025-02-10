@@ -4,6 +4,7 @@ namespace TRPG
 {
     internal class MissFortune : Champion
     {
+        Enemy enemy;
         public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4, 3)
         {
         }
@@ -56,7 +57,7 @@ namespace TRPG
             atk += (int)attackBoost;
             Console.WriteLine($"{Name}이(가) '사랑의 한 방' 스킬을 사용합니다!");
             Console.WriteLine($"공격력이 {attackBoost} 만큼 증가하고 즉시 기본 공격을 수행합니다.");
-            BaseAttack();
+            BaseAttack(enemy);
             atk = originalAtk;
             Console.WriteLine("공격력이 원래 상태로 돌아갑니다.");
         }

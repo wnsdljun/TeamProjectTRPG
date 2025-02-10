@@ -4,6 +4,7 @@ namespace TRPG
 {
     internal class Teemo : Champion
     {
+        Enemy enemy;
         public Teemo() : base("티모", 615, 334, 54, 24, 104, 25, 3, 5, 2)
         {
         }
