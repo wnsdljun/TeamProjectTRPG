@@ -15,6 +15,8 @@ namespace TRPG
                 Console.Write(">>> ");
                 playerName = Console.ReadLine();
 
+                
+
                 while (true)
                 {
                     Console.WriteLine($"\n닉네임을 {playerName}(으)로 하시겠습니까?");
