@@ -6,6 +6,7 @@ namespace TRPG
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
 
             // 플레이어 닉네임 입력 및 확인
             string playerName = "";
@@ -195,6 +196,12 @@ namespace TRPG
 
                 }
             }
+=======
+            //Console.BackgroundColor = ConsoleColor.Green;
+            //Console.WriteLine("Hello, World! 지환!");
+            //SampleClass.ShowSample();
+            SampleClass.ShowSample2();
+>>>>>>> parent of b0d13cc (Program)
         }
 
 
