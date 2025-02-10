@@ -6,6 +6,7 @@ namespace TRPG
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
             string playerName = "";
             while (true)
             {
@@ -89,6 +90,10 @@ namespace TRPG
 
             Player player = new Player(playerName, selectedChampion);
             Console.WriteLine($"\n플레이어 '{player.PlayerName}'이(가) '{player.Championclass.Name}' 챔피언으로 확정되었습니다!");
+=======
+
+
+>>>>>>> Dev
         }
     }
 }
