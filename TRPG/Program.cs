@@ -62,6 +62,20 @@ namespace TRPG
                 // 닉네임이 공백이면 다시 입력받음
                 if (string.IsNullOrWhiteSpace(playerName))
                 {
+
+            bool nameConfirmed = false;
+            while (!nameConfirmed)
+            {
+                Console.Clear();
+                Console.WriteLine("소환사의 협곡에 오신 것을 환영합니다.");
+                Console.WriteLine("닉네임을 정해주세요.");
+                Console.Write(">>> ");
+                playerName = Console.ReadLine();
+
+                // 닉네임이 공백이면 다시 입력받음
+                if (string.IsNullOrWhiteSpace(playerName))
+                {
+
                     Console.WriteLine("닉네임을 올바르게 입력해주세요.");
                     Console.ReadLine();
                     continue;
@@ -95,6 +109,7 @@ namespace TRPG
                     }
 
                 }
+
 
                 else
                 {
