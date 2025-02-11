@@ -39,7 +39,7 @@ namespace TRPG
         public void DungeonForward()
         {
             int input = 0;
-            Console.WriteLine("적이 곳 몰려옵니다. 어떻게 하시겠습니까?" +
+            Console.WriteLine("적이 곧 몰려옵니다. 어떻게 하시겠습니까?" +
                 "\n\n1. 전진하기" +
                 "\n2. 인벤토리" +
                 "\n3. 휴식하기" +
@@ -78,6 +78,10 @@ namespace TRPG
                                 {
                                     GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
                                 }
+                                if (GameManager.Instance.player.Championclass.mp > GameManager.Instance.player.Championclass.MaxMp)
+                                {
+                                    GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
+                                }
                             }
                             else
                             {
@@ -105,6 +109,8 @@ namespace TRPG
         {
             Console.WriteLine("협곡을 빠져나가셨습니다.");//스테이터스 창으로 이동
             battleSystem.StageWave = 1;
+            GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
+            GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
             GameManager.Instance.MainMenu();
         }
     }
