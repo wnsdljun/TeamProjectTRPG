@@ -8,27 +8,11 @@ namespace TRPG
 {
     internal class Inven
     {
-        //public List<InvenItem> inven_list = new List<InvenItem>();
-        GameManager GM_instance;
+        //private GameManager gameManager;
 
         public Inven()
         {
-            GM_instance = GameManager.Instance;
-
-            //List<InvenItem> newitems = new List<InvenItem>()
-            //{ 
-            //    //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
-            //    new InvenItem(false,"삼위일체",3000,ItemType.Weapon,30,0,15,15),
-            //    new InvenItem(false,"몰락한왕의검",3000,ItemType.Weapon,0,0,40,0),
-            //    new InvenItem(false,"얼어붙은심장",2000,ItemType.Armor,50,0,0,30),
-            //    new InvenItem(false,"가시갑옷",2500,ItemType.Armor,40,0,0,40),
-            //    new InvenItem(false,"광전사의군화",1500,ItemType.Shoes,0,0,15,0),
-            //    new InvenItem(false,"판금장화",1500,ItemType.Weapon,0,0,0,18)
-            //};
-            //foreach (var _item in newitems)
-            //{
-            //    inven_list.Add(_item);
-            //}
+           // this.gameManager = manager;
         }
 
         public void ShowInven(Player _player)
@@ -43,7 +27,7 @@ namespace TRPG
                 Console.ResetColor();
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
 
-                Item_list_show(GM_instance.inventoryItems);
+                Item_list_show(GameManager.Instance.inventoryItems);
 
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("0. 나가기");
@@ -91,14 +75,14 @@ namespace TRPG
             while (!bool_1)
             {
                 Console.Clear();
-                Item_list_show(GM_instance.inventoryItems);
+                Item_list_show(GameManager.Instance.inventoryItems);
                 Console.WriteLine("장착하거나 해제하고 싶은 아이템 이름을 입력해주세요 (나가기 :0):");
                 Console.Write(">>>");
                 string answer = Console.ReadLine();
                 int number;
-                if (!string.IsNullOrEmpty(answer) && GM_instance.inventoryItems.Any(x => x.itemName == answer))
+                if (!string.IsNullOrEmpty(answer) && GameManager.Instance.inventoryItems.Any(x => x.itemName == answer))
                 {
-                    var item_Find = GM_instance.inventoryItems.Find(x => x.itemName == answer);
+                    var item_Find = GameManager.Instance.inventoryItems.Find(x => x.itemName == answer);
 
                     //장착
                     if (item_Find.Installed == false)
@@ -163,7 +147,7 @@ namespace TRPG
         /// <param name="itemName"></param>
         public void ItemDelete(string itemName)
         {
-            InvenItem foundItem = GM_instance.inventoryItems.Find(Item => Item.itemName == itemName);
+            InvenItem foundItem = GameManager.Instance.inventoryItems.Find(Item => Item.itemName == itemName);
             //스텟을 감소시키기
             StatusSetting(foundItem,'-');
             //삭제
@@ -176,12 +160,12 @@ namespace TRPG
         /// <param name="_item"></param>
         public void ItemAdd(InvenItem _item)
         {
-            GM_instance.inventoryItems.Add(_item);
+            GameManager.Instance.inventoryItems.Add(_item);
         }
         public void ItemAdd(bool installed, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
         {
             InvenItem newItem_inven = new InvenItem(installed, itemName, itemPrice, itemType, hp, mp, atk, def);
-            GM_instance.inventoryItems.Add(newItem_inven);
+            GameManager.Instance.inventoryItems.Add(newItem_inven);
         }
         /// <summary>
         /// 아이템에 대한 수치마큼 스텟에서  '+' or '-'
@@ -192,17 +176,17 @@ namespace TRPG
             //player의 스텟이 구성되면 그 구성된 수치에서 제외시켜주기 
             if (_char == '+')
             {
-                GM_instance.selectedChampion.hp +=foundItem.hp;
-                GM_instance.selectedChampion.mp += foundItem.mp;
-                GM_instance.selectedChampion.atk += foundItem.atk;
-                GM_instance.selectedChampion.def +=foundItem.def;
+                GameManager.Instance.selectedChampion.hp +=foundItem.hp;
+                GameManager.Instance.selectedChampion.mp += foundItem.mp;
+                GameManager.Instance.selectedChampion.atk += foundItem.atk;
+                GameManager.Instance.selectedChampion.def +=foundItem.def;
             }
             else if (_char == '-')
             {
-                GM_instance.selectedChampion.hp -= foundItem.hp;
-                GM_instance.selectedChampion.mp -= foundItem.mp;
-                GM_instance.selectedChampion.atk -= foundItem.atk;
-                GM_instance.selectedChampion.def -= foundItem.def;
+                GameManager.Instance.selectedChampion.hp -= foundItem.hp;
+                GameManager.Instance.selectedChampion.mp -= foundItem.mp;
+                GameManager.Instance.selectedChampion.atk -= foundItem.atk;
+                GameManager.Instance.selectedChampion.def -= foundItem.def;
             }
             else
             {

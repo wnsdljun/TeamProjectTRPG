@@ -8,43 +8,44 @@ namespace TRPG
 {
     internal class GameManager
     {
-        public Player player ;
+        public Player player;
+        public Inven inven;
+        public Shop shop;
         public Champion selectedChampion;
+        public List<InvenItem> inventoryItems;
+        public List<ShopItem> items_list_shop;
         private static GameManager instance = null;
-        // 2. thread-safe를 위한 lock 객체
-        private static readonly object lockObject = new object();
-        public List<InvenItem> inventoryItems { get; set; } = new List<InvenItem>();
 
         public string playerName = "";
 
-        
-        private GameManager()
-        {
-            // 초기화 코드
-        }
-        // 4. public static 프로퍼티 (인스턴스 접근용)
+
         public static GameManager Instance
         {
             get
             {
-                // Double-check locking
+                // null 체크 후 새 인스턴스 생성
                 if (instance == null)
                 {
-                    lock (lockObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new GameManager();
-                        }
-                    }
+                    instance = new GameManager();
                 }
                 return instance;
             }
         }
 
-
-        public  void Chi_Champion()
+        // private 생성자
+        private GameManager()
         {
+            player = new Player();
+            shop = new Shop();
+            inven = new Inven();
+            inventoryItems = new List<InvenItem>();            
+            items_list_shop = new List<ShopItem>();
+            // 다른 초기화 코드
+        }
+
+        public void Chi_Champion()
+        {
+            //플레이어 선택 화먀
             while (true)
             {
                 UI ui_Welcome = new UI(new List<UIElement>
@@ -75,9 +76,6 @@ namespace TRPG
             ////////////////////////////////////////////////////
 
             //챔피언 선택 화면
-
-            
-
             while (true)
             {
                 UI ui_SelectChmp = new UI(new List<UIElement>
@@ -100,15 +98,18 @@ namespace TRPG
                     _ => throw new Exception()
                 };
 
-                Console.WriteLine();
-                selectedChampion.DisplaySkillInfo();
-                Thread.Sleep(5000);
-
                 UI ui_ConfirmChmp = new UI(new List<UIElement>
                 {
                     new($"{selectedChampion.Name}(을)를 선택하셨습니다."),
                     new(),
-                    new(),
+                    new($"===== {selectedChampion.Name} 스킬 설명 ====="),
+                    new(selectedChampion.skillInfoQ),
+                    new(selectedChampion.skillInfoQDetail),
+                    new(selectedChampion.skillInfoW),
+                    new(selectedChampion.skillInfoWDetail),
+                    new(selectedChampion.skillInfoE),
+                    new(selectedChampion.skillInfoEDetail),
+                    new("================================"),
                     new(),
                     new("이 챔피언을 사용하시겠습니까?"),
                     new(),
@@ -119,57 +120,74 @@ namespace TRPG
                 ui_ConfirmChmp.WriteAll();
                 input = ui_ConfirmChmp.UserUIControl();
 
-
                 if (input == 0) break;
             }
 
-            while (selectedChampion == null)
-            {
-                Console.Clear();
-                Console.WriteLine("챔피언을 선택하세요.");
-                Console.WriteLine("1. 미스 포춘\n2. 티모\n3. 블라디미르");
-                Console.Write("\n>>> ");
-                string championChoice = Console.ReadLine();
 
-                Champion tempChampion = championChoice switch
-                {
-                    "1" => new MissFortune(),
-                    "2" => new Teemo(),
-                    "3" => new Vladimir(),
-                    _ => null
-                };
+            player.GetPlayer(playerName, selectedChampion);
+            Console.WriteLine($"\n플레이어 '{this.player.PlayerName}'이(가) '{this.player.Championclass.Name}' 챔피언으로 확정되었습니다!");
 
-                if (tempChampion != null)
-                {
-                    Console.Clear();
-                    Console.WriteLine($"{tempChampion.Name} 챔피언을 선택하셨습니다.\n");
 
-                    tempChampion.DisplaySkillInfo();
 
-                    Console.WriteLine("\n이 챔피언을 선택하시겠습니까?");
-                    Console.WriteLine("1. 네\n2. 아니오");
-                    Console.Write("\n>>> ");
-                    string confirmChoice = Console.ReadLine();
-
-                    if (confirmChoice == "1")
-                    {
-                        selectedChampion = tempChampion;
-                        break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 선택입니다. 다시 입력해주세요.");
-                    Console.ReadLine();
-                }
-            }
-
-            player = new Player(playerName, selectedChampion);
-            Console.WriteLine($"\n플레이어 '{player.PlayerName}'이(가) '{player.Championclass.Name}' 챔피언으로 확정되었습니다!");
 
             //플레이어랑 챔피언을 인스턴스를 만들어야지
             //player =new Player(playerName, selectedChampion);
         }
 
+        public void MainMenu()
+        {
+            //Player player = new Player();
+            //Inven inven = new Inven();
+            //Shop shop = new Shop();
+
+            //메인메뉴?
+            bool exitMenu = false;
+            while (!exitMenu)
+            {
+                UI ui_MainMenu = new UI(new List<UIElement>
+                {
+                    new("메인 메뉴를 선택하세요"),
+                    new(),
+                    new("1. 스테이터스 확인",selectable: true ,tip: ""),
+                    new("2. 인벤토리 확인",selectable: true ,tip: ""),
+                    new("3. 상점",selectable: true ,tip: ""),
+                    new("4. 협곡",selectable: true ,tip: ""),
+                    new(),
+                    new("종료",selectable: true ,tip: "")
+                });
+                ui_MainMenu.WriteAll();
+                int menuChoice = ui_MainMenu.UserUIControl();
+
+                switch (menuChoice)
+                {
+                    case 0:
+                        Program.ShowStatus(player);
+                        break;
+                    case 1:
+                        inven.ShowInven(player);
+                        break;
+                    case 2:
+                        shop.ShowShop(player, inven);
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
+                        Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        //goto myloc;
+                        exitMenu = true;
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
+                        break;
+                }
+
+
+
+            }// whil
+        }
     }
 }
