@@ -13,21 +13,7 @@ namespace TRPG
         public ItemType itemType { get; }
         
 
-        /// <summary>
-        /// 아이템을 장착 메소드 
-        /// </summary>
-        public void EquipItem()
-        {
 
-        }
-
-        /// <summary>
-        /// 아이템을 해제하는 메소드
-        /// </summary>
-        public void ReleaseItem()
-        {
-
-        }
 
 
     }

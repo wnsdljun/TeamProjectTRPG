@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//
+﻿//
 namespace TRPG
 {
     using System;
@@ -82,6 +77,12 @@ namespace TRPG
 
         public abstract void DisplaySkillInfo();
 
+        public abstract string skillInfoQ { get;  }
+        public abstract string skillInfoQDetail { get;  }
+        public abstract string skillInfoW { get;  }
+        public abstract string skillInfoWDetail { get;  }
+        public abstract string skillInfoE { get;  }
+        public abstract string skillInfoEDetail { get;  }
     }
 
 

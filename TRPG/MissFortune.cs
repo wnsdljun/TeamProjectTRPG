@@ -91,7 +91,22 @@ namespace TRPG
             Console.WriteLine("E - 총알은 비를 타고: 적 전체에게 광역 피해를 입힌다.");
             Console.WriteLine("   기본 데미지: 70/95/120/145/170, 공격력 계수: 0.3");
             Console.WriteLine("=================================");
+
+            //string a= "===== 미스 포춘 스킬 설명 ===== " +
+            //            "Q - 한 발에 두 놈: 두 대상에게 순차적으로 피해를 입힌다." +
+            //            "   기본 데미지: 40/60/80/100/120, 공격력 계수: 0.5"
+
+
+
+            //return
         }
+
+        public override string skillInfoQ => "Q - 한 발에 두 놈: 두 대상에게 순차적으로 피해를 입힌다.";
+        public override string skillInfoQDetail => "   기본 데미지: 40/60/80/100/120, 공격력 계수: 0.5";
+        public override string skillInfoW => "W - 사랑의 한 방: 단일 대상에게 피해를 입힌다.";
+        public override string skillInfoWDetail => "   기본 데미지: 30/45/60/75/90, 공격력 계수: 0.4";
+        public override string skillInfoE => "E - 총알은 비를 타고: 적 전체에게 광역 피해를 입힌다.";
+        public override string skillInfoEDetail => "   기본 데미지: 70/95/120/145/170, 공격력 계수: 0.3";
     }
 }
 

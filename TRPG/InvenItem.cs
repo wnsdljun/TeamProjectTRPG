@@ -28,5 +28,6 @@ namespace TRPG
         public int mp { get; set; }
         public int atk { get; set; }
         public int def { get; set; }
+
     }
 }

@@ -2,7 +2,7 @@
 {
     public class UIElement
     {
-        private List<Tuple<char, ConsoleColor, ConsoleColor>> coloredChar = new List<Tuple<char, ConsoleColor, ConsoleColor>>();
+        private List<UIChar> coloredChar = new List<UIChar>();
         private string tip;
         public event EventHandler? StateChange;
         private bool IsHighlighted; //이거 추가하니까 stackoverflow 없어짐
@@ -24,30 +24,30 @@
         {
             foreach (char c in text)
             {
-                coloredChar.Add(new Tuple<char, ConsoleColor, ConsoleColor>(c, back ??= Console.BackgroundColor, fore ??= Console.ForegroundColor));
+                coloredChar.Add(new UIChar(c, back ??= Console.BackgroundColor, fore ??= Console.ForegroundColor));
             }
             isSelectable = selectable;
             if (selectable) StateChange += HighlightChanged;
             this.tip = tip;
         }
 
-        public UIElement(string text, List<Tuple<int, ConsoleColor, ConsoleColor>> colorIndex, bool selectable = false, string tip = "지정된 설명이 없습니다.")
+        public UIElement(string text, List<UIColorIndex> colorIndex, bool selectable = false, string tip = "지정된 설명이 없습니다.")
         {
-            Tuple<char, ConsoleColor, ConsoleColor> tuple;
+            UIChar uIChar;
             int i = 0;
             int j = 0;
             foreach (char c in text)
             {
-                if (j < colorIndex.Count && colorIndex[j].Item1 == i++) //색을 바꿀 인덱스
+                if (j < colorIndex.Count && colorIndex[j].index == i++) //색을 바꿀 인덱스
                 {
-                    tuple = new(c, colorIndex[j].Item2, colorIndex[j].Item3);
+                    uIChar = new(c, colorIndex[j].backColor, colorIndex[j].foreColor);
                     j++;
                 }
                 else
                 {
-                    tuple = new(c, Console.BackgroundColor, Console.ForegroundColor);
+                    uIChar = new(c, Console.BackgroundColor, Console.ForegroundColor);
                 }
-                coloredChar.Add(tuple);
+                coloredChar.Add(uIChar);
             }
             isSelectable = selectable;
             if (selectable) StateChange += HighlightChanged;
@@ -63,22 +63,22 @@
         public void Write()
         {
             Console.SetCursorPosition(0, lineIndex);
-            foreach (var (c, back, fore) in coloredChar)
+            foreach (var cha in coloredChar)
             {
-                Console.BackgroundColor = back;
-                Console.ForegroundColor = fore;
-                Console.Write(c);
+                Console.BackgroundColor = cha.backColor;
+                Console.ForegroundColor = cha.foreColor;
+                Console.Write(cha.ch);
                 Console.ResetColor();
             }
         }
         public void WriteOverrideColor(ConsoleColor _back, ConsoleColor _fore)
         {
             Console.SetCursorPosition(0, lineIndex);
-            foreach (var (c, back, fore) in coloredChar)
+            foreach (var cha in coloredChar)
             {
                 Console.BackgroundColor = _back;
                 Console.ForegroundColor = _fore;
-                Console.Write(c);
+                Console.Write(cha.ch);
                 Console.ResetColor();
             }
         }
@@ -99,6 +99,33 @@
                 //아님.
                 Write();
             }
+        }
+    }
+
+    public class UIChar
+    {
+        public char ch;
+        public ConsoleColor backColor;
+        public ConsoleColor foreColor;
+
+        public UIChar(char c, ConsoleColor back, ConsoleColor fore) 
+        { 
+            ch = c;
+            this.backColor = back;
+            this.foreColor = fore;
+        }
+    }
+
+    public class UIColorIndex
+    {
+        public int index { get; }
+        public ConsoleColor backColor;
+        public ConsoleColor foreColor;
+        public UIColorIndex(int index, ConsoleColor back, ConsoleColor fore)
+        {
+            this.index = index;
+            this.backColor = back;
+            this.foreColor = fore;
         }
     }
 }
