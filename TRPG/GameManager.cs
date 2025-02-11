@@ -164,11 +164,11 @@ namespace TRPG
                 }
             }
 
-            Player player = new Player(playerName, selectedChampion);
+            player = new Player(playerName, selectedChampion);
             Console.WriteLine($"\n플레이어 '{player.PlayerName}'이(가) '{player.Championclass.Name}' 챔피언으로 확정되었습니다!");
 
             //플레이어랑 챔피언을 인스턴스를 만들어야지
-            player =new Player(playerName, selectedChampion);
+            //player =new Player(playerName, selectedChampion);
         }
 
     }
