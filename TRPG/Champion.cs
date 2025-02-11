@@ -73,9 +73,9 @@ namespace TRPG
         }
 
         //각 챔피언마다 고유의 스킬 구현
-        public abstract void UseSkill_Q(Enemy enemy);
-        public abstract void UseSkill_W(Enemy enemy);
-        public abstract void UseSkill_E(Enemy enemy);
+        public abstract void UseSkill_Q(Enemy enemy, List<Enemy> enemies);
+        public abstract void UseSkill_W(Enemy enemy, List<Enemy> enemies);
+        public abstract void UseSkill_E(Enemy enemy, List<Enemy> enemies);
 
         public abstract void DisplaySkillInfo();
 

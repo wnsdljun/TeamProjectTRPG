@@ -101,7 +101,7 @@
                             if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
                                 enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
+                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
                                 Turn = false;
                             }
                             else
@@ -115,7 +115,7 @@
                             if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
                             {
                                 enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                                GameManager.Instance.selectedChampion.UseSkill_W(enemy, enemies);
                                 Turn = false;
                             }
                             else
@@ -129,7 +129,7 @@
                             if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
                             {
                                 enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                                GameManager.Instance.selectedChampion.UseSkill_E(enemy, enemies);
                                 Turn = false;
                             }
                             else
@@ -255,11 +255,10 @@
         }
         public void StageSet()
         {
-
             switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
-                    enemies = battleEnemies.wave1;
+                    enemies =  battleEnemies.wave1;
                     break;
                 case 2:
                     enemies = battleEnemies.wave2;
@@ -289,6 +288,7 @@
         {
             wave1 = new List<Enemy>
             {
+                
                 enemyfactory.MeleeMinion()
             };
 
