@@ -88,16 +88,16 @@
                         GameManager.Instance.selectedChampion.BaseAttack(enemy);
                         break;
                     case 2:
-                        Targeting();
-                        GameManager.Instance.selectedChampion.UseSkill_Q(Target);
+                        enemy = Targeting();
+                        GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
                         break;
                     case 3:
-                        Targeting();
-                        GameManager.Instance.selectedChampion.UseSkill_E(Target);
+                        enemy = Targeting();
+                        GameManager.Instance.selectedChampion.UseSkill_E(enemy);
                         break;
                     case 4:
-                        Targeting();
-                        GameManager.Instance.selectedChampion.UseSkill_W(Target);
+                        enemy = Targeting();
+                        GameManager.Instance.selectedChampion.UseSkill_W(enemy);
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -134,23 +134,9 @@
             int target;
             if (int.TryParse(Console.ReadLine(), out target))
             {
-<<<<<<< HEAD
-                
-                if (enemies[target - 1] != null)
-                {
-                    Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Console.ResetColor();
-                    return;
-                }
-=======
+
                 Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
                 return Target;
->>>>>>> origin/_test
             }
             else
             {
