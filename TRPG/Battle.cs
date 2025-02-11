@@ -10,8 +10,6 @@ namespace TRPG
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-        public Player? player;
-        public Champion? champion { get; set; }
     }
     internal class BattleSystem : Battle
     {
@@ -128,7 +126,7 @@ namespace TRPG
                 {
                     enemyskill.EnemyAttack(enemy); //EnemyAttack() 공격 멘트가 나오고 이어지는 Damage() 에서 피해량 멘트가 나옴.
                 }
-                if (player.Championclass.hp <= 0)
+                if (GameManager.Instance.player.Championclass.hp <= 0)
                 {
                     GameOver();
                     break;
@@ -154,10 +152,12 @@ namespace TRPG
         public void GameOver()
         {
             StageWave = 1;
-            player.Gold /= 2;
+            GameManager.Instance.player.Gold /= 2;
             Console.WriteLine("패배….");
-            Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {player.Gold}입니다.");
-            return;
+            Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
+            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+            Console.ReadLine();
+            GameManager.Instance.MainMenu();
         }
         public void StageClear()
         {
@@ -170,7 +170,7 @@ namespace TRPG
                 goldAdd += enemy.gold;
                 expAdd += enemy.exp;
             }
-            player.Gold += goldAdd;
+            GameManager.Instance.player.Gold += goldAdd;
             if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
             else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
             else if (comment == 2) { Console.WriteLine("도저히 막을 수 없습니다."); }
@@ -178,8 +178,8 @@ namespace TRPG
             else if (comment == 4) { Console.WriteLine("미쳐 날뛰고 있습니다."); }
             else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
-            Console.WriteLine($"골드 {goldAdd} 획득, 경험치 {expAdd} 획득\n");
-            player.GainExp(expAdd);
+            Console.WriteLine($"골드 {goldAdd} 획득! 경험치 {expAdd} 획득!\n");
+            GameManager.Instance.player.GainExp(expAdd);
             if (StageWave == 6)
             {
                 DungeonClear();
@@ -195,7 +195,9 @@ namespace TRPG
         {
             StageWave = 1;
             Console.WriteLine("승리!");
-            return;
+            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+            Console.ReadLine();
+            GameManager.Instance.MainMenu();
         }
         public void StageSet()
         {
