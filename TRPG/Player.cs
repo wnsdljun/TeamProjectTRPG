@@ -9,9 +9,11 @@ namespace TRPG
     internal class Player
     {
         public string PlayerName { get; private set; }
+
         public int Level { get; set; } = 1;
         public int Exp { get; set; } = 0;
         public int Gold { get; set; } = 1500;
+
         public Champion Championclass { get; private set; }
 
         //public Player() { }
