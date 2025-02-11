@@ -182,7 +182,8 @@ namespace TRPG
                         SampleClass.ShowShop();
                         break;
                     case 3:
-                        dungeon.DungeonStart();
+                        //dungeon.DungeonStart();
+                        SampleClass.SampleLobby();
                         break;
                     case 4:
                         //goto myloc;

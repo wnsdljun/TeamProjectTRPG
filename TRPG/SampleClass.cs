@@ -60,7 +60,7 @@
         ////////////////////////////////////////////////////
 
         //챔피언 선택 화면
-        myloc:
+        //myloc:
             Champion selectedChampion;
 
             while (true)
@@ -191,7 +191,7 @@
 
             if (input == 1)
             {
-                ui_DungeonLobbyExit.WriteAll("마을로 돌아가는중...", 2);
+                ui_DungeonLobbyExit.WriteAll("마을로 돌아가는중...", 5900);
                 return;
             }
             //else// battleSystem.BattleStart();
