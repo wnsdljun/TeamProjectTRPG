@@ -11,9 +11,6 @@ namespace TRPG
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
         public Player? player;
-        public Vladimir vladimir = new Vladimir();
-        public Teemo teemo = new Teemo();
-        public MissFortune missFortune = new MissFortune();
         public Champion? champion { get; set; }
     }
     internal class BattleSystem : Battle
@@ -95,58 +92,19 @@ namespace TRPG
                 {
                     case 1:
                         Targeting();
-                        player.Championclass.BaseAttack(Target);
+                        GameManager.Instance.selectedChampion.BaseAttack(Target);
                         break;
                     case 2:
-                        if (player.Championclass.Championcode == 1)
-                        {
-                            Targeting();
-                            vladimir.UseSkill_Q(Target);
-                        }
-                        else if (player.Championclass.Championcode == 2)
-                        {
-                            Targeting();
-                            teemo.UseSkill_Q(Target);
-                        }
-                        else if (player.Championclass.Championcode == 3)
-                        {
-                            Targeting();
-                            missFortune.UseSkill_Q(Target);
-                        }
+                        Targeting();
+                        GameManager.Instance.selectedChampion.UseSkill_Q(Target);
                         break;
                     case 3:
-                        if (player.Championclass.Championcode == 1)
-                        {
-                            Targeting();
-                            vladimir.UseSkill_E(Target);
-                        }
-                        else if (player.Championclass.Championcode == 2)
-                        {
-                            Targeting();
-                            teemo.UseSkill_E(Target);
-                        }
-                        else if (player.Championclass.Championcode == 3)
-                        {
-                            Targeting();
-                            missFortune.UseSkill_E(Target);
-                        }
+                        Targeting();
+                        GameManager.Instance.selectedChampion.UseSkill_E(Target);
                         break;
                     case 4:
-                        if (player.Championclass.Championcode == 1)
-                        {
-                            Targeting();
-                            vladimir.UseSkill_W(Target);
-                        }
-                        else if (player.Championclass.Championcode == 2)
-                        {
-                            Targeting();
-                            teemo.UseSkill_W(Target);
-                        }
-                        else if (player.Championclass.Championcode == 3)
-                        {
-                            Targeting();
-                            missFortune.UseSkill_W(Target);
-                        }
+                        Targeting();
+                        GameManager.Instance.selectedChampion.UseSkill_W(Target);
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
