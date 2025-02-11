@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class SampleClass
     {
@@ -377,9 +375,9 @@ namespace TRPG
                 if (input < itemList.Count - 3) //아이템을 선택, 고정 크기 3만큼 빼서 indexOutOdRange 해결
                 {
                     ShopItem shopItem = GameManager.Instance.items_list_shop[input];
-                    if (shopItem.itemPrice <= GameManager.Instance.player.Gold)
+                    if (!shopItem.purchase)
                     {
-                        if (!shopItem.purchase)
+                        if (shopItem.itemPrice <= GameManager.Instance.player.Gold)
                         {
                             BuyShopConfirm(shopItem);
                             continue;
@@ -387,16 +385,18 @@ namespace TRPG
                         Console.SetCursorPosition(0, Console.WindowHeight - 2);
                         Console.Write(new string(' ', Console.WindowWidth));
                         Console.SetCursorPosition(0, Console.WindowHeight - 2);
-                        Console.Write("이미 구입한 아이템입니다.");
+                        Console.Write("돈 더 내놔!");
                         Thread.Sleep(2500);
                         continue;
                     }
                     Console.SetCursorPosition(0, Console.WindowHeight - 2);
                     Console.Write(new string(' ', Console.WindowWidth));
                     Console.SetCursorPosition(0, Console.WindowHeight - 2);
-                    Console.Write("돈 더 내놔!");
+                    Console.Write("이미 구입한 아이템입니다.");
                     Thread.Sleep(2500);
                     continue;
+
+
                 }
                 else //나가기를 선택
                 {
