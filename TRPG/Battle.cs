@@ -20,6 +20,7 @@ namespace TRPG
     {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
         public List<Enemy> enemies;
+        public Enemy Target;
         public void BattleStart()
         {
             Console.WriteLine("적이 나타났다! \n");
@@ -93,67 +94,57 @@ namespace TRPG
                 switch (input)
                 {
                     case 1:
-                        int target = int.Parse(Console.ReadLine());
-                        Enemy Target = enemies[target - 1];
+                        Targeting();
                         player.Championclass.BaseAttack(Target);
                         break;
                     case 2:
                         if (player.Championclass.Championcode == 1)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             vladimir.UseSkill_Q(Target);
                         }
                         else if (player.Championclass.Championcode == 2)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             teemo.UseSkill_Q(Target);
                         }
                         else if (player.Championclass.Championcode == 3)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             missFortune.UseSkill_Q(Target);
                         }
                         break;
                     case 3:
                         if (player.Championclass.Championcode == 1)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             vladimir.UseSkill_E(Target);
                         }
                         else if (player.Championclass.Championcode == 2)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             teemo.UseSkill_E(Target);
                         }
                         else if (player.Championclass.Championcode == 3)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             missFortune.UseSkill_E(Target);
                         }
                         break;
                     case 4:
                         if (player.Championclass.Championcode == 1)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             vladimir.UseSkill_W(Target);
                         }
                         else if (player.Championclass.Championcode == 2)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             teemo.UseSkill_W(Target);
                         }
                         else if (player.Championclass.Championcode == 3)
                         {
-                            target = int.Parse(Console.ReadLine());
-                            Target = enemies[target - 1];
+                            Targeting();
                             missFortune.UseSkill_W(Target);
                         }
                         break;
@@ -184,6 +175,21 @@ namespace TRPG
                     GameOver();
                     break;
                 }
+            }
+        }
+        public void Targeting()
+        {
+            int target;
+            if (int.TryParse(Console.ReadLine(), out target) )
+            {
+                Enemy Target = enemies[target - 1];
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("잘못된 입력입니다.");
+                Console.ResetColor();
+                return;
             }
         }
         public void GameOver()
