@@ -82,8 +82,8 @@
             {
                 Console.WriteLine("1. 기본 공격" +
                 "\n2. Q스킬" +
-                "\n3. E스킬" +
-                "\n4. W스킬");
+                "\n3. W스킬" +
+                "\n4. E스킬");
                 int input;
                 Enemy enemy;
                 if (int.TryParse(Console.ReadLine(), out input))
@@ -102,12 +102,12 @@
                             break;
                         case 3:
                             enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                            GameManager.Instance.selectedChampion.UseSkill_W(enemy);
                             Turn = false;
                             break;
                         case 4:
                             enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                            GameManager.Instance.selectedChampion.UseSkill_E(enemy);
                             Turn = false;
                             break;
                         default:
