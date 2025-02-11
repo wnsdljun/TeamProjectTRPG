@@ -28,10 +28,9 @@ namespace TRPG
             int totalDamage = baseDamage + (int)(atk * 1.0 * 1) - enemy.def;
             Console.WriteLine($"{Name}이(가) '한 발에 두 놈' 스킬을 사용합니다!");
             Console.WriteLine($"첫 번째 적에게 {totalDamage} 데미지를 입힙니다.");
-
+            damage.PlayerSkillDamage(totalDamage, enemy);
             // 예시로 첫 번째 적 처치 시 두 번째 적에게 추가 피해
-            bool firstTargetDies = true;
-            if (firstTargetDies)
+            if (enemy.hp <= 0)
             {
                 Console.WriteLine("첫 번째 적이 처치되었습니다! 두 번째 적에게 추가 데미지를 입힙니다!");
                 Console.WriteLine($"두 번째 적에게 {totalDamage * 2} 데미지를 입힙니다.");

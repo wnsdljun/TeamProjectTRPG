@@ -39,7 +39,7 @@ namespace TRPG
         public void DungeonForward()
         {
             int input = 0;
-            Console.WriteLine("적이 곳 몰려옵니다. 어떻게 하시겠습니까?" +
+            Console.WriteLine("적이 곧 몰려옵니다. 어떻게 하시겠습니까?" +
                 "\n\n1. 전진하기" +
                 "\n2. 인벤토리" +
                 "\n3. 휴식하기" +
@@ -59,6 +59,7 @@ namespace TRPG
                         int input2;
                         Console.WriteLine("골드를 지불해 체력을 회복 시킵니다. 회복하시겠습니까?\n비용: 100골드\n");
                         Console.WriteLine("================================================\n");
+                        Console.WriteLine($"보유 골드: {GameManager.Instance.player.Gold}골드");
                         Console.WriteLine("1. 회복하기\n2. 나가기");
                         if (int.TryParse(Console.ReadLine(), out input2) && input2 == 1 || input2 == 2)
                         {
@@ -77,6 +78,10 @@ namespace TRPG
                                 if (GameManager.Instance.player.Championclass.hp > GameManager.Instance.player.Championclass.MaxHp)
                                 {
                                     GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
+                                }
+                                if (GameManager.Instance.player.Championclass.mp > GameManager.Instance.player.Championclass.MaxMp)
+                                {
+                                    GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
                                 }
                             }
                             else
@@ -105,6 +110,8 @@ namespace TRPG
         {
             Console.WriteLine("협곡을 빠져나가셨습니다.");//스테이터스 창으로 이동
             battleSystem.StageWave = 1;
+            GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
+            GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
             GameManager.Instance.MainMenu();
         }
     }
