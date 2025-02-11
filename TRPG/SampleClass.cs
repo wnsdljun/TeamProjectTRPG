@@ -168,5 +168,30 @@ namespace TRPG
             }// while 의 끝
 
         }
+
+        public static void SampleBattle()
+        {
+            UI ui_DungeonLobby = new UI(new List<UIElement>
+                {
+                    new("협곡에 오신 것을 환영합니다."),
+                    new("앞으로 나아가시겠습니까?"),
+                    new(),
+                    new("1. 들어가기",selectable: true ,tip: "협곡에 입장합니다."),
+                    new("2. 나가기",selectable: true ,tip: "마을로 돌아갑니다.")
+                });
+
+            UI ui_Rest = new UI(new List<UIElement>
+                {
+                    new("골드를 지불해 체력을 회복시킵니다."),
+                    new(),
+                    new("회복하시겠습니까?"),
+                    new("[비용: {비용} 골드"),
+                    new(),
+                    new("1. 네",selectable: true ,tip: "{비용} 골드를 지불하여 체력을 모두 회복합니다."),
+                    new("2. 아니오",selectable: true ,tip: "회복하지 않습니다.")
+                });
+
+
+        }
     }
 }
