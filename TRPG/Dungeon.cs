@@ -72,6 +72,7 @@
                                     {
                                         GameManager.Instance.player.Gold -= 100;
                                         GameManager.Instance.player.Championclass.hp += 300;
+                                        GameManager.Instance.player.Championclass.mp += 100;
                                     }
                                     else
                                     {
