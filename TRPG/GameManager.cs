@@ -130,6 +130,28 @@ namespace TRPG
 
 
 
+                    Console.WriteLine("\n이 챔피언을 선택하시겠습니까?");
+                    Console.WriteLine("1. 네\n2. 아니오");
+                    Console.Write("\n>>> ");
+                    string confirmChoice = Console.ReadLine();
+
+                    if (confirmChoice == "1")
+                    {
+                        selectedChampion = tempChampion;
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 선택입니다. 다시 입력해주세요.");
+                    Console.ReadLine();
+                }
+            }
+
+            player = new Player(playerName, selectedChampion);
+            Console.WriteLine($"\n플레이어 '{player.PlayerName}'이(가) '{player.Championclass.Name}' 챔피언으로 확정되었습니다!");
+
+
             //플레이어랑 챔피언을 인스턴스를 만들어야지
             //player =new Player(playerName, selectedChampion);
         }
