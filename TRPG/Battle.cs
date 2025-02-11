@@ -54,8 +54,6 @@ namespace TRPG
                 {
                     case 1://스킬 선택 메소드
                         PlayerAttack();
-                        int target = int.Parse(Console.ReadLine());
-                        Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
                         break;
                     case 2://인벤토리 메소드
                         break;
@@ -139,7 +137,7 @@ namespace TRPG
             int target;
             if (int.TryParse(Console.ReadLine(), out target) && target <= enemies.Count && target > 0)
             {
-                Enemy Target = enemies[target - 1];
+                Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
             }
             else
             {
