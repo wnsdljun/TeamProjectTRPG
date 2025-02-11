@@ -72,6 +72,7 @@
                                     {
                                         GameManager.Instance.player.Gold -= 100;
                                         GameManager.Instance.player.Championclass.hp += 300;
+                                        GameManager.Instance.player.Championclass.mp += 100;
                                     }
                                     else
                                     {
@@ -86,10 +87,6 @@
                                     {
                                         GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
                                     }
-                                }
-                                else
-                                {
-                                    DungeonForward();
                                 }
                             }
                             else

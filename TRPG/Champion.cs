@@ -25,9 +25,9 @@ namespace TRPG
         protected const int E_MANA_COST = 80;
 
 
-        protected int SkillLevelQ { get; private set; } = 0;
-        protected int SkillLevelW { get; private set; } = 0;
-        protected int SkillLevelE { get; private set; } = 0;
+        public int SkillLevelQ { get; set; } = 0;
+        public int SkillLevelW { get; set; } = 0;
+        public int SkillLevelE { get; set; } = 0;
 
         //각 스킬의 최대레벨 제한
         protected const int MAX_SKILL_LEVEL_Q = 5;
