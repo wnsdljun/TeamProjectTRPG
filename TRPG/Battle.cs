@@ -56,14 +56,14 @@ namespace TRPG
             {
                 switch (input)//플레이어의 행동을 받아오는 부분
                 {
-                    case 0://스킬 선택 메소드
+                    case 1://스킬 선택 메소드
                         PlayerAttack();
                         int target = int.Parse(Console.ReadLine());
                         Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
                         break;
-                    case 1://인벤토리 메소드
+                    case 2://인벤토리 메소드
                         break;
-                    case 2://도망가기 메소드
+                    case 3://도망가기 메소드
                         Dungeon dungeon = new Dungeon();
                         dungeon.DungeonEnd();
                         break;
@@ -92,12 +92,12 @@ namespace TRPG
             {
                 switch (input)
                 {
-                    case 0:
+                    case 1:
                         int target = int.Parse(Console.ReadLine());
                         Enemy Target = enemies[target - 1];
                         player.Championclass.BaseAttack(Target);
                         break;
-                    case 1:
+                    case 2:
                         if (player.Championclass.Championcode == 1)
                         {
                             target = int.Parse(Console.ReadLine());
@@ -117,7 +117,7 @@ namespace TRPG
                             missFortune.UseSkill_Q(Target);
                         }
                         break;
-                    case 2:
+                    case 3:
                         if (player.Championclass.Championcode == 1)
                         {
                             target = int.Parse(Console.ReadLine());
@@ -137,7 +137,7 @@ namespace TRPG
                             missFortune.UseSkill_E(Target);
                         }
                         break;
-                    case 3:
+                    case 4:
                         if (player.Championclass.Championcode == 1)
                         {
                             target = int.Parse(Console.ReadLine());

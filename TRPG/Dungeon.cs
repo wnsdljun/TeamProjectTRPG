@@ -20,11 +20,11 @@ namespace TRPG
             {
                 switch (input)
                 {
-                    case 0:
+                    case 1:
                         Console.WriteLine("협곡으로 들어갑니다.");
                         battleSystem.BattleStart();
                         break;
-                    case 1:
+                    case 2:
                         DungeonEnd();
                         break;
                 }
@@ -47,14 +47,14 @@ namespace TRPG
             {
                 switch (input)
                 {
-                    case 0:
+                    case 1:
                         battleSystem.BattleStart();
                         break;
-                    case 1:
+                    case 2:
                         //인벤토리
 
                         break;
-                    case 2://휴식
+                    case 3://휴식
                         int input2;
                         Console.WriteLine("골드를 지불해 체력을 회복 시킵니다. 회복하시겠습니까?\n비용: 100골드\n");
                         Console.WriteLine("================================================\n");
@@ -90,7 +90,7 @@ namespace TRPG
                             Console.WriteLine("잘못된 입력입니다.");
                             return;
                         }
-                    case 3:
+                    case 4:
                         DungeonEnd();
                         break;
                 }
