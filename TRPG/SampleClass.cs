@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using System;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class SampleClass
     {
@@ -16,7 +13,7 @@ namespace TRPG
                     new(1, ConsoleColor.Red, ConsoleColor.Green),
                     new(2, ConsoleColor.Green, ConsoleColor.Red)
                 }),
-                new("색을지정할수있는선택가능한", new List<UIColorIndex> 
+                new("색을지정할수있는선택가능한", new List<UIColorIndex>
                 {
                     new(7, ConsoleColor.Red, ConsoleColor.Green),
                     new(8, ConsoleColor.Green, ConsoleColor.Red)
@@ -60,10 +57,10 @@ namespace TRPG
                 if (input == 0) break; //0번 선택시 - 네
 
             }
-            ////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////
 
-            //챔피언 선택 화면
-            myloc:
+        //챔피언 선택 화면
+        myloc:
             Champion selectedChampion;
 
             while (true)
@@ -173,29 +170,68 @@ namespace TRPG
 
         }
 
-        public static void SampleBattle()
+        public static void SampleLobby()
         {
+            BattleSystem battleSystem = new BattleSystem();
+
             UI ui_DungeonLobby = new UI(new List<UIElement>
-                {
-                    new("협곡에 오신 것을 환영합니다."),
-                    new("앞으로 나아가시겠습니까?"),
-                    new(),
-                    new("1. 들어가기",selectable: true ,tip: "협곡에 입장합니다."),
-                    new("2. 나가기",selectable: true ,tip: "마을로 돌아갑니다.")
-                });
+            {
+                new("협곡에 오신 것을 환영합니다."),
+                new("앞으로 나아가시겠습니까?"),
+                new(),
+                new("1. 들어가기",selectable: true ,tip: "협곡에 입장합니다."),
+                new("2. 나가기",selectable: true ,tip: "마을로 돌아갑니다.")
+            });
 
+            UI ui_DungeonLobbyExit = new UI(new List<UIElement>
+            {
+                new("마을로 돌아갑니다."),
+            });
+
+            ui_DungeonLobby.WriteAll();
+            int input = ui_DungeonLobby.UserUIControl();
+
+            if (input == 1)
+            {
+                ui_DungeonLobbyExit.WriteAll("마을로 돌아가는중...", 2);
+                return;
+            }
+            else battleSystem.BattleStart();
+
+
+
+            //휴식하기
             UI ui_Rest = new UI(new List<UIElement>
+            {
+                new("골드를 지불해 체력을 회복시킵니다."),
+                new(),
+                new("회복하시겠습니까?"),
+                new("[비용: {비용} 골드"),
+                new(),
+                new("1. 네",selectable: true ,tip: "{비용} 골드를 지불하여 체력을 모두 회복합니다."),
+                new("2. 아니오",selectable: true ,tip: "회복하지 않습니다.")
+            });
+
+            ui_Rest.WriteAll();
+            input = ui_Rest.UserUIControl();
+
+            if (input == 1) return;
+            else
+            {
+                if (battleSystem.player.Gold <= 100) //돈이 부족함
                 {
-                    new("골드를 지불해 체력을 회복시킵니다."),
-                    new(),
-                    new("회복하시겠습니까?"),
-                    new("[비용: {비용} 골드"),
-                    new(),
-                    new("1. 네",selectable: true ,tip: "{비용} 골드를 지불하여 체력을 모두 회복합니다."),
-                    new("2. 아니오",selectable: true ,tip: "회복하지 않습니다.")
-                });
-
-
+                    ui_Rest.elements[5] = new UIElement("1. 네", Console.BackgroundColor, ConsoleColor.Red, selectable: false, tip: "골드가 부족합니다.");
+                }
+                else
+                {
+                    Console.WriteLine("골드가 부족합니다.");
+                    return;
+                }
+                if (battleSystem.player.Championclass.hp > battleSystem.player.Championclass.MaxHp)
+                {
+                    battleSystem.player.Championclass.hp = battleSystem.player.Championclass.MaxHp;
+                }
+            }
         }
     }
 }

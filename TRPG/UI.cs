@@ -8,6 +8,7 @@ namespace TRPG
         List<UIElement> selectableE = new();
         int selectedLine = -1;
         int lastSelectedLine = -1;
+        int waitTime = 0;
         
         public UI(List<UIElement> elements)
         {
@@ -26,6 +27,30 @@ namespace TRPG
             foreach (UIElement element in elements)
             {
                 element.Write();
+            }
+        }
+        public void WriteAll(string waitMessage,int waitingTime)
+        {
+            int temp = waitingTime;
+            Console.Clear();
+            foreach (UIElement element in elements)
+            {
+                element.Write();
+            }
+                Console.SetCursorPosition(0, Console.WindowHeight - 3); //밑에서 3번째줄
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.WriteLine(waitMessage);
+
+            while (waitingTime <= temp)
+            {
+                Console.SetCursorPosition(0, Console.WindowHeight - 2); //밑에서 2번째줄
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                Console.Write($"{waitingTime / 1000} 초 뒤 계속됩니다...");
+                Thread.Sleep(waitingTime%1000);
+                waitingTime -= waitingTime%1000;
+                waitingTime -= 1000;
             }
         }
         public int UserUIControl()
