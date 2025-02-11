@@ -36,7 +36,6 @@ namespace TRPG
                 Console.Write($"두 번째로 ");
                 battleSystem.Targeting();
                 damage.PlayerSkillDamage(totalDamage * 3, battleSystem.Target);
-                //Console.WriteLine($"두 번째 적에게 {totalDamage * 2} 데미지를 입힙니다.");
             }
         }
 
