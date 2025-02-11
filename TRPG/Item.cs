@@ -16,21 +16,7 @@ namespace TRPG
         int atk { get; set; }
         int def { get; set; }
 
-        /// <summary>
-        /// 아이템을 장착 메소드 
-        /// </summary>
-        public void EquipItem()
-        {
 
-        }
-
-        /// <summary>
-        /// 아이템을 해제하는 메소드
-        /// </summary>
-        public void ReleaseItem()
-        {
-
-        }
 
 
     }

@@ -8,12 +8,16 @@ namespace TRPG
 {
     internal class GameManager
     {
-        public string playerName = "";
+        public Player player ;
         public Champion selectedChampion;
         private static GameManager instance = null;
         // 2. thread-safe를 위한 lock 객체
         private static readonly object lockObject = new object();
-        // 3. private 생성자
+        public List<InvenItem> inventoryItems { get; set; } = new List<InvenItem>();
+
+        public string playerName = "";
+
+        
         private GameManager()
         {
             // 초기화 코드
@@ -163,7 +167,8 @@ namespace TRPG
             Player player = new Player(playerName, selectedChampion);
             Console.WriteLine($"\n플레이어 '{player.PlayerName}'이(가) '{player.Championclass.Name}' 챔피언으로 확정되었습니다!");
 
-
+            //플레이어랑 챔피언을 인스턴스를 만들어야지
+            player =new Player(playerName, selectedChampion);
         }
 
     }
