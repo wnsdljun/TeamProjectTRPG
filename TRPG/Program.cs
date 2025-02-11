@@ -104,7 +104,7 @@ namespace TRPG
                 Console.WriteLine("1. 스테이터스 확인");
                 Console.WriteLine("2. 인벤토리 확인");
                 Console.WriteLine("3. 상점");
-                Console.WriteLine("4. 협곡 (미구현)");
+                Console.WriteLine("4. 협곡");
                 Console.WriteLine("0. 종료");
                 Console.Write("\n>>> ");
                 string menuChoice = Console.ReadLine();
@@ -121,7 +121,11 @@ namespace TRPG
                         shop.ShowShop(player, inven);
                         break;
                     case "4":
+                        // 협곡 기능을 호출합니다.
                         dungeon.DungeonStart();
+                        dungeon.DungeonForward();
+                        Console.WriteLine("\n엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
                         break;
                     case "0":
                         exitMenu = true;
