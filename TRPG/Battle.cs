@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class Battle
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-        public Player? player;
-        public Vladimir vladimir = new Vladimir();
-        public Teemo teemo = new Teemo();
-        public MissFortune missFortune = new MissFortune();
-        public Champion? champion { get; set; }
     }
     internal class BattleSystem : Battle
     {
@@ -23,7 +12,7 @@ namespace TRPG
         public Enemy Target;
         public void BattleStart()
         {
-            Console.WriteLine("적이 나타났다! \n");
+            Console.WriteLine("적이 나타났습니다. \n");
             StageSet();
             while (enemies.Exists(e => e.hp > 0))
             {
@@ -37,129 +26,103 @@ namespace TRPG
         }
         public void PlayerTurn()
         {
-            for (int i = 0; i < enemies.Count; i++)
+            bool Turn = true;
+            while (Turn)
             {
-                if (enemies[i].hp > 0)
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {enemies[i].name} | HP: {enemies[i].hp}");
+                    if (enemies[i].hp > 0)
+                    {
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} | HP: {enemies[i].hp}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                    }
+                }
+                Console.WriteLine("\n플레이어 상태\n" +
+                    $"HP: {GameManager.Instance.selectedChampion.hp} " +
+                    $"MP: {GameManager.Instance.selectedChampion.mp}" +
+                    "\n1. 전투하기" +
+                    "\n2. 도망가기");
+                int input;
+                if (int.TryParse(Console.ReadLine(), out input))
+                {
+                    switch (input)//플레이어의 행동을 받아오는 부분
+                    {
+                        case 1://스킬 선택 메소드
+                            PlayerAttack();
+                            Turn = false;
+                            break;
+                        case 2://도망가기 메소드
+                            Dungeon dungeon = new Dungeon();
+                            dungeon.DungeonEnd();
+                            Turn = false;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.ResetColor();
+                            break;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
                 }
-            }
-            Console.WriteLine("\n플레이어 상태\n" +
-                "\n1. 전투하기" +
-                "\n2. 인벤토리" +
-                "\n3. 도망가기");
-            int input;
-            if (int.TryParse(Console.ReadLine(), out input))
-            {
-                switch (input)//플레이어의 행동을 받아오는 부분
-                {
-                    case 1://스킬 선택 메소드
-                        PlayerAttack();
-                        int target = int.Parse(Console.ReadLine());
-                        Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
-                        break;
-                    case 2://인벤토리 메소드
-                        break;
-                    case 3://도망가기 메소드
-                        Dungeon dungeon = new Dungeon();
-                        dungeon.DungeonEnd();
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Console.ResetColor();
-                        break;//잘못된 입력 넣으면 턴이 넘어감
-                }
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("잘못된 입력입니다.");
-                Console.ResetColor();
             }
         }
+
         public void PlayerAttack()
         {
-            Console.WriteLine("1. 기본 공격" +
+            bool Turn = true;
+            while (Turn)
+            {
+                Console.WriteLine("1. 기본 공격" +
                 "\n2. Q스킬" +
                 "\n3. E스킬" +
                 "\n4. W스킬");
-            int input;
-            if (int.TryParse(Console.ReadLine(), out input))
-            {
-                switch (input)
+                int input;
+                Enemy enemy;
+                if (int.TryParse(Console.ReadLine(), out input))
                 {
-                    case 1:
-                        Targeting();
-                        player.Championclass.BaseAttack(Target);
-                        break;
-                    case 2:
-                        if (player.Championclass.Championcode == 1)
-                        {
-                            Targeting();
-                            vladimir.UseSkill_Q(Target);
-                        }
-                        else if (player.Championclass.Championcode == 2)
-                        {
-                            Targeting();
-                            teemo.UseSkill_Q(Target);
-                        }
-                        else if (player.Championclass.Championcode == 3)
-                        {
-                            Targeting();
-                            missFortune.UseSkill_Q(Target);
-                        }
-                        break;
-                    case 3:
-                        if (player.Championclass.Championcode == 1)
-                        {
-                            Targeting();
-                            vladimir.UseSkill_E(Target);
-                        }
-                        else if (player.Championclass.Championcode == 2)
-                        {
-                            Targeting();
-                            teemo.UseSkill_E(Target);
-                        }
-                        else if (player.Championclass.Championcode == 3)
-                        {
-                            Targeting();
-                            missFortune.UseSkill_E(Target);
-                        }
-                        break;
-                    case 4:
-                        if (player.Championclass.Championcode == 1)
-                        {
-                            Targeting();
-                            vladimir.UseSkill_W(Target);
-                        }
-                        else if (player.Championclass.Championcode == 2)
-                        {
-                            Targeting();
-                            teemo.UseSkill_W(Target);
-                        }
-                        else if (player.Championclass.Championcode == 3)
-                        {
-                            Targeting();
-                            missFortune.UseSkill_W(Target);
-                        }
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Console.ResetColor();
-                        break;
+                    switch (input)
+                    {
+                        case 1:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.BaseAttack(enemy);
+                            Turn = false;
+                            break;
+                        case 2:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
+                            Turn = false;
+                            break;
+                        case 3:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                            Turn = false;
+                            break;
+                        case 4:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                            Turn = false;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.ResetColor();
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("잘못된 입력입니다.");
-                Console.ResetColor();
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                }
             }
         }
         public void EnemyTurn()
@@ -170,35 +133,40 @@ namespace TRPG
                 {
                     enemyskill.EnemyAttack(enemy); //EnemyAttack() 공격 멘트가 나오고 이어지는 Damage() 에서 피해량 멘트가 나옴.
                 }
-                if (player.Championclass.hp <= 0)
+                if (GameManager.Instance.player.Championclass.hp <= 0)
                 {
                     GameOver();
                     break;
                 }
             }
         }
-        public void Targeting()
+        public Enemy Targeting()
         {
+            Console.WriteLine("공격할 적을 선택하세요.");
             int target;
-            if (int.TryParse(Console.ReadLine(), out target) )
+            if (int.TryParse(Console.ReadLine(), out target))
             {
-                Enemy Target = enemies[target - 1];
+
+                Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                return Target;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("잘못된 입력입니다.");
                 Console.ResetColor();
-                return;
+                return null;
             }
         }
         public void GameOver()
         {
             StageWave = 1;
-            player.Gold /= 2;
+            GameManager.Instance.player.Gold /= 2;
             Console.WriteLine("패배….");
-            Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {player.Gold}입니다.");
-            return;
+            Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
+            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+            Console.ReadLine();
+            GameManager.Instance.MainMenu();
         }
         public void StageClear()
         {
@@ -211,7 +179,7 @@ namespace TRPG
                 goldAdd += enemy.gold;
                 expAdd += enemy.exp;
             }
-            player.Gold += goldAdd;
+            GameManager.Instance.player.Gold += goldAdd;
             if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
             else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
             else if (comment == 2) { Console.WriteLine("도저히 막을 수 없습니다."); }
@@ -219,16 +187,16 @@ namespace TRPG
             else if (comment == 4) { Console.WriteLine("미쳐 날뛰고 있습니다."); }
             else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
-            Console.WriteLine($"골드 {goldAdd} 획득, 경험치 {expAdd} 획득\n");
-            player.GainExp(expAdd);
+            Console.WriteLine($"골드 {goldAdd} 획득! 경험치 {expAdd} 획득!\n");
+            GameManager.Instance.player.GainExp(expAdd);
             if (StageWave == 6)
             {
                 DungeonClear();
             }
             else
             {
-                Dungeon dungeon = new Dungeon();
-                dungeon.DungeonForward();
+
+                GameManager.Instance.dungeon.DungeonForward();
             }
 
         }
@@ -236,7 +204,9 @@ namespace TRPG
         {
             StageWave = 1;
             Console.WriteLine("승리!");
-            return;
+            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+            Console.ReadLine();
+            GameManager.Instance.MainMenu();
         }
         public void StageSet()
         {
@@ -274,7 +244,7 @@ namespace TRPG
         {
             wave1 = new List<Enemy>
             {
-                enemyfactory.MeleeMinion(),
+                enemyfactory.MeleeMinion()
             };
 
             wave2 = new List<Enemy>

@@ -3,7 +3,7 @@ namespace TRPG
 {
     internal class Vladimir : Champion
     {
-        Enemy? enemy;
+
         public Vladimir() : base("블라디미르", 607, 320, 55, 27, 110, 30, 3, 5, 1)
         {
         }

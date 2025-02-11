@@ -11,7 +11,8 @@ namespace TRPG
         public int mp { get; set; }
         public int atk { get; set; }
         public int def { get; set; }
-        public int MaxHp { get; private set; }
+        public int MaxHp { get; set; }
+        public int MaxMp { get; set; }
         public int GrowthHp { get; private set; }
         public int GrowthMp { get; private set; }
         public int GrowthAtk { get; private set; }
@@ -47,6 +48,7 @@ namespace TRPG
             GrowthDef = growthDef;
             Championcode = code;
             MaxHp = hp;
+            MaxMp = mp;
         }
 
         //레벨업 시 능력치 증가
