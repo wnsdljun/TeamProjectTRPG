@@ -87,10 +87,6 @@
                                         GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
                                     }
                                 }
-                                else
-                                {
-                                    DungeonForward();
-                                }
                             }
                             else
                             {
