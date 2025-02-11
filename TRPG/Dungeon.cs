@@ -11,19 +11,28 @@ namespace TRPG
         public BattleSystem battleSystem = new BattleSystem();
         public void DungeonStart()
         {
-            int input = 1;
+            int input;
             Console.WriteLine("협곡에 오신 것을 환영합니다." +
                 "\n앞으로 나아가시겠습니까?" +
                 "\n\n1. 들어가기" +
                 "\n2. 나가기");
-            switch(input)
+            if (int.TryParse(Console.ReadLine(), out input))
             {
-                case 0:
-                    Console.WriteLine("협곡으로 들어갑니다.");
-                    break;
-                case 1:
-                    Console.WriteLine("협곡을 빠져나갑니다.");
-                    break;
+                switch (input)
+                {
+                    case 0:
+                        Console.WriteLine("협곡으로 들어갑니다.");
+                        battleSystem.BattleStart();
+                        break;
+                    case 1:
+                        DungeonEnd();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+                return;
             }
         }
         public void DungeonForward()
@@ -34,25 +43,69 @@ namespace TRPG
                 "\n2. 인벤토리" +
                 "\n3. 휴식하기" +
                 "\n4. 나가기");
-            switch (input)
+            if (int.TryParse(Console.ReadLine(), out input))
             {
-                case 0:
-                    battleSystem.BattleStart();
-                    break;
-                case 1:
-                    //인벤토리
-                    break;
-                case 2:
-                    //휴식
-                    break;
-                case 3:
-                    DungeonEnd();
-                    break;
+                switch (input)
+                {
+                    case 0:
+                        battleSystem.BattleStart();
+                        break;
+                    case 1:
+                        //인벤토리
+
+                        break;
+                    case 2://휴식
+                        int input2;
+                        Console.WriteLine("골드를 지불해 체력을 회복 시킵니다. 회복하시겠습니까?\n비용: 100골드\n");
+                        Console.WriteLine("================================================\n");
+                        Console.WriteLine("1. 회복하기\n2. 나가기");
+                        if (int.TryParse(Console.ReadLine(), out input2))
+                        {
+                            if (input2 == 1)
+                            {
+                                if (battleSystem.player.Gold >= 100)
+                                {
+                                    battleSystem.player.Gold -= 100;
+                                    battleSystem.player.Championclass.hp += 300;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("골드가 부족합니다.");
+                                    return;
+                                }
+                                if (battleSystem.player.Championclass.hp > battleSystem.player.Championclass.MaxHp)
+                                {
+                                    battleSystem.player.Championclass.hp = battleSystem.player.Championclass.MaxHp;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("잘못된 입력입니다.");
+                                return;
+                            }
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            return;
+                        }
+                    case 3:
+                        DungeonEnd();
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+                return;
             }
         }
         public void DungeonEnd()
         {
             Console.WriteLine("협곡을 빠져나가셨습니다.");//스테이터스 창으로 이동
+            battleSystem.StageWave = 1;
+            return;
         }
     }
 }
