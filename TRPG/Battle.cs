@@ -37,7 +37,9 @@
                     }
                     else
                     {
-                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.");//사망한 적은 회색으로 표시
+                        Console.ResetColor();
                     }
                 }
                 Console.WriteLine("\n플레이어 상태\n" +
