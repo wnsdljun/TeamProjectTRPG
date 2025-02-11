@@ -78,13 +78,14 @@
                 "\n3. E스킬" +
                 "\n4. W스킬");
             int input;
+            Enemy enemy;
             if (int.TryParse(Console.ReadLine(), out input))
             {
                 switch (input)
                 {
                     case 1:
-                        Targeting();
-                        GameManager.Instance.selectedChampion.BaseAttack(Target);
+                        enemy = Targeting();
+                        GameManager.Instance.selectedChampion.BaseAttack(enemy);
                         break;
                     case 2:
                         Targeting();
@@ -127,31 +128,21 @@
                 }
             }
         }
-        public void Targeting()
+        public Enemy Targeting()
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;
-            if (int.TryParse(Console.ReadLine(), out target))
+            if (int.TryParse(Console.ReadLine(), out target) && target <= enemies.Count && target > 0)
             {
-                
-                if (enemies[target - 1] != null)
-                {
-                    Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Console.ResetColor();
-                    return;
-                }
+                Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                return Target;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("잘못된 입력입니다.");
                 Console.ResetColor();
-                return;
+                return null;
             }
         }
         public void GameOver()
