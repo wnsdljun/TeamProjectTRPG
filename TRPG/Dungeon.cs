@@ -40,19 +40,19 @@ namespace TRPG
                     battleSystem.BattleStart();
                     break;
                 case 1:
-                  
+                    //인벤토리
                     break;
                 case 2:
-                   
+                    //휴식
                     break;
                 case 3:
-
+                    DungeonEnd();
                     break;
             }
         }
         public void DungeonEnd()
         {
-            Console.WriteLine("협곡을 빠져나가셨습니다.");
+            Console.WriteLine("협곡을 빠져나가셨습니다.");//스테이터스 창으로 이동
         }
     }
 }

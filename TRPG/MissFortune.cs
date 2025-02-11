@@ -9,7 +9,7 @@ namespace TRPG
         {
         }
 
-        public override void UseSkill_Q()
+        public override void UseSkill_Q(Enemy enemy)
         {
             if (SkillLevelQ == 0)
             {
@@ -38,7 +38,7 @@ namespace TRPG
             }
         }
 
-        public override void UseSkill_W()
+        public override void UseSkill_W(Enemy enemy)
         {
             if (SkillLevelW == 0)
             {
@@ -62,7 +62,7 @@ namespace TRPG
             Console.WriteLine("공격력이 원래 상태로 돌아갑니다.");
         }
 
-        public override void UseSkill_E()
+        public override void UseSkill_E(Enemy enemy)
         {
             if (SkillLevelE == 0)
             {
