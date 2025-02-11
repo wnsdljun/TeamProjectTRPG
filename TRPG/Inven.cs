@@ -102,7 +102,7 @@ namespace TRPG
 
 
                 }
-                else if (int.TryParse(answer, out number))
+                else if (int.Parse(answer) ==0)
                 {
                     bool_1 = true;
                 }
