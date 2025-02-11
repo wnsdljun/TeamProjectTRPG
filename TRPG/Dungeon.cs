@@ -20,7 +20,7 @@
                     {
                         case 1:
                             Console.WriteLine("협곡으로 들어갑니다.");
-                            battleSystem.BattleStart();
+                            battleSystem.BattleStart(true);
                             Turn = false;
                             break;
                         case 2:
@@ -51,7 +51,7 @@
                     switch (input)
                     {
                         case 1:
-                            battleSystem.BattleStart();
+                            battleSystem.BattleStart(false);
                             Turn = false;
                             break;
                         case 2:

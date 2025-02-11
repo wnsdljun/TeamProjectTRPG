@@ -2,18 +2,25 @@
 {
     internal class Battle
     {
-        public BattleEnemies battleEnemies = new BattleEnemies();
+        //public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
     }
     internal class BattleSystem : Battle
     {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
+        public bool bool_stage = false;
         public List<Enemy> enemies;
         public Enemy Target;
-        public void BattleStart()
+        public BattleEnemies battleEnemies;
+        public void BattleStart(bool bool_stage)
         {
             Console.WriteLine("적이 나타났습니다. \n");
-            StageSet();
+            if (bool_stage)
+            {
+                StageWave= 1;
+                battleEnemies = new BattleEnemies();
+            }
+            StageSet(battleEnemies, StageWave);
             while (enemies.Exists(e => e.hp > 0))
             {
                 PlayerTurn();
@@ -21,7 +28,7 @@
             }
             if (enemies.Exists(e => e.hp > 0) == false)
             {
-                StageClear();
+                StageClear(ref bool_stage);
             }
         }
         public void PlayerTurn()
@@ -168,7 +175,7 @@
             Console.ReadLine();
             GameManager.Instance.MainMenu();
         }
-        public void StageClear()
+        public void StageClear(ref bool bool_stage)
         {
             Random random = new Random();
             int goldAdd = 0;
@@ -187,6 +194,7 @@
             else if (comment == 4) { Console.WriteLine("미쳐 날뛰고 있습니다."); }
             else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
+            bool_stage = true;
             Console.WriteLine($"골드 {goldAdd} 획득! 경험치 {expAdd} 획득!\n");
             GameManager.Instance.player.GainExp(expAdd);
             if (StageWave == 6)
@@ -208,12 +216,12 @@
             Console.ReadLine();
             GameManager.Instance.MainMenu();
         }
-        public void StageSet()
+        public void StageSet(BattleEnemies battleEnemies, int stageWave)
         {
-            switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
+            switch (stageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
-                    enemies =  battleEnemies.wave1;
+                    enemies = battleEnemies.wave1;
                     break;
                 case 2:
                     enemies = battleEnemies.wave2;
@@ -243,7 +251,7 @@
         {
             wave1 = new List<Enemy>
             {
-                
+
                 enemyfactory.MeleeMinion()
             };
 
