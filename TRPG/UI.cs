@@ -9,10 +9,10 @@ namespace TRPG
         int selectedLine = -1;
         int lastSelectedLine = -1;
         int waitTime = 0;
+        int i = 0;
         
         public UI(List<UIElement> elements)
         {
-            int i = 0;
             foreach (UIElement element in elements)
             {
                 element.lineIndex = i++;
@@ -20,7 +20,21 @@ namespace TRPG
             }
             this.elements = elements;
         }
-
+        public void AddElement(UIElement element)
+        {
+            element.lineIndex = i++;
+            if (element.isSelectable) selectableE.Add(element);
+            elements.Add(element);
+        }
+        public void AddElement(List<UIElement> elements)
+        {
+            foreach (UIElement element in elements)
+            {
+                element.lineIndex = i++;
+                if (element.isSelectable) selectableE.Add(element);
+                this.elements.Add(element);
+            }
+        }
         public void WriteAll()
         {
             Console.Clear();
