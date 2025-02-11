@@ -2,7 +2,7 @@
 {
     //internal class Battle
     //{
-    //    public BattleEnemies battleEnemies = new BattleEnemies(); <- 이렇게 사용하면 BattleEnemies 클래스가 초기화 되지 않음
+    //    public BattleEnemies battleEnemies = new BattleEnemies(); 
     //    public Enemyskill enemyskill = new Enemyskill();
     //}
     internal class BattleSystem //: Battle
@@ -92,15 +92,17 @@
                     switch (input)
                     {
                         case 1:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.BaseAttack(enemy);
+                            TargetingReset();
+                            //enemy = Targeting();
+                            GameManager.Instance.selectedChampion.BaseAttack(Target);
                             Turn = false;
                             break;
                         case 2:
                             if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
-                                enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
+                                TargetingReset();
+                                //enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_Q(Target, enemies);
                                 Turn = false;
                             }
                             else
@@ -172,7 +174,7 @@
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;
-            if (int.TryParse(Console.ReadLine(), out target))
+            if (int.TryParse(Console.ReadLine(), out target) && enemies.Count >= target && target > 0)
             {
                 if (enemies[target - 1].hp >= 0)
                 {
@@ -200,6 +202,22 @@
                 Console.WriteLine("잘못된 입력입니다.");
                 Console.ResetColor();
                 return null;
+            }
+
+        }
+        public void TargetingReset()
+        {
+            while (true)
+            {
+                Target = Targeting();
+                if (Target != null)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
             }
         }
         public void GameOver()
@@ -257,7 +275,7 @@
             switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
-                    enemies =  battleEnemies.wave1;
+                    enemies = battleEnemies.wave1;
                     break;
                 case 2:
                     enemies = battleEnemies.wave2;
@@ -287,7 +305,7 @@
         {
             wave1 = new List<Enemy>
             {
-                
+
                 enemyfactory.MeleeMinion()
             };
 
