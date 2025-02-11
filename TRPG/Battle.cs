@@ -38,7 +38,7 @@
                 }
             }
             Console.WriteLine("\n플레이어 상태\n" +
-                $"HP: {GameManager.Instance.selectedChampion.hp}" +
+                $"HP: {GameManager.Instance.selectedChampion.hp} " +
                 $"MP: {GameManager.Instance.selectedChampion.mp}" +
                 "\n1. 전투하기" +
                 "\n2. 인벤토리" +
@@ -183,8 +183,8 @@
             }
             else
             {
-                Dungeon dungeon = new Dungeon();
-                dungeon.DungeonForward();
+
+                GameManager.Instance.dungeon.DungeonForward();
             }
 
         }
