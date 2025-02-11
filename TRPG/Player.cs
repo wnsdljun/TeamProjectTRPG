@@ -9,11 +9,12 @@ namespace TRPG
     internal class Player
     {
         public string PlayerName { get; private set; }
-        public int Level { get;  set; } = 1;
-        public int Exp { get;  set; } = 0;
-        public int Gold { get;  set; } = 1500;
+        public int Level { get; set; } = 1;
+        public int Exp { get; set; } = 0;
+        public int Gold { get; set; } = 1500;
         public Champion Championclass { get; private set; }
 
+        //public Player() { }
         public Player(string playerName, Champion champion)
         {
             PlayerName = playerName;
@@ -24,7 +25,7 @@ namespace TRPG
         public void GainExp(int amount)
         {
             Exp += amount;
-            Console.WriteLine($"{Championclass.Name}이(가) {amount} 경험치를 획득했습니다! 현재 경험치: {Exp}");
+            Console.WriteLine($"현재 경험치: {Exp}");
 
             while (Exp >= GetRequiredExp())
             {

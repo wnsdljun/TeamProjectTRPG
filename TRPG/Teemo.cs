@@ -4,12 +4,13 @@ namespace TRPG
 {
     internal class Teemo : Champion
     {
-        public Teemo() : base("티모", 615, 334, 54, 24, 104, 25, 3, 5)
+        Enemy enemy;
+        public Teemo() : base("티모", 615, 334, 54, 24, 104, 25, 3, 5, 2)
         {
         }
 
         // Q 스킬: 맹독 다트 
-        public override void UseSkill_Q()
+        public override void UseSkill_Q(Enemy enemy)
         {
             if (SkillLevelQ == 0)
             {
@@ -28,13 +29,14 @@ namespace TRPG
             double qScalingCoefficient = 0.5; // 공격력의 50% 추가
             int baseDamage = qBaseDamageValues[Math.Min(SkillLevelQ - 1, qBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * qScalingCoefficient);
-            int totalDamage = baseDamage + scalingDamage;
+            int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             int damagePerTurn = totalDamage / 3;
             int remainder = totalDamage % 3;
 
-            Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");            
-            Console.WriteLine("독 효과: 매 초마다 추가 피해가 발생합니다.");
+            Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");
+            damage.PlayerSkillDamage(totalDamage, enemy);
+            Console.WriteLine("독 효과: 매 턴마다 추가 피해가 발생합니다.");
 
             for (int turn = 1; turn <= 3; turn++)
             {
@@ -43,12 +45,12 @@ namespace TRPG
                 {
                     damageThisTurn += remainder;  // 마지막 턴에 남은 피해 추가
                 }
-                Console.WriteLine($"  {turn}턴째: {damageThisTurn}의 독 피해");
+                Console.WriteLine($"{turn}턴째: {damageThisTurn}의 독 피해");
             }
         }
 
         // W 스킬: 실명다트 지만 그냥 강한 공격
-        public override void UseSkill_W()
+        public override void UseSkill_W(Enemy enemy)
         {
             if (SkillLevelW == 0)
             {
@@ -66,14 +68,14 @@ namespace TRPG
             double wScalingCoefficient = 0.4; // 공격력의 40% 추가
             int baseDamage = wBaseDamageValues[Math.Min(SkillLevelW - 1, wBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * wScalingCoefficient);
-            int totalDamage = baseDamage + scalingDamage;
+            int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '실명다트' 스킬을 사용합니다!");
-            Console.WriteLine($"적에게 {totalDamage}의 피해를 입힙니다.");
+            damage.PlayerSkillDamage(totalDamage, enemy);
         }
 
         // E 스킬: 유독성 함정 → 사용 시 즉시 광역 피해 적용
-        public override void UseSkill_E()
+        public override void UseSkill_E(Enemy enemy)
         {
             if (SkillLevelE == 0)
             {
@@ -91,10 +93,10 @@ namespace TRPG
             double eScalingCoefficient = 0.3; // 공격력의 30% 추가
             int baseDamage = eBaseDamageValues[Math.Min(SkillLevelE - 1, eBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * eScalingCoefficient);
-            int totalDamage = baseDamage + scalingDamage;
+            int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '유독성 함정' 스킬을 사용합니다!");
-            Console.WriteLine($"적들에게 {totalDamage}의 광역 피해를 입힙니다.");
+            damage.PlayerAllSkillDamage(totalDamage);
         }
         public override void DisplaySkillInfo()
         {
@@ -107,5 +109,12 @@ namespace TRPG
             Console.WriteLine("   기본 데미지: 80/110/140/170/200, 공격력 계수: 0.3");
             Console.WriteLine("===========================");
         }
+
+        public override string skillInfoQ => "Q - 맹독 다트: 단일 대상에게 피해를 입히고, 일정 시간 동안 독 효과를 부여한다.";
+        public override string skillInfoQDetail => "   기본 데미지: 30/50/70/90/110, 공격력 계수: 0.5";
+        public override string skillInfoW => "W - 실명다트: 단일 대상에게 피해를 입힌다.";
+        public override string skillInfoWDetail => "   기본 데미지: 40/60/80/100/120, 공격력 계수: 0.4";
+        public override string skillInfoE => "E - 유독성 함정: 적 전체에게 광역 피해를 입힌다.";
+        public override string skillInfoEDetail => "   기본 데미지: 80/110/140/170/200, 공격력 계수: 0.3";
     }
 }

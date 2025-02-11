@@ -4,11 +4,12 @@ namespace TRPG
 {
     internal class MissFortune : Champion
     {
-        public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4)
+        Enemy? enemy;
+        public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4, 3)
         {
         }
 
-        public override void UseSkill_Q()
+        public override void UseSkill_Q(Enemy enemy)
         {
             if (SkillLevelQ == 0)
             {
@@ -24,7 +25,7 @@ namespace TRPG
             int[] baseDamageValues = { 20, 45, 70, 95, 120 };
             int baseDamage = baseDamageValues[Math.Min(SkillLevelQ - 1, baseDamageValues.Length - 1)];
             // 여기서는 플레이어 레벨 대신 기본 배수를 1로 사용합니다.
-            int totalDamage = baseDamage + (int)(atk * 1.0 * 1);
+            int totalDamage = baseDamage + (int)(atk * 1.0 * 1) - enemy.def;
             Console.WriteLine($"{Name}이(가) '한 발에 두 놈' 스킬을 사용합니다!");
             Console.WriteLine($"첫 번째 적에게 {totalDamage} 데미지를 입힙니다.");
 
@@ -37,7 +38,7 @@ namespace TRPG
             }
         }
 
-        public override void UseSkill_W()
+        public override void UseSkill_W(Enemy enemy)
         {
             if (SkillLevelW == 0)
             {
@@ -56,12 +57,12 @@ namespace TRPG
             atk += (int)attackBoost;
             Console.WriteLine($"{Name}이(가) '사랑의 한 방' 스킬을 사용합니다!");
             Console.WriteLine($"공격력이 {attackBoost} 만큼 증가하고 즉시 기본 공격을 수행합니다.");
-            BaseAttack();
+            BaseAttack(enemy);
             atk = originalAtk;
             Console.WriteLine("공격력이 원래 상태로 돌아갑니다.");
         }
 
-        public override void UseSkill_E()
+        public override void UseSkill_E(Enemy enemy)
         {
             if (SkillLevelE == 0)
             {
@@ -76,9 +77,9 @@ namespace TRPG
             mp -= E_MANA_COST;
             int[] baseDamageValues = { 70, 80, 90, 100, 110, 120 };
             int baseDamage = baseDamageValues[Math.Min(SkillLevelE - 1, baseDamageValues.Length - 1)];
-            int totalDamage = baseDamage * 1;
+            int totalDamage = baseDamage * 1 - enemy.def;
             Console.WriteLine($"{Name}이(가) '총알은 비를 타고' 스킬을 사용합니다!");
-            Console.WriteLine($"적 전체에게 {totalDamage}의 광역 데미지를 입힙니다.");
+            damage.PlayerAllSkillDamage(totalDamage);
         }
         public override void DisplaySkillInfo()
         {
@@ -99,6 +100,13 @@ namespace TRPG
 
             //return
         }
+
+        public override string skillInfoQ => "Q - 한 발에 두 놈: 두 대상에게 순차적으로 피해를 입힌다.";
+        public override string skillInfoQDetail => "   기본 데미지: 40/60/80/100/120, 공격력 계수: 0.5";
+        public override string skillInfoW => "W - 사랑의 한 방: 단일 대상에게 피해를 입힌다.";
+        public override string skillInfoWDetail => "   기본 데미지: 30/45/60/75/90, 공격력 계수: 0.4";
+        public override string skillInfoE => "E - 총알은 비를 타고: 적 전체에게 광역 피해를 입힌다.";
+        public override string skillInfoEDetail => "   기본 데미지: 70/95/120/145/170, 공격력 계수: 0.3";
     }
 }
 
