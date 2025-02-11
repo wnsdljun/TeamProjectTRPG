@@ -201,7 +201,7 @@
 
 
 
-                
+
             //휴식하기
             UIElement temp = new UIElement("1. 네", selectable: true, tip: "{비용} 골드를 지불하여 체력을 모두 회복합니다.");
             while (true)
@@ -235,5 +235,101 @@
                 }
             }//while 끝
         }
+
+        public static void ShowInven()
+        {
+            while (true)
+            {
+                UI ui_ShowInven = new UI(new List<UIElement>
+                {
+                    new("인벤토리",Console.BackgroundColor,ConsoleColor.Yellow),
+                    new("보유 중인 아이템을 관리할 수 있습니다."),
+                    new()
+                });
+
+                ui_ShowInven.AddElement(GetInvenListUI(GameManager.Instance.inventoryItems, false));
+                ui_ShowInven.AddElement(new UIElement());
+                ui_ShowInven.AddElement(new UIElement("장착관리", selectable: true, tip: "아이템을 장착하거나 장착 해제합니다."));
+                ui_ShowInven.AddElement(new UIElement("나가기", selectable: true, tip: "돌아갑니다."));
+
+                ui_ShowInven.WriteAll();
+                int input = ui_ShowInven.UserUIControl();
+
+                if (input == 0) InvenManage(); //장착관리
+                else return;
+            }
+
+
+        }
+        public static void InvenManage()
+        {
+            while (true)
+            {
+                UI ui_ShowInven = new UI(new List<UIElement>
+                {
+                    new("인벤토리 - 장착 관리",Console.BackgroundColor,ConsoleColor.Yellow),
+                    new("장착하거나 해제할 아이템을 선택해 주세요."),
+                    new()
+                });
+
+                List<UIElement> itemList = GetInvenListUI(GameManager.Instance.inventoryItems, true);
+
+                ui_ShowInven.AddElement(itemList);
+                ui_ShowInven.AddElement(new UIElement());
+                ui_ShowInven.AddElement(new UIElement("나가기", selectable: true, tip: "돌아갑니다."));
+
+                ui_ShowInven.WriteAll();
+                int input = ui_ShowInven.UserUIControl();
+
+                if (input < itemList.Count - 3) //아이템을 선택, 고정 크기 3만큼 빼서 indexOutOdRange 해결
+                {
+                    if (GameManager.Instance.inventoryItems[input].Installed)
+                    {
+                        GameManager.Instance.inventoryItems[input].Installed = false;
+                        GameManager.Instance.inven.StatusSetting(GameManager.Instance.inventoryItems[input], '-');
+                    }
+                    else
+                    {
+                        GameManager.Instance.inventoryItems[input].Installed = true;
+                        GameManager.Instance.inven.StatusSetting(GameManager.Instance.inventoryItems[input], '+');
+                    }
+                }
+                else //나가기를 선택
+                {
+                    return;
+                }
+            }
+        }
+
+
+
+        public static List<UIElement> GetInvenListUI(List<InvenItem> inven_list, bool selectable)
+        {
+            var list = new List<UIElement>
+            {
+                new("[아이템 목록]"),
+                new(new string('=', Console.WindowWidth))
+            };
+
+            foreach (var x in inven_list)
+            {
+                IStatus status = x;
+                UIElement elem = new UIElement
+                    (
+                    $"[{(x.Installed ? "E" : " ")}]{x.itemName,-14}{x.itemType,-10}{x.itemPrice,-8}{status.hp,-6}{status.mp,-6}{status.atk,-8}{status.def,-6}",
+                    Console.BackgroundColor,
+                    x.Installed ? ConsoleColor.Red : Console.ForegroundColor,
+                    selectable: selectable
+                    );
+
+                list.Add(elem);
+
+            }
+            list.Add(new UIElement(new string('=', Console.WindowWidth)));
+
+            return list;
+        }
+
+
     }
 }
