@@ -16,7 +16,7 @@ namespace TRPG
         public int mp { get; set; }
         public int atk { get; set; }
         public int def { get; set; }
-
+        public int MaxHp { get; private set; }
         public int GrowthHp { get; private set; }
         public int GrowthMp { get; private set; }
         public int GrowthAtk { get; private set; }
@@ -51,6 +51,7 @@ namespace TRPG
             GrowthAtk = growthAtk;
             GrowthDef = growthDef;
             Championcode = code;
+            MaxHp = hp;
         }
 
         //레벨업 시 능력치 증가
@@ -60,6 +61,7 @@ namespace TRPG
             mp += GrowthMp;
             atk += GrowthAtk;
             def += GrowthDef;
+            MaxHp += GrowthHp;
         }
 
         //스킬의 최대 레벨을 넘지 않도록 제한

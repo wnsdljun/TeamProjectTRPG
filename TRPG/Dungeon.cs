@@ -54,9 +54,42 @@ namespace TRPG
                         //인벤토리
 
                         break;
-                    case 2:
-                        //휴식
-                        break;
+                    case 2://휴식
+                        int input2;
+                        Console.WriteLine("골드를 지불해 체력을 회복 시킵니다. 회복하시겠습니까?\n비용: 100골드\n");
+                        Console.WriteLine("================================================\n");
+                        Console.WriteLine("1. 회복하기\n2. 나가기");
+                        if (int.TryParse(Console.ReadLine(), out input2))
+                        {
+                            if (input2 == 1)
+                            {
+                                if (battleSystem.player.Gold >= 100)
+                                {
+                                    battleSystem.player.Gold -= 100;
+                                    battleSystem.player.Championclass.hp += 300;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("골드가 부족합니다.");
+                                    return;
+                                }
+                                if (battleSystem.player.Championclass.hp > battleSystem.player.Championclass.MaxHp)
+                                {
+                                    battleSystem.player.Championclass.hp = battleSystem.player.Championclass.MaxHp;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("잘못된 입력입니다.");
+                                return;
+                            }
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            return;
+                        }
                     case 3:
                         DungeonEnd();
                         break;
@@ -71,6 +104,7 @@ namespace TRPG
         public void DungeonEnd()
         {
             Console.WriteLine("협곡을 빠져나가셨습니다.");//스테이터스 창으로 이동
+            battleSystem.StageWave = 1;
             return;
         }
     }
