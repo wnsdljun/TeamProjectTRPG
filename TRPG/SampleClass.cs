@@ -373,10 +373,10 @@ namespace TRPG
 
                 ui_ShowShop.WriteAll();
                 int input = ui_ShowShop.UserUIControl();
-                ShopItem shopItem = GameManager.Instance.items_list_shop[input];
 
                 if (input < itemList.Count - 3) //아이템을 선택, 고정 크기 3만큼 빼서 indexOutOdRange 해결
                 {
+                    ShopItem shopItem = GameManager.Instance.items_list_shop[input];
                     if (shopItem.itemPrice <= GameManager.Instance.player.Gold)
                     {
                         if (!shopItem.purchase)
