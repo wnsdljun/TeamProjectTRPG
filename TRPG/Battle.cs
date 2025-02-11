@@ -1,12 +1,14 @@
 ﻿namespace TRPG
 {
-    internal class Battle
+    //internal class Battle
+    //{
+    //    public BattleEnemies battleEnemies = new BattleEnemies(); <- 이렇게 사용하면 BattleEnemies 클래스가 초기화 되지 않음
+    //    public Enemyskill enemyskill = new Enemyskill();
+    //}
+    internal class BattleSystem //: Battle
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-    }
-    internal class BattleSystem : Battle
-    {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
         public List<Enemy> enemies;
         public Enemy Target;
