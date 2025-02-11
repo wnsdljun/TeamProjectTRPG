@@ -96,19 +96,46 @@
                             Turn = false;
                             break;
                         case 2:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
-                            Turn = false;
+                            if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
+                            {
+                                enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
+                                Turn = false;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("스킬을 배우지 않았습니다.");
+                                Console.ResetColor();
+                            }
                             break;
                         case 3:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_W(enemy, enemies);
-                            Turn = false;
+                            if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
+                            {
+                                enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                                Turn = false;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("스킬을 배우지 않았습니다.");
+                                Console.ResetColor();
+                            }
                             break;
                         case 4:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_E(enemy, enemies);
-                            Turn = false;
+                            if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
+                            {
+                                enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                                Turn = false;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("스킬을 배우지 않았습니다.");
+                                Console.ResetColor();
+                            }
                             break;
                         default:
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -146,9 +173,25 @@
             int target;
             if (int.TryParse(Console.ReadLine(), out target))
             {
-
-                Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
-                return Target;
+                if (enemies[target - 1].hp >= 0)
+                {
+                    Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                    return Target;
+                }
+                else if (enemies[target - 1].hp <= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("이미 죽은 적입니다.");
+                    Console.ResetColor();
+                    return null;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                    return null;
+                }
             }
             else
             {
