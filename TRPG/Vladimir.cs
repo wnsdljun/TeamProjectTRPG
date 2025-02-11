@@ -10,7 +10,7 @@ namespace TRPG
 
         // Q 스킬: 수혈
         // - 적에게 데미지를 주고, 그 데미지의 50%만큼 자신의 체력을 회복합니다.
-        public override void UseSkill_Q(Enemy enemy)
+        public override void UseSkill_Q(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelQ == 0)
             {
@@ -44,7 +44,7 @@ namespace TRPG
 
         // W 스킬: 혈사병
         // - 적 전체에게 데미지를 입히고, 입힌 데미지의 40%만큼 자신의 체력을 회복합니다.
-        public override void UseSkill_W(Enemy enemy)
+        public override void UseSkill_W(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelW == 0)
             {
@@ -72,13 +72,13 @@ namespace TRPG
             hp += healAmount;
 
             Console.WriteLine($"{Name}이(가) '혈사병' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage);
+            damage.PlayerAllSkillDamage(totalDamage,enemies);
             Console.WriteLine($"자신은 {healAmount}의 체력을 회복합니다.");
         }
 
         // E 스킬: 선혈의 파도
         // - 적 전체에게 광역 피해를 입힙니다.
-        public override void UseSkill_E(Enemy enemy)
+        public override void UseSkill_E(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelE == 0)
             {
@@ -101,7 +101,7 @@ namespace TRPG
             int totalDamage = baseDamage + scalingDamage;
 
             Console.WriteLine($"{Name}이(가) '선혈의 파도' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage);
+            damage.PlayerAllSkillDamage(totalDamage, enemies);
         }
         public override void DisplaySkillInfo()
         {

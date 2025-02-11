@@ -25,9 +25,9 @@ namespace TRPG
         protected const int E_MANA_COST = 80;
 
 
-        protected int SkillLevelQ { get; private set; } = 0;
-        protected int SkillLevelW { get; private set; } = 0;
-        protected int SkillLevelE { get; private set; } = 0;
+        public int SkillLevelQ { get; set; } = 0;
+        public int SkillLevelW { get; set; } = 0;
+        public int SkillLevelE { get; set; } = 0;
 
         //각 스킬의 최대레벨 제한
         protected const int MAX_SKILL_LEVEL_Q = 5;
@@ -73,9 +73,9 @@ namespace TRPG
         }
 
         //각 챔피언마다 고유의 스킬 구현
-        public abstract void UseSkill_Q(Enemy enemy);
-        public abstract void UseSkill_W(Enemy enemy);
-        public abstract void UseSkill_E(Enemy enemy);
+        public abstract void UseSkill_Q(Enemy enemy, List<Enemy> enemies);
+        public abstract void UseSkill_W(Enemy enemy, List<Enemy> enemies);
+        public abstract void UseSkill_E(Enemy enemy, List<Enemy> enemies);
 
         public abstract void DisplaySkillInfo();
 

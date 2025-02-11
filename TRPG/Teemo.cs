@@ -10,7 +10,7 @@ namespace TRPG
         }
 
         // Q 스킬: 맹독 다트 
-        public override void UseSkill_Q(Enemy enemy)
+        public override void UseSkill_Q(Enemy enemy,List<Enemy> enemies)
         {
             if (SkillLevelQ == 0)
             {
@@ -51,7 +51,7 @@ namespace TRPG
         }
 
         // W 스킬: 실명다트 지만 그냥 강한 공격
-        public override void UseSkill_W(Enemy enemy)
+        public override void UseSkill_W(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelW == 0)
             {
@@ -76,7 +76,7 @@ namespace TRPG
         }
 
         // E 스킬: 유독성 함정 → 사용 시 즉시 광역 피해 적용
-        public override void UseSkill_E(Enemy enemy)
+        public override void UseSkill_E(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelE == 0)
             {
@@ -97,7 +97,7 @@ namespace TRPG
             int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '유독성 함정' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage);
+            damage.PlayerAllSkillDamage(totalDamage,enemies);
         }
         public override void DisplaySkillInfo()
         {

@@ -1,12 +1,14 @@
 ﻿namespace TRPG
 {
-    internal class Battle
+    //internal class Battle
+    //{
+    //    public BattleEnemies battleEnemies = new BattleEnemies(); <- 이렇게 사용하면 BattleEnemies 클래스가 초기화 되지 않음
+    //    public Enemyskill enemyskill = new Enemyskill();
+    //}
+    internal class BattleSystem //: Battle
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-    }
-    internal class BattleSystem : Battle
-    {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
         public List<Enemy> enemies;
         public Enemy Target;
@@ -96,19 +98,46 @@
                             Turn = false;
                             break;
                         case 2:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
-                            Turn = false;
+                            if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
+                            {
+                                enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
+                                Turn = false;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("스킬을 배우지 않았습니다.");
+                                Console.ResetColor();
+                            }
                             break;
                         case 3:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_W(enemy);
-                            Turn = false;
+                            if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
+                            {
+                                enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_W(enemy, enemies);
+                                Turn = false;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("스킬을 배우지 않았습니다.");
+                                Console.ResetColor();
+                            }
                             break;
                         case 4:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_E(enemy);
-                            Turn = false;
+                            if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
+                            {
+                                enemy = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_E(enemy, enemies);
+                                Turn = false;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("스킬을 배우지 않았습니다.");
+                                Console.ResetColor();
+                            }
                             break;
                         default:
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -146,9 +175,25 @@
             int target;
             if (int.TryParse(Console.ReadLine(), out target))
             {
-
-                Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
-                return Target;
+                if (enemies[target - 1].hp >= 0)
+                {
+                    Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                    return Target;
+                }
+                else if (enemies[target - 1].hp <= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("이미 죽은 적입니다.");
+                    Console.ResetColor();
+                    return null;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                    return null;
+                }
             }
             else
             {
@@ -210,11 +255,10 @@
         }
         public void StageSet()
         {
-
             switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
-                    enemies = battleEnemies.wave1;
+                    enemies =  battleEnemies.wave1;
                     break;
                 case 2:
                     enemies = battleEnemies.wave2;
@@ -244,6 +288,7 @@
         {
             wave1 = new List<Enemy>
             {
+                
                 enemyfactory.MeleeMinion()
             };
 
