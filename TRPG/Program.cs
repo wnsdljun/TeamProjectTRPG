@@ -94,6 +94,7 @@ namespace TRPG
 
             Inven inven = new Inven();
             Shop shop = new Shop();
+            Dungeon dungeon = new Dungeon();
 
             bool exitMenu = false;
             while (!exitMenu)
@@ -120,10 +121,7 @@ namespace TRPG
                         shop.ShowShop(player, inven);
                         break;
                     case "4":
-                        Console.Clear();
-                        Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
-                        Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
-                        Console.ReadLine();
+                        dungeon.DungeonStart();
                         break;
                     case "0":
                         exitMenu = true;

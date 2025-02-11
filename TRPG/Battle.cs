@@ -170,7 +170,10 @@ namespace TRPG
         }
         public void GameOver()
         {
+            player.Gold /= 2;
             Console.WriteLine("패배….");
+            Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {player.Gold}입니다.");
+            return;
         }
         public void StageClear()
         {
@@ -184,7 +187,6 @@ namespace TRPG
                 expAdd += enemy.exp;
             }
             player.Gold += goldAdd;
-            player.Exp += expAdd;
             if (comment == 0) { Console.WriteLine("전장의 지배자!"); }
             else if (comment == 1) { Console.WriteLine("학살 중입니다."); }
             else if (comment == 2) { Console.WriteLine("도저히 막을 수 없습니다."); }
@@ -193,6 +195,7 @@ namespace TRPG
             else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
             Console.WriteLine($"골드 {goldAdd} 획득, 경험치 {expAdd} 획득\n");
+            player.GainExp(expAdd);
             if (StageWave == 6)
             {
                 DungeonClear();
@@ -207,6 +210,7 @@ namespace TRPG
         public void DungeonClear()
         {
             Console.WriteLine("승리!");
+            return;
         }
         public void StageSet()
         {
