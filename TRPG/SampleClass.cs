@@ -1,56 +1,23 @@
-﻿namespace TRPG
+﻿using System.Numerics;
+using System;
+
+namespace TRPG
 {
     internal class SampleClass
     {
-        /*
-        public static void ShowSample()
-        {
-
-            //사용법 1: 콘솔 창에 표시할 정보를 이런 느낌으로 입력합니다.
-            //ColorString 은 한 줄에 해당하는 정보를 담고 있습니다.
-            //정보가 담겨있는 줄을 리스트로 만듭니다. 아래와 같이 쓰면 보기가 좋습니다.
-
-            List<ColorString> sample = new List<ColorString>
-            {
-                new ColorString("인벤토리", ConsoleColor.Green, ConsoleColor.Black),
-                new ColorString("인벤토리를 볼 수 있읍니다."),
-                new ColorString(),
-                new ColorString("1. 선택 가능한 옵션", tip: "1번 옵션에 대한 설명입니다.", selectable:true),
-                new ColorString("2. 선택 가능한 옵션", tip: "2번 옵션에 대한 설명입니다.", selectable:true),
-                new ColorString("3. 선택 가능한 옵션", ConsoleColor.Blue, ConsoleColor.Red , tip: "3번 옵션에 대한 설명입니다.", selectable:true),
-                new ColorString("4. 색깔 입히기", selectable: true, lineChange: false),
-                new ColorString("으히힝", selectable:true, lineChange: true)
-            };
-
-            //사용법 2: UIDesign 객체를 하나 만듭니다.
-            //그리고 생성자에 아까 만든 리스트를 넣어줍니다.
-            UIDesign uIDesign = new UIDesign(sample);
-
-            //사용법 3: 콘솔 창에 표시해주는 함수를 호출합니다.
-            uIDesign.WriteAll();
-
-            //사용법 4: 유저 입력을 받도록 uIDesign으로 제어를 넘겨줍니다.
-            int input = uIDesign.PlayerUIControl();
-
-            //사용법 5: 이제 int 형으로 반환된 값을 갖고 놀면 됩니다.
-
-            Console.Clear();
-
-            Console.WriteLine(input);
-        }
-        */
-
         public static void ShowSample2()
         {
             UI ui = new UI(new List<UIElement>
             {
                 new("텍스 트"),
                 new("샘플?입니다.",ConsoleColor.Green, ConsoleColor.Red),
-                new("색을지정할수있는", new List<Tuple<int,ConsoleColor,ConsoleColor>> {
+                new("색을지정할수있는", new List<UIColorIndex>
+                {
                     new(1, ConsoleColor.Red, ConsoleColor.Green),
                     new(2, ConsoleColor.Green, ConsoleColor.Red)
                 }),
-                new("색을지정할수있는선택가능한", new List<Tuple<int,ConsoleColor,ConsoleColor>> {
+                new("색을지정할수있는선택가능한", new List<UIColorIndex> 
+                {
                     new(7, ConsoleColor.Red, ConsoleColor.Green),
                     new(8, ConsoleColor.Green, ConsoleColor.Red)
                 }, selectable: true,tip: "선택가능한첫번째의설명"),
@@ -66,8 +33,6 @@
         {
             //최초 시작 화면의 샘플 씬
             string playerName = "";
-
-
 
             while (true)
             {
@@ -98,6 +63,7 @@
             ////////////////////////////////////////////////////
 
             //챔피언 선택 화면
+            myloc:
             Champion selectedChampion;
 
             while (true)
@@ -126,7 +92,14 @@
                 {
                     new($"{selectedChampion.Name}(을)를 선택하셨습니다."),
                     new(),
-                    // skill info 
+                    new($"===== {selectedChampion.Name} 스킬 설명 ====="),
+                    new(selectedChampion.skillInfoQ),
+                    new(selectedChampion.skillInfoQDetail),
+                    new(selectedChampion.skillInfoW),
+                    new(selectedChampion.skillInfoWDetail),
+                    new(selectedChampion.skillInfoE),
+                    new(selectedChampion.skillInfoEDetail),
+                    new("================================"),
                     new(),
                     new("이 챔피언을 사용하시겠습니까?"),
                     new(),
@@ -140,9 +113,63 @@
                 if (input == 0) break;
             }
 
-            
+
+            // 챔피언 확정 멘트
+
+            //
+
+            Player player = new Player(playerName, selectedChampion);
+            Inven inven = new Inven();
+            Shop shop = new Shop();
+
+            //메인메뉴?
+            bool exitMenu = false;
+            while (!exitMenu)
+            {
+                UI ui_MainMenu = new UI(new List<UIElement>
+                {
+                    new("메인 메뉴를 선택하세요"),
+                    new(),
+                    new("1. 스테이터스 확인",selectable: true ,tip: ""),
+                    new("2. 인벤토리 확인",selectable: true ,tip: ""),
+                    new("3. 상점",selectable: true ,tip: ""),
+                    new("4. 협곡",selectable: true ,tip: ""),
+                    new(),
+                    new("종료",selectable: true ,tip: "")
+                });
+                ui_MainMenu.WriteAll();
+                int menuChoice = ui_MainMenu.UserUIControl();
+
+                switch (menuChoice)
+                {
+                    case 0:
+                        Program.ShowStatus(player);
+                        break;
+                    case 1:
+                        inven.ShowInven(player);
+                        break;
+                    case 2:
+                        shop.ShowShop(player, inven);
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
+                        Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        //goto myloc;
+                        exitMenu = true;
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+                        Console.ReadLine();
+                        break;
+                }
 
 
+
+            }// while 의 끝
 
         }
     }
