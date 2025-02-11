@@ -13,6 +13,7 @@ namespace TRPG
         public BattleSystem battleSystem;
         int damage;
 
+
         public void EnemtAttackDamage(Enemy enemy, int damage)
         {
             Random random = new Random();

@@ -12,6 +12,7 @@ namespace TRPG
         public Inven inven;
         public Shop shop;
         public Champion selectedChampion;
+        public Dungeon dungeon = new Dungeon();
         public List<InvenItem> inventoryItems;
         public List<ShopItem> items_list_shop;
         private static GameManager instance = null;
@@ -171,10 +172,7 @@ namespace TRPG
                         shop.ShowShop(player, inven);
                         break;
                     case 3:
-                        Console.Clear();
-                        Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
-                        Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
-                        Console.ReadLine();
+                        dungeon.DungeonStart();
                         break;
                     case 4:
                         //goto myloc;
