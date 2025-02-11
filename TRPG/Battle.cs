@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class Battle
     {
@@ -18,7 +12,7 @@ namespace TRPG
         public Enemy Target;
         public void BattleStart()
         {
-            Console.WriteLine("적이 나타났다! \n");
+            Console.WriteLine("적이 나타났습니다. \n");
             StageSet();
             while (enemies.Exists(e => e.hp > 0))
             {
@@ -44,6 +38,8 @@ namespace TRPG
                 }
             }
             Console.WriteLine("\n플레이어 상태\n" +
+                $"HP: {GameManager.Instance.selectedChampion.hp}" +
+                $"MP: {GameManager.Instance.selectedChampion.mp}" +
                 "\n1. 전투하기" +
                 "\n2. 인벤토리" +
                 "\n3. 도망가기");
@@ -135,9 +131,20 @@ namespace TRPG
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;
-            if (int.TryParse(Console.ReadLine(), out target) && target <= enemies.Count && target > 0)
+            if (int.TryParse(Console.ReadLine(), out target))
             {
-                Enemy Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                
+                if (enemies[target - 1] != null)
+                {
+                    Target = enemies[target - 1];//지정한 적에게 피해를 주기 위한 지정
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                    return;
+                }
             }
             else
             {
@@ -233,7 +240,7 @@ namespace TRPG
         {
             wave1 = new List<Enemy>
             {
-                enemyfactory.MeleeMinion(),
+                enemyfactory.MeleeMinion()
             };
 
             wave2 = new List<Enemy>

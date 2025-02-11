@@ -11,6 +11,7 @@ namespace TRPG
         public BattleSystem battleSystem = new BattleSystem();
         public void DungeonStart()
         {
+            Console.Clear();
             int input;
             Console.WriteLine("협곡에 오신 것을 환영합니다." +
                 "\n앞으로 나아가시겠습니까?" +
