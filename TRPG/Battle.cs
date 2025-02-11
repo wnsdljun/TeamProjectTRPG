@@ -57,8 +57,7 @@
                             Turn = false;
                             break;
                         case 2://도망가기 메소드
-                            Dungeon dungeon = new Dungeon();
-                            dungeon.DungeonEnd();
+                            GameManager.Instance.dungeon.DungeonEnd();
                             Turn = false;
                             break;
                         default:
