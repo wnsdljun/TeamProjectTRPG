@@ -113,6 +113,7 @@ namespace TRPG
                 if (input == 0) break;
             }
 
+
             Player player = new Player(playerName, selectedChampion);
             Inven inven = new Inven();
             Shop shop = new Shop();
@@ -161,9 +162,6 @@ namespace TRPG
                         Console.ReadLine();
                         break;
                 }
-
-
-
 
             }// while 의 끝
 
