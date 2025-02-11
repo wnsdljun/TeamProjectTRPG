@@ -113,11 +113,6 @@ namespace TRPG
                 if (input == 0) break;
             }
 
-
-            // 챔피언 확정 멘트
-
-            //
-
             Player player = new Player(playerName, selectedChampion);
             Inven inven = new Inven();
             Shop shop = new Shop();
@@ -166,6 +161,7 @@ namespace TRPG
                         Console.ReadLine();
                         break;
                 }
+
 
 
 
