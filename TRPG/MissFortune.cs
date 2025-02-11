@@ -51,8 +51,8 @@ namespace TRPG
                 {
                     if (enemies[N].hp > 0)
                     {
-                        Console.WriteLine(" 탄환이 첫 번째 적을 관통합니다! 두 번째 적도 공격합니다.");
-                        damage.PlayerSkillDamage(totalDamage * 3, enemies[N]);
+                        Console.WriteLine("탄환이 첫 번째 적을 관통합니다! 두 번째 적도 공격합니다.");
+                        damage.PlayerSkillDamage(totalDamage, enemies[N]);
                         break;
                     }
                     else if (enemies[N].hp <= 0)
