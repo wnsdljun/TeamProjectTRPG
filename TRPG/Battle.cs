@@ -99,17 +99,17 @@
                             break;
                         case 2:
                             enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
+                            GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
                             Turn = false;
                             break;
                         case 3:
                             enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                            GameManager.Instance.selectedChampion.UseSkill_W(enemy, enemies);
                             Turn = false;
                             break;
                         case 4:
                             enemy = Targeting();
-                            GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                            GameManager.Instance.selectedChampion.UseSkill_E(enemy, enemies);
                             Turn = false;
                             break;
                         default:

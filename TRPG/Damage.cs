@@ -30,9 +30,10 @@ namespace TRPG
             Console.WriteLine($"{GameManager.Instance.player.PlayerName}이 기본 공격을 사용합니다. \n{enemy.name}은 {Randomdamage}의 피해를 받았습니다.");
             enemy.hp -= Randomdamage;
         }
-        public void PlayerAllSkillDamage(int NewDamage)
+        public void PlayerAllSkillDamage(int NewDamage, List<Enemy> enemies)
         {
-            foreach (var enemy in battleSystem.enemies)
+            foreach (var enemy in enemies)
+            
             {
                 if (enemy.hp > 0)
                 {

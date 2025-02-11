@@ -9,7 +9,7 @@ namespace TRPG
         {
         }
 
-        public override void UseSkill_Q(Enemy enemy)
+        public override void UseSkill_Q(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelQ == 0)
             {
@@ -40,7 +40,7 @@ namespace TRPG
             }
         }
 
-        public override void UseSkill_W(Enemy enemy)
+        public override void UseSkill_W(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelW == 0)
             {
@@ -64,7 +64,7 @@ namespace TRPG
             Console.WriteLine("공격력이 원래 상태로 돌아갑니다.");
         }
 
-        public override void UseSkill_E(Enemy enemy)
+        public override void UseSkill_E(Enemy enemy, List<Enemy> enemies)
         {
             if (SkillLevelE == 0)
             {
@@ -81,7 +81,7 @@ namespace TRPG
             int baseDamage = baseDamageValues[Math.Min(SkillLevelE - 1, baseDamageValues.Length - 1)];
             int totalDamage = baseDamage * 1 - enemy.def;
             Console.WriteLine($"{Name}이(가) '총알은 비를 타고' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage);
+            damage.PlayerAllSkillDamage(totalDamage, enemies);
         }
         public override void DisplaySkillInfo()
         {
