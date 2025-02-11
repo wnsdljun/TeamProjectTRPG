@@ -15,11 +15,19 @@ namespace TRPG
         public Champion Championclass { get; private set; }
 
         //public Player() { }
-        public Player(string playerName, Champion champion)
+        public Player()
         {
+
+        }
+
+        public void GetPlayer(string playerName, Champion champion)
+        {
+
             PlayerName = playerName;
             Championclass = champion;
+
         }
+
 
         //경험치 획득 및 레벨업
         public void GainExp(int amount)

@@ -8,16 +8,14 @@ namespace TRPG
 {
     internal class Shop
     {
-        List<ShopItem> items_list_shop = new List<ShopItem>();
-        Inven inven = new Inven();
+        
+        Inven inven;
 
         public Shop()
         {
-
-
         }
 
-        public void ShowShop(Player _player,Inven _inven)
+        public void ShowShop(Player _player, Inven _inven)
         {
             inven = _inven;
             bool bool_showShop = false;
@@ -31,7 +29,7 @@ namespace TRPG
                     Console.ResetColor();
                     Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
 
-                    Item_list_show(items_list_shop,  false);
+                    Item_list_show(GameManager.Instance.items_list_shop, false);
 
                     Console.WriteLine("1. 아이템구매");
                     Console.WriteLine("0. 나가기");
@@ -50,7 +48,7 @@ namespace TRPG
                             break;
                         case 1:
                             //아이템구매 
-                            Buy_item(_player, items_list_shop);
+                            Buy_item(_player, GameManager.Instance.items_list_shop);
 
                             break;
 
@@ -79,37 +77,79 @@ namespace TRPG
                 //반복문장
                 {
                     Console.Clear();
-                    Console.WriteLine($"[보유한 골드] : {"player.gold"} G");
+                    Console.WriteLine($"[보유한 골드] : {GameManager.Instance.player.Gold} G");
                     Console.WriteLine();
                     Item_list_show(items_list_shop, true);
                     Console.WriteLine();
-                    Console.WriteLine("구해하실 아이템의 이름를 입력해주세요");
+                    Console.WriteLine("구매하실 아이템의 이름를 입력해주세요 :(나가기 :0)");
                     Console.Write(">>>");
                 }
                 string answer = Console.ReadLine();
                 if (!string.IsNullOrEmpty(answer) && items_list_shop.Any(x => x.itemName == answer))
                 {
                     var Buyitem = items_list_shop.Find(x => x.itemName == answer);
-                    //구매완료인템 
-                    if (Buyitem.purchase == true)
+                    //골드가 있는경우
+                    if (GameManager.Instance.player.Gold >= Buyitem.itemPrice)
                     {
-                        Console.WriteLine("구매 완료된 템입니다. 다른 아이템을 구매해주세요");
-                        Thread.Sleep(1500);
+                        //구매완료인템 
+                        if (Buyitem.purchase == true)
+                        {
+                            Console.WriteLine("구매 완료된 템입니다. 다른 아이템을 구매해주세요");
+                            Thread.Sleep(1500);
+                        }
+                        else
+                        {
+                            int anser;
+                            bool boolbuyShop_02 = false;
+                            while (!boolbuyShop_02)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("구매하시겠습니까? :(1:구매하기 /0:뒤로가기)");
+                                Console.Write(">>> ");
+                                if (int.TryParse(Console.ReadLine(), out anser))
+                                {
+                                    if (anser == 1)
+                                    {
+                                        //골드 차감 
+                                        GameManager.Instance.player.Gold -= Buyitem.itemPrice;
+                                        //상점에 표시
+                                        Buyitem.purchase = true;
+                                        //가방에 넣기
+                                        inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
+
+                                    }
+                                    else if (anser == 0)
+                                    {
+                                        boolbuyShop_02 = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("잘못된 입력입니다 다시 입력해주세요");
+                                    Thread.Sleep(1000);
+                                }
+                            }
+
+
+                        }
+
+
+
                     }
-                    else
+                    else //골드 부족한 경우
                     {
-                        //상점에 표시
-                        Buyitem.purchase = true;
+                        Console.WriteLine("골드가 부족합니다 : ");
+                        Thread.Sleep(1000);
                     }
 
-                    //골드 차감
-                    //미구현 
-                    //가방에 넣기
-                    inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
-                    
-                   
+
                 }
-                else if (int.TryParse(answer,out number))
+                else if (int.TryParse(answer, out number) && number == 0)
                 {
                     boolbuyShop = true;
                 }
@@ -122,7 +162,7 @@ namespace TRPG
             }
         }
 
-        private void Item_list_show(List<ShopItem> items_list_shop,  bool buybool)
+        private void Item_list_show(List<ShopItem> items_list_shop, bool buybool)
         {
 
             Console.WriteLine("[아이템 목록]");
@@ -158,13 +198,13 @@ namespace TRPG
 
         public void Add(ShopItem item)
         {
-            items_list_shop.Add(item);
+            GameManager.Instance.items_list_shop.Add(item);
         }
         public void Add(bool purchase, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
         {
             //음 어덯게 하는게 좋을까?
             ShopItem newitem = new ShopItem(purchase, itemName, itemPrice, itemType, hp, mp, atk, def);
-            items_list_shop.Add(newitem);
+            GameManager.Instance.items_list_shop.Add(newitem);
         }
     }
 }
