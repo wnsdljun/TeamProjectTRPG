@@ -41,8 +41,7 @@
                 $"HP: {GameManager.Instance.selectedChampion.hp} " +
                 $"MP: {GameManager.Instance.selectedChampion.mp}" +
                 "\n1. 전투하기" +
-                "\n2. 인벤토리" +
-                "\n3. 도망가기");
+                "\n2. 도망가기");
             int input;
             if (int.TryParse(Console.ReadLine(), out input))
             {
@@ -51,9 +50,7 @@
                     case 1://스킬 선택 메소드
                         PlayerAttack();
                         break;
-                    case 2://인벤토리 메소드
-                        break;
-                    case 3://도망가기 메소드
+                    case 2://도망가기 메소드
                         Dungeon dungeon = new Dungeon();
                         dungeon.DungeonEnd();
                         break;
