@@ -1,12 +1,14 @@
 ﻿namespace TRPG
 {
-    internal class Battle
+    //internal class Battle
+    //{
+    //    public BattleEnemies battleEnemies = new BattleEnemies(); <- 이렇게 사용하면 BattleEnemies 클래스가 초기화 되지 않음
+    //    public Enemyskill enemyskill = new Enemyskill();
+    //}
+    internal class BattleSystem //: Battle
     {
         public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
-    }
-    internal class BattleSystem : Battle
-    {
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
         public List<Enemy> enemies;
         public Enemy Target;
@@ -57,8 +59,7 @@
                             Turn = false;
                             break;
                         case 2://도망가기 메소드
-                            Dungeon dungeon = new Dungeon();
-                            dungeon.DungeonEnd();
+                            GameManager.Instance.dungeon.DungeonEnd();
                             Turn = false;
                             break;
                         default:
@@ -101,7 +102,7 @@
                             if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
                                 enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
+                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
                                 Turn = false;
                             }
                             else
@@ -115,7 +116,7 @@
                             if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
                             {
                                 enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                                GameManager.Instance.selectedChampion.UseSkill_W(enemy, enemies);
                                 Turn = false;
                             }
                             else
@@ -129,7 +130,7 @@
                             if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
                             {
                                 enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                                GameManager.Instance.selectedChampion.UseSkill_E(enemy, enemies);
                                 Turn = false;
                             }
                             else

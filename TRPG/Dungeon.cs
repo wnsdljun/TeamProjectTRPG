@@ -20,6 +20,7 @@
                     {
                         case 1:
                             Console.WriteLine("협곡으로 들어갑니다.");
+                            GameManager.Instance.dungeon.battleSystem.battleEnemies = new();
                             battleSystem.BattleStart();
                             Turn = false;
                             break;
