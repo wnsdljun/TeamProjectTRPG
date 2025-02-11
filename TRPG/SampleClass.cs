@@ -1,4 +1,6 @@
-﻿namespace TRPG
+﻿using System;
+
+namespace TRPG
 {
     internal class SampleClass
     {
@@ -300,9 +302,6 @@
                 }
             }
         }
-
-
-
         public static List<UIElement> GetInvenListUI(List<InvenItem> inven_list, bool selectable)
         {
             var list = new List<UIElement>
@@ -331,5 +330,133 @@
         }
 
 
+        public static void ShowShop()
+        {
+            while (true)
+            {
+                UI ui_ShowShop = new UI(new List<UIElement>
+                {
+                    new("상점",Console.BackgroundColor,ConsoleColor.Yellow),
+                    new("필요한 아이템을 얻을 수 있는 상점입니다."),
+                    new()
+                });
+
+                ui_ShowShop.AddElement(GetShopListUI(GameManager.Instance.items_list_shop, false));
+                ui_ShowShop.AddElement(new UIElement());
+                ui_ShowShop.AddElement(new UIElement("아이템 구매", selectable: true, tip: "아이템을 구매합니다."));
+                ui_ShowShop.AddElement(new UIElement("나가기", selectable: true, tip: "돌아갑니다."));
+
+                ui_ShowShop.WriteAll();
+                int input = ui_ShowShop.UserUIControl();
+
+                if (input == 0) buyShop(); //구매모드
+                else return;
+            }
+        }
+        public static void buyShop()
+        {
+            while (true)
+            {
+                UI ui_ShowShop = new UI(new List<UIElement>
+                {
+                    new("상점 - 아이템 구입",Console.BackgroundColor,ConsoleColor.Yellow),
+                    new("구매하실 아이템을 선택 후 엔터"),
+                    new(),
+                    new($"[보유한 골드] : {GameManager.Instance.player.Gold} G"),
+                    new()
+                });
+
+                List<UIElement> itemList = GetShopListUI(GameManager.Instance.items_list_shop, true);
+                ui_ShowShop.AddElement(itemList);
+                ui_ShowShop.AddElement(new UIElement());
+                ui_ShowShop.AddElement(new UIElement("나가기", selectable: true, tip: "돌아갑니다."));
+
+                ui_ShowShop.WriteAll();
+                int input = ui_ShowShop.UserUIControl();
+                ShopItem shopItem = GameManager.Instance.items_list_shop[input];
+
+                if (input < itemList.Count - 3) //아이템을 선택, 고정 크기 3만큼 빼서 indexOutOdRange 해결
+                {
+                    if (shopItem.itemPrice <= GameManager.Instance.player.Gold)
+                    {
+                        if (!shopItem.purchase)
+                        {
+                            BuyShopConfirm(shopItem);
+                            continue;
+                        }
+                        Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                        Console.Write("이미 구입한 아이템입니다.");
+                        Thread.Sleep(2500);
+                        continue;
+                    }
+                    Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                    Console.Write("돈 더 내놔!");
+                    Thread.Sleep(2500);
+                    continue;
+                }
+                else //나가기를 선택
+                {
+                    return;
+                }
+            }
+        }
+        public static List<UIElement> GetShopListUI(List<ShopItem> items_list_shop, bool selectable)
+        {
+            var list = new List<UIElement>
+            {
+                new("[아이템 목록]"),
+                new(new string('=', Console.WindowWidth))
+            };
+
+            foreach (var x in items_list_shop)
+            {
+                IStatus status = x;
+                UIElement elem = new UIElement
+                    (
+                    $"{(x.purchase ? "[구매완료]" : x.itemPrice > GameManager.Instance.player.Gold ? "[너무 비쌉니다!]" : "")}{x.itemName,-14}{x.itemType,-10}{x.itemPrice,-8}{status.hp,-6}{status.mp,-6}{status.atk,-8}{status.def,-6}",
+                    Console.BackgroundColor,
+                    x.purchase || x.itemPrice > GameManager.Instance.player.Gold ? ConsoleColor.Red : Console.ForegroundColor,
+                    selectable: selectable
+                    );
+
+                list.Add(elem);
+
+            }
+            list.Add(new UIElement(new string('=', Console.WindowWidth)));
+
+            return list;
+        }
+
+        public static void BuyShopConfirm(ShopItem Buyitem)
+        {
+            UI ui_ShowShop = new UI(new List<UIElement>
+                {
+                    new("상점 - 아이템 구입 확인",Console.BackgroundColor,ConsoleColor.Yellow),
+                    new(),
+                    new("아래 아이템을 선택하셨습니다. 구매를 확정하시겠습니까?"),
+                    new(),
+                    new($"{Buyitem.itemName,-14}{Buyitem.itemType,-10}{Buyitem.itemPrice,-8}{Buyitem.hp,-6}{Buyitem.mp,-6}{Buyitem.atk,-8}{Buyitem.def,-6}"),
+                    new(),
+                    new($"거래 후 [ {GameManager.Instance.player.Gold - Buyitem.itemPrice} G ] 만큼 남습니다."),
+                    new(),
+                    new("네",selectable:true),
+                    new("아니오",selectable:true),
+                });
+
+            ui_ShowShop.WriteAll();
+            int input = ui_ShowShop.UserUIControl();
+
+            if (input == 1) return;
+            else
+            {
+                GameManager.Instance.player.Gold -= Buyitem.itemPrice;
+                Buyitem.purchase = true;
+                GameManager.Instance.inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
+            }
+        }
     }
 }

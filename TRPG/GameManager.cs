@@ -178,7 +178,8 @@ namespace TRPG
                         SampleClass.ShowInven();
                         break;
                     case 2:
-                        shop.ShowShop(player, inven);
+                        //shop.ShowShop(player, inven);
+                        SampleClass.ShowShop();
                         break;
                     case 3:
                         dungeon.DungeonStart();
