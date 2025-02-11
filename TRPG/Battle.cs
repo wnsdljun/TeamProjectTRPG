@@ -26,88 +26,103 @@
         }
         public void PlayerTurn()
         {
-            for (int i = 0; i < enemies.Count; i++)
+            bool Turn = true;
+            while (Turn)
             {
-                if (enemies[i].hp > 0)
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {enemies[i].name} | HP: {enemies[i].hp}");
+                    if (enemies[i].hp > 0)
+                    {
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} | HP: {enemies[i].hp}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                    }
+                }
+                Console.WriteLine("\n플레이어 상태\n" +
+                    $"HP: {GameManager.Instance.selectedChampion.hp} " +
+                    $"MP: {GameManager.Instance.selectedChampion.mp}" +
+                    "\n1. 전투하기" +
+                    "\n2. 도망가기");
+                int input;
+                if (int.TryParse(Console.ReadLine(), out input))
+                {
+                    switch (input)//플레이어의 행동을 받아오는 부분
+                    {
+                        case 1://스킬 선택 메소드
+                            PlayerAttack();
+                            Turn = false;
+                            break;
+                        case 2://도망가기 메소드
+                            Dungeon dungeon = new Dungeon();
+                            dungeon.DungeonEnd();
+                            Turn = false;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.ResetColor();
+                            break;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
                 }
-            }
-            Console.WriteLine("\n플레이어 상태\n" +
-                $"HP: {GameManager.Instance.selectedChampion.hp} " +
-                $"MP: {GameManager.Instance.selectedChampion.mp}" +
-                "\n1. 전투하기" +
-                "\n2. 도망가기");
-            int input;
-            if (int.TryParse(Console.ReadLine(), out input))
-            {
-                switch (input)//플레이어의 행동을 받아오는 부분
-                {
-                    case 1://스킬 선택 메소드
-                        PlayerAttack();
-                        break;
-                    case 2://도망가기 메소드
-                        Dungeon dungeon = new Dungeon();
-                        dungeon.DungeonEnd();
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Console.ResetColor();
-                        break;//잘못된 입력 넣으면 턴이 넘어감
-                }
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("잘못된 입력입니다.");
-                Console.ResetColor();
             }
         }
+
         public void PlayerAttack()
         {
-            Console.WriteLine("1. 기본 공격" +
+            bool Turn = true;
+            while (Turn)
+            {
+                Console.WriteLine("1. 기본 공격" +
                 "\n2. Q스킬" +
                 "\n3. E스킬" +
                 "\n4. W스킬");
-            int input;
-            Enemy enemy;
-            if (int.TryParse(Console.ReadLine(), out input))
-            {
-                switch (input)
+                int input;
+                Enemy enemy;
+                if (int.TryParse(Console.ReadLine(), out input))
                 {
-                    case 1:
-                        enemy = Targeting();
-                        GameManager.Instance.selectedChampion.BaseAttack(enemy);
-                        break;
-                    case 2:
-                        enemy = Targeting();
-                        GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
-                        break;
-                    case 3:
-                        enemy = Targeting();
-                        GameManager.Instance.selectedChampion.UseSkill_E(enemy);
-                        break;
-                    case 4:
-                        enemy = Targeting();
-                        GameManager.Instance.selectedChampion.UseSkill_W(enemy);
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Console.ResetColor();
-                        break;
+                    switch (input)
+                    {
+                        case 1:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.BaseAttack(enemy);
+                            Turn = false;
+                            break;
+                        case 2:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.UseSkill_Q(enemy);
+                            Turn = false;
+                            break;
+                        case 3:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.UseSkill_E(enemy);
+                            Turn = false;
+                            break;
+                        case 4:
+                            enemy = Targeting();
+                            GameManager.Instance.selectedChampion.UseSkill_W(enemy);
+                            Turn = false;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.ResetColor();
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("잘못된 입력입니다.");
-                Console.ResetColor();
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
+                }
             }
         }
         public void EnemyTurn()
