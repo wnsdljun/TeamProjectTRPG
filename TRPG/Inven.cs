@@ -8,10 +8,13 @@ namespace TRPG
 {
     internal class Inven
     {
-        public List<InvenItem> inven_list = new List<InvenItem>();
+        //public List<InvenItem> inven_list = new List<InvenItem>();
+        GameManager GM_instance;
 
         public Inven()
         {
+            GM_instance = GameManager.Instance;
+
             //List<InvenItem> newitems = new List<InvenItem>()
             //{ 
             //    //string _itemName, ItemType _itemType, int _hp, int _mp, int _atk, int _def
@@ -28,9 +31,10 @@ namespace TRPG
             //}
         }
 
-        public void ShowInven( Player _player)
+        public void ShowInven(Player _player)
         {
-            bool bool_showinven =false;
+
+            bool bool_showinven = false;
             while (!bool_showinven)
             {
                 Console.Clear();
@@ -39,7 +43,7 @@ namespace TRPG
                 Console.ResetColor();
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
 
-                Item_list_show(inven_list);
+                Item_list_show(GM_instance.inventoryItems);
 
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("0. 나가기");
@@ -77,7 +81,7 @@ namespace TRPG
                     Thread.Sleep(1000);
                 }
             }
-            
+
 
         }
 
@@ -87,14 +91,14 @@ namespace TRPG
             while (!bool_1)
             {
                 Console.Clear();
-                Item_list_show(inven_list);
+                Item_list_show(GM_instance.inventoryItems);
                 Console.WriteLine("장착하거나 해제하고 싶은 아이템 이름을 입력해주세요 (나가기 :0):");
                 Console.Write(">>>");
                 string answer = Console.ReadLine();
                 int number;
-                if (!string.IsNullOrEmpty(answer) && inven_list.Any(x => x.itemName == answer))
+                if (!string.IsNullOrEmpty(answer) && GM_instance.inventoryItems.Any(x => x.itemName == answer))
                 {
-                    var item_Find = inven_list.Find(x => x.itemName == answer);
+                    var item_Find = GM_instance.inventoryItems.Find(x => x.itemName == answer);
 
                     //장착
                     if (item_Find.Installed == false)
@@ -102,19 +106,19 @@ namespace TRPG
                         //장착하면 E 버튼 생성 
                         item_Find.Installed = true;
                         //아이템 스텟에 추가    
-                        StatusSetting(item_Find, _player, '+');
+                        StatusSetting(item_Find,'+');
                     }
                     else  // 해제
                     {
                         //해제하면 E버튼 없애기
                         item_Find.Installed = false;
                         //아이템 스텟 해제
-                        StatusSetting(item_Find, _player, '-');
+                        StatusSetting(item_Find,'-');
                     }
 
 
                 }
-                else if (int.TryParse(answer,out number))
+                else if (int.TryParse(answer, out number))
                 {
                     bool_1 = true;
                 }
@@ -157,11 +161,11 @@ namespace TRPG
         /// 스텟을 줄이기
         /// </summary>
         /// <param name="itemName"></param>
-        public void ItemDelete(string itemName, Player player)
+        public void ItemDelete(string itemName)
         {
-            Item foundItem = inven_list.Find(Item => Item.itemName == itemName);
+            InvenItem foundItem = GM_instance.inventoryItems.Find(Item => Item.itemName == itemName);
             //스텟을 감소시키기
-            StatusSetting(foundItem, player, '-');
+            StatusSetting(foundItem,'-');
             //삭제
             //items.Remove(foundItem);
         }
@@ -172,27 +176,33 @@ namespace TRPG
         /// <param name="_item"></param>
         public void ItemAdd(InvenItem _item)
         {
-            inven_list.Add(_item);
+            GM_instance.inventoryItems.Add(_item);
         }
         public void ItemAdd(bool installed, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
         {
-            InvenItem newItem_inven=new InvenItem(installed, itemName, itemPrice, itemType, hp, mp, atk, def);
-            inven_list.Add(newItem_inven);
+            InvenItem newItem_inven = new InvenItem(installed, itemName, itemPrice, itemType, hp, mp, atk, def);
+            GM_instance.inventoryItems.Add(newItem_inven);
         }
         /// <summary>
         /// 아이템에 대한 수치마큼 스텟에서  '+' or '-'
         /// </summary>
         /// <param name="foundItem"></param>
-        public void StatusSetting(Item? foundItem, Player player, char _char)
+        public void StatusSetting(InvenItem foundItem,char _char)
         {
             //player의 스텟이 구성되면 그 구성된 수치에서 제외시켜주기 
             if (_char == '+')
             {
-
+                GM_instance.selectedChampion.hp +=foundItem.hp;
+                GM_instance.selectedChampion.mp += foundItem.mp;
+                GM_instance.selectedChampion.atk += foundItem.atk;
+                GM_instance.selectedChampion.def +=foundItem.def;
             }
             else if (_char == '-')
             {
-
+                GM_instance.selectedChampion.hp -= foundItem.hp;
+                GM_instance.selectedChampion.mp -= foundItem.mp;
+                GM_instance.selectedChampion.atk -= foundItem.atk;
+                GM_instance.selectedChampion.def -= foundItem.def;
             }
             else
             {
@@ -200,5 +210,9 @@ namespace TRPG
             }
 
         }
+
+
+
+
     }
 }

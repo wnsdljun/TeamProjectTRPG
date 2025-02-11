@@ -10,18 +10,23 @@ namespace TRPG
     {
         List<ShopItem> items_list_shop = new List<ShopItem>();
         Inven inven = new Inven();
-
+        GameManager GM_instance;
         public Shop()
         {
+<<<<<<< HEAD
             items_list_shop.Add(new ShopItem(false, "삼위일체", 3000, ItemType.Weapon, 30, 0, 15, 15));
             items_list_shop.Add(new ShopItem(false, "몰락한왕의검", 3000, ItemType.Weapon, 0, 0, 40, 0));
             items_list_shop.Add(new ShopItem(false, "얼어붙은심장", 2000, ItemType.Armor, 50, 0, 0, 30));
             items_list_shop.Add(new ShopItem(false, "가시갑옷", 2500, ItemType.Armor, 40, 0, 0, 40));
             items_list_shop.Add(new ShopItem(false, "광전사의군화", 1500, ItemType.Shoes, 0, 0, 15, 0));
             items_list_shop.Add(new ShopItem(false, "판금장화", 1500, ItemType.Weapon, 0, 0, 0, 18));
+=======
+            GM_instance = GameManager.Instance;
+
+>>>>>>> Dev_bosung_01
         }
 
-        public void ShowShop(Player _player,Inven _inven)
+        public void ShowShop(Player _player, Inven _inven)
         {
             inven = _inven;
             bool bool_showShop = false;
@@ -35,7 +40,7 @@ namespace TRPG
                     Console.ResetColor();
                     Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
 
-                    Item_list_show(items_list_shop,  false);
+                    Item_list_show(items_list_shop, false);
 
                     Console.WriteLine("1. 아이템구매");
                     Console.WriteLine("0. 나가기");
@@ -83,37 +88,79 @@ namespace TRPG
                 //반복문장
                 {
                     Console.Clear();
-                    Console.WriteLine($"[보유한 골드] : {"player.gold"} G");
+                    Console.WriteLine($"[보유한 골드] : {GM_instance.player.Gold} G");
                     Console.WriteLine();
                     Item_list_show(items_list_shop, true);
                     Console.WriteLine();
-                    Console.WriteLine("구해하실 아이템의 이름를 입력해주세요");
+                    Console.WriteLine("구매하실 아이템의 이름를 입력해주세요 :(나가기 :0)");
                     Console.Write(">>>");
                 }
                 string answer = Console.ReadLine();
                 if (!string.IsNullOrEmpty(answer) && items_list_shop.Any(x => x.itemName == answer))
                 {
                     var Buyitem = items_list_shop.Find(x => x.itemName == answer);
-                    //구매완료인템 
-                    if (Buyitem.purchase == true)
+                    //골드가 있는경우
+                    if (GM_instance.player.Gold >= Buyitem.itemPrice)
                     {
-                        Console.WriteLine("구매 완료된 템입니다. 다른 아이템을 구매해주세요");
-                        Thread.Sleep(1500);
+                        //구매완료인템 
+                        if (Buyitem.purchase == true)
+                        {
+                            Console.WriteLine("구매 완료된 템입니다. 다른 아이템을 구매해주세요");
+                            Thread.Sleep(1500);
+                        }
+                        else
+                        {
+                            int anser;
+                            bool boolbuyShop_02 = false;
+                            while (!boolbuyShop_02)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("구매하시겠습니까? :(1:구매하기 /0:뒤로가기)");
+                                Console.Write(">>> ");
+                                if (int.TryParse(Console.ReadLine(), out anser))
+                                {
+                                    if (anser == 1)
+                                    {
+                                        //골드 차감 
+                                        GM_instance.player.Gold -= Buyitem.itemPrice;
+                                        //상점에 표시
+                                        Buyitem.purchase = true;
+                                        //가방에 넣기
+                                        inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
+                                        
+                                    }
+                                    else if (anser == 0)
+                                    {
+                                        boolbuyShop_02 = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("잘못된 입력입니다 다시 입력해주세요");
+                                    Thread.Sleep(1000);
+                                }
+                            }
+
+                           
+                        }
+
+
+
                     }
-                    else
+                    else //골드 부족한 경우
                     {
-                        //상점에 표시
-                        Buyitem.purchase = true;
+                        Console.WriteLine("골드가 부족합니다 : ");
+                        Thread.Sleep(1000);
                     }
 
-                    //골드 차감
-                    //미구현 
-                    //가방에 넣기
-                    inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
-                    
-                   
+
                 }
-                else if (int.TryParse(answer,out number))
+                else if (int.TryParse(answer, out number) && number == 0)
                 {
                     boolbuyShop = true;
                 }
@@ -126,7 +173,7 @@ namespace TRPG
             }
         }
 
-        private void Item_list_show(List<ShopItem> items_list_shop,  bool buybool)
+        private void Item_list_show(List<ShopItem> items_list_shop, bool buybool)
         {
 
             Console.WriteLine("[아이템 목록]");
