@@ -4,7 +4,7 @@ namespace TRPG
 {
     internal class MissFortune : Champion
     {
-
+        public BattleSystem battleSystem;
         public MissFortune() : base("미스 포춘", 640, 300, 53, 25, 103, 40, 3, 4, 3)
         {
         }
@@ -33,7 +33,10 @@ namespace TRPG
             if (enemy.hp <= 0)
             {
                 Console.WriteLine("첫 번째 적이 처치되었습니다! 두 번째 적에게 추가 데미지를 입힙니다!");
-                Console.WriteLine($"두 번째 적에게 {totalDamage * 2} 데미지를 입힙니다.");
+                Console.Write($"두 번째로 ");
+                battleSystem.Targeting();
+                damage.PlayerSkillDamage(totalDamage * 2, battleSystem.Target);
+                //Console.WriteLine($"두 번째 적에게 {totalDamage * 2} 데미지를 입힙니다.");
             }
         }
 
