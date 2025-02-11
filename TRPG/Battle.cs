@@ -179,8 +179,9 @@ namespace TRPG
         }
         public void Targeting()
         {
+            Console.WriteLine("공격할 적을 선택하세요.");
             int target;
-            if (int.TryParse(Console.ReadLine(), out target) )
+            if (int.TryParse(Console.ReadLine(), out target) && target <= enemies.Count && target > 0)
             {
                 Enemy Target = enemies[target - 1];
             }

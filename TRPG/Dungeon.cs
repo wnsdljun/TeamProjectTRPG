@@ -43,7 +43,7 @@ namespace TRPG
                 "\n2. 인벤토리" +
                 "\n3. 휴식하기" +
                 "\n4. 나가기");
-            if (int.TryParse(Console.ReadLine(), out input))
+            if (int.TryParse(Console.ReadLine(), out input) && input < 5 && 0 < input)
             {
                 switch (input)
                 {
