@@ -36,17 +36,18 @@ namespace TRPG
 
             Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");
             damage.PlayerSkillDamage(totalDamage, enemy);
-            Console.WriteLine("독 효과: 매 턴마다 추가 피해가 발생합니다.");
+            damage.TeemoSkillDamage(totalDamage, enemy);
+            //Console.WriteLine("독 효과: 매 턴마다 추가 피해가 발생합니다.");
 
-            for (int turn = 1; turn <= 3; turn++)
-            {
-                int damageThisTurn = damagePerTurn;
-                if (turn == 3)
-                {
-                    damageThisTurn += remainder;  // 마지막 턴에 남은 피해 추가
-                }
-                Console.WriteLine($"{turn}턴째: {damageThisTurn}의 독 피해");
-            }
+            //for (int turn = 1; turn <= 3; turn++)
+            //{
+            //    int damageThisTurn = damagePerTurn;
+            //    if (turn == 3)
+            //    {
+            //        damageThisTurn += remainder;  // 마지막 턴에 남은 피해 추가
+            //    }
+            //    Console.WriteLine($"{turn}턴째: {damageThisTurn}의 독 피해");
+            //}
         }
 
         // W 스킬: 실명다트 지만 그냥 강한 공격
