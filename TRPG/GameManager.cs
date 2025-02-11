@@ -35,11 +35,12 @@ namespace TRPG
         // private 생성자
         private GameManager()
         {
+            inventoryItems = new List<InvenItem>();
+            items_list_shop = new List<ShopItem>();
             player = new Player();
             shop = new Shop();
             inven = new Inven();
-            inventoryItems = new List<InvenItem>();            
-            items_list_shop = new List<ShopItem>();
+            
             // 다른 초기화 코드
         }
 

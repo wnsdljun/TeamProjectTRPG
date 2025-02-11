@@ -26,6 +26,16 @@ namespace TRPG
 
         }
 
+        public void ShopItem_Add()
+        {
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "삼위일체", 3000, ItemType.Weapon, 30, 0, 15, 15));
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "몰락한왕의검", 3000, ItemType.Weapon, 0, 0, 40, 0));
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "얼어붙은심장", 2000, ItemType.Armor, 50, 0, 0, 30));
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "가시갑옷", 2500, ItemType.Armor, 40, 0, 0, 40));
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "광전사의군화", 1500, ItemType.Shoes, 0, 0, 15, 0));
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "판금장화", 1500, ItemType.Weapon, 0, 0, 0, 18));
+        }
+
         public void ShowShop(Player _player, Inven _inven)
         {
             inven = _inven;
@@ -115,6 +125,12 @@ namespace TRPG
                             while (!boolbuyShop_02)
                             {
                                 Console.Clear();
+                                Console.WriteLine($"[보유한 골드] : {GameManager.Instance.player.Gold} G");
+                                Console.WriteLine();
+                                //Console.WriteLine($"구매하실 아이템 :{Buyitem.itemName} /가격 :{Buyitem.itemPrice}");
+                                Console.WriteLine($"{"이름",-17}{"종류",-10}{"가격",-5}{"HP",-5}{"MP",-6}{"공격력",-7}{"방어력",-4}");
+                                Console.WriteLine($"{Buyitem.itemName,-14}{Buyitem.itemType,-10}{Buyitem.itemPrice,-8}{Buyitem.hp,-6}{Buyitem.mp,-6}{Buyitem.atk,-8}{Buyitem.def,-6}");
+                                Console.WriteLine();
                                 Console.WriteLine("구매하시겠습니까? :(1:구매하기 /0:뒤로가기)");
                                 Console.Write(">>> ");
                                 if (int.TryParse(Console.ReadLine(), out anser))
@@ -127,7 +143,8 @@ namespace TRPG
                                         Buyitem.purchase = true;
                                         //가방에 넣기
                                         inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
-
+                                        boolbuyShop_02= true;
+                                        break;
                                     }
                                     else if (anser == 0)
                                     {
@@ -136,7 +153,8 @@ namespace TRPG
                                     }
                                     else
                                     {
-
+                                        Console.WriteLine("잘못된 입력입니다 다시 입력해주세요");
+                                        Thread.Sleep(1000);
                                     }
                                 }
                                 else
