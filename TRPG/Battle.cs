@@ -115,8 +115,8 @@
                         case 3:
                             if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
                             {
-                                enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_W(enemy, enemies);
+                                TargetingReset();
+                                GameManager.Instance.selectedChampion.UseSkill_W(Target, enemies);
                                 Turn = false;
                             }
                             else
@@ -129,8 +129,8 @@
                         case 4:
                             if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
                             {
-                                enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_E(enemy, enemies);
+                                TargetingReset();
+                                GameManager.Instance.selectedChampion.UseSkill_E(Target, enemies);
                                 Turn = false;
                             }
                             else

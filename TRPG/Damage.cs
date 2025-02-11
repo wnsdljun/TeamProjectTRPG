@@ -27,7 +27,7 @@ namespace TRPG
             Random random = new Random();
             damage = 100 / (30 + enemy.def) * GameManager.Instance.player.Championclass.atk;
             int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
-            Console.WriteLine($"{GameManager.Instance.player.PlayerName}이 기본 공격을 사용합니다. \n{enemy.name}은 {Randomdamage}의 피해를 받았습니다.");
+            Console.WriteLine($"{GameManager.Instance.player.PlayerName}이 기본 공격을 사용합니다. \n{enemy.name}은 {Randomdamage}의 피해를 받았습니다.\n");
             enemy.hp -= Randomdamage;
         }
         public void PlayerAllSkillDamage(int NewDamage, List<Enemy> enemies)
@@ -40,7 +40,7 @@ namespace TRPG
                     Random random = new Random();
                     damage = NewDamage;
                     int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
-                    Console.WriteLine($"{enemy.name}은 {Randomdamage}의 피해를 받았습니다.");
+                    Console.WriteLine($"{enemy.name}은 {Randomdamage}의 피해를 받았습니다.\n");
                     enemy.hp -= Randomdamage;
                 }
             }
@@ -50,7 +50,7 @@ namespace TRPG
             Random random = new Random();
             damage = NewDamage;
             int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
-            Console.WriteLine($"{enemy.name}은 {Randomdamage}의 피해를 받았습니다.");
+            Console.WriteLine($"{enemy.name}은 {Randomdamage}의 피해를 받았습니다.\n");
             enemy.hp -= Randomdamage;
         }
         public void TeemoSkillDamage(int NewDamage, Enemy enemy)
@@ -59,7 +59,7 @@ namespace TRPG
             Random random = new Random();
             damage = NewDamage / 3 * turn++;
             int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
-            Console.WriteLine($"{enemy.name}은 {Randomdamage}의 추가 독 피해를 받았습니다.");
+            Console.WriteLine($"{enemy.name}은 {Randomdamage}의 추가 독 피해를 받았습니다.\n");
             enemy.hp -= Randomdamage;
             if (turn >= 5)
             {
