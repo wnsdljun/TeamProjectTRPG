@@ -210,11 +210,10 @@
         }
         public void StageSet()
         {
-
             switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
-                    enemies = battleEnemies.wave1;
+                    enemies =  battleEnemies.wave1;
                     break;
                 case 2:
                     enemies = battleEnemies.wave2;
@@ -244,6 +243,7 @@
         {
             wave1 = new List<Enemy>
             {
+                
                 enemyfactory.MeleeMinion()
             };
 
