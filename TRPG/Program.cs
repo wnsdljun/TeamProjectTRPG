@@ -6,11 +6,11 @@ namespace TRPG
     {
         static void Main(string[] args)
         {
+            GameManager.Instance.shop.ShopItem_Add();
             GameManager.Instance.Chi_Champion();
             GameManager.Instance.MainMenu();
 
 
-           
         }
         public static void ShowStatus(Player player)
             {
