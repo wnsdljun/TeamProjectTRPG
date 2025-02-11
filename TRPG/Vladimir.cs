@@ -10,7 +10,7 @@ namespace TRPG
 
         // Q 스킬: 수혈
         // - 적에게 데미지를 주고, 그 데미지의 50%만큼 자신의 체력을 회복합니다.
-        public override void UseSkill_Q()
+        public override void UseSkill_Q(Enemy enemy)
         {
             if (SkillLevelQ == 0)
             {
@@ -44,7 +44,7 @@ namespace TRPG
 
         // W 스킬: 혈사병
         // - 적 전체에게 데미지를 입히고, 입힌 데미지의 40%만큼 자신의 체력을 회복합니다.
-        public override void UseSkill_W()
+        public override void UseSkill_W(Enemy enemy)
         {
             if (SkillLevelW == 0)
             {
@@ -78,7 +78,7 @@ namespace TRPG
 
         // E 스킬: 선혈의 파도
         // - 적 전체에게 광역 피해를 입힙니다.
-        public override void UseSkill_E()
+        public override void UseSkill_E(Enemy enemy)
         {
             if (SkillLevelE == 0)
             {
