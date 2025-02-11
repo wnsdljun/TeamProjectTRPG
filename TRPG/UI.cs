@@ -65,7 +65,7 @@ namespace TRPG
                 if (key == ConsoleKey.DownArrow) MoveSelection(1);
                 //if (key == ConsoleKey.RightArrow) ;
                 //if (key == ConsoleKey.LeftArrow) ;
-                if (key == ConsoleKey.Enter) return ConfirmAnim(selectedLine);
+                if (selectedLine != -1 && key == ConsoleKey.Enter) return ConfirmAnim(selectedLine);
                 if (selectedLine != -1 && key == ConsoleKey.Escape)
                 {
                     selectableE[selectedLine].isHighlighted = false;
