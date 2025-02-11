@@ -12,10 +12,6 @@ namespace TRPG
         public int itemPrice { get; }
         public ItemType itemType { get; }
         
-
-
-
-
     }
 
     enum ItemType

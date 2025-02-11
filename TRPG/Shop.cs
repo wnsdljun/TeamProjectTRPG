@@ -8,13 +8,11 @@ namespace TRPG
 {
     internal class Shop
     {
-        List<ShopItem> items_list_shop = new List<ShopItem>();
-        Inven inven = new Inven();
-        GameManager GM_instance;
+        
+        Inven inven;
+
         public Shop()
         {
-            GM_instance = GameManager.Instance;
-
         }
 
         public void ShowShop(Player _player, Inven _inven)
@@ -31,7 +29,7 @@ namespace TRPG
                     Console.ResetColor();
                     Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
 
-                    Item_list_show(items_list_shop, false);
+                    Item_list_show(GameManager.Instance.items_list_shop, false);
 
                     Console.WriteLine("1. 아이템구매");
                     Console.WriteLine("0. 나가기");
@@ -50,7 +48,7 @@ namespace TRPG
                             break;
                         case 1:
                             //아이템구매 
-                            Buy_item(_player, items_list_shop);
+                            Buy_item(_player, GameManager.Instance.items_list_shop);
 
                             break;
 
@@ -79,7 +77,7 @@ namespace TRPG
                 //반복문장
                 {
                     Console.Clear();
-                    Console.WriteLine($"[보유한 골드] : {GM_instance.player.Gold} G");
+                    Console.WriteLine($"[보유한 골드] : {GameManager.Instance.player.Gold} G");
                     Console.WriteLine();
                     Item_list_show(items_list_shop, true);
                     Console.WriteLine();
@@ -91,7 +89,7 @@ namespace TRPG
                 {
                     var Buyitem = items_list_shop.Find(x => x.itemName == answer);
                     //골드가 있는경우
-                    if (GM_instance.player.Gold >= Buyitem.itemPrice)
+                    if (GameManager.Instance.player.Gold >= Buyitem.itemPrice)
                     {
                         //구매완료인템 
                         if (Buyitem.purchase == true)
@@ -113,12 +111,12 @@ namespace TRPG
                                     if (anser == 1)
                                     {
                                         //골드 차감 
-                                        GM_instance.player.Gold -= Buyitem.itemPrice;
+                                        GameManager.Instance.player.Gold -= Buyitem.itemPrice;
                                         //상점에 표시
                                         Buyitem.purchase = true;
                                         //가방에 넣기
                                         inven.ItemAdd(false, Buyitem.itemName, Buyitem.itemPrice, Buyitem.itemType, Buyitem.hp, Buyitem.mp, Buyitem.atk, Buyitem.def);
-                                        
+
                                     }
                                     else if (anser == 0)
                                     {
@@ -137,7 +135,7 @@ namespace TRPG
                                 }
                             }
 
-                           
+
                         }
 
 
@@ -200,13 +198,13 @@ namespace TRPG
 
         public void Add(ShopItem item)
         {
-            items_list_shop.Add(item);
+            GameManager.Instance.items_list_shop.Add(item);
         }
         public void Add(bool purchase, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
         {
             //음 어덯게 하는게 좋을까?
             ShopItem newitem = new ShopItem(purchase, itemName, itemPrice, itemType, hp, mp, atk, def);
-            items_list_shop.Add(newitem);
+            GameManager.Instance.items_list_shop.Add(newitem);
         }
     }
 }

@@ -118,58 +118,58 @@ namespace TRPG
 
             //
 
-            Player player = new Player(playerName, selectedChampion);
-            Inven inven = new Inven();
-            Shop shop = new Shop();
+            //Player player = new Player();
+            //Inven inven = new Inven(GameManager);
+            //Shop shop = new Shop();
 
-            //메인메뉴?
-            bool exitMenu = false;
-            while (!exitMenu)
-            {
-                UI ui_MainMenu = new UI(new List<UIElement>
-                {
-                    new("메인 메뉴를 선택하세요"),
-                    new(),
-                    new("1. 스테이터스 확인",selectable: true ,tip: ""),
-                    new("2. 인벤토리 확인",selectable: true ,tip: ""),
-                    new("3. 상점",selectable: true ,tip: ""),
-                    new("4. 협곡",selectable: true ,tip: ""),
-                    new(),
-                    new("종료",selectable: true ,tip: "")
-                });
-                ui_MainMenu.WriteAll();
-                int menuChoice = ui_MainMenu.UserUIControl();
+            ////메인메뉴?
+            //bool exitMenu = false;
+            //while (!exitMenu)
+            //{
+            //    UI ui_MainMenu = new UI(new List<UIElement>
+            //    {
+            //        new("메인 메뉴를 선택하세요"),
+            //        new(),
+            //        new("1. 스테이터스 확인",selectable: true ,tip: ""),
+            //        new("2. 인벤토리 확인",selectable: true ,tip: ""),
+            //        new("3. 상점",selectable: true ,tip: ""),
+            //        new("4. 협곡",selectable: true ,tip: ""),
+            //        new(),
+            //        new("종료",selectable: true ,tip: "")
+            //    });
+            //    ui_MainMenu.WriteAll();
+            //    int menuChoice = ui_MainMenu.UserUIControl();
 
-                switch (menuChoice)
-                {
-                    case 0:
-                        Program.ShowStatus(player);
-                        break;
-                    case 1:
-                        inven.ShowInven(player);
-                        break;
-                    case 2:
-                        shop.ShowShop(player, inven);
-                        break;
-                    case 3:
-                        Console.Clear();
-                        Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
-                        Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
-                        Console.ReadLine();
-                        break;
-                    case 4:
-                        //goto myloc;
-                        exitMenu = true;
-                        break;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다. 엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
-                        Console.ReadLine();
-                        break;
-                }
+            //    switch (menuChoice)
+            //    {
+            //        case 0:
+            //            Program.ShowStatus(player);
+            //            break;
+            //        case 1:
+            //            inven.ShowInven(player);
+            //            break;
+            //        case 2:
+            //            shop.ShowShop(player, inven);
+            //            break;
+            //        case 3:
+            //            Console.Clear();
+            //            Console.WriteLine("협곡 기능은 아직 구현되지 않았습니다.");
+            //            Console.WriteLine("엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+            //            Console.ReadLine();
+            //            break;
+            //        case 4:
+            //            //goto myloc;
+            //            exitMenu = true;
+            //            break;
+            //        default:
+            //            Console.WriteLine("잘못된 입력입니다. 엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
+            //            Console.ReadLine();
+            //            break;
+            //    }
 
 
 
-            }// while 의 끝
+            //}// while 의 끝
 
         }
     }
