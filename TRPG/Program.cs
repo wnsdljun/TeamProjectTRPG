@@ -121,15 +121,11 @@ namespace TRPG
                         shop.ShowShop(player, inven);
                         break;
                     case "4":
-<<<<<<< HEAD
                         // 협곡 기능을 호출합니다.
                         dungeon.DungeonStart();
                         dungeon.DungeonForward();
                         Console.WriteLine("\n엔터 키를 눌러 메인 메뉴로 돌아갑니다.");
                         Console.ReadLine();
-=======
-                        dungeon.DungeonStart();
->>>>>>> GH_Dev_Fix
                         break;
                     case "0":
                         exitMenu = true;
