@@ -180,7 +180,7 @@ namespace TRPG
         public void Targeting()
         {
             int target;
-            if (int.TryParse(Console.ReadLine(), out target) )
+            if (int.TryParse(Console.ReadLine(), out target) && target < enemies.Count)
             {
                 Enemy Target = enemies[target - 1];
             }
