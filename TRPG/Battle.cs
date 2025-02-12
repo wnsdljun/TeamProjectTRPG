@@ -1,4 +1,6 @@
-﻿namespace TRPG
+﻿using System.Numerics;
+
+namespace TRPG
 {
     //internal class Battle
     //{
@@ -39,12 +41,14 @@
                     }
                     else
                     {
-                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.");//사망한 적은 회색으로 표시
+                        Console.ResetColor();
                     }
                 }
                 Console.WriteLine("\n플레이어 상태\n" +
-                    $"HP: {GameManager.Instance.selectedChampion.hp} " +
-                    $"MP: {GameManager.Instance.selectedChampion.mp}" +
+                    $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp}" +
+                    $"MP: {GameManager.Instance.selectedChampion.mp}/{GameManager.Instance.selectedChampion.MaxMp}" +
                     "\n1. 전투하기" +
                     "\n2. 도망가기");
                 int input;
@@ -82,9 +86,9 @@
             while (Turn)
             {
                 Console.WriteLine("1. 기본 공격" +
-                "\n2. Q스킬" +
-                "\n3. W스킬" +
-                "\n4. E스킬");
+                $"\n2. Q스킬 LV{GameManager.Instance.selectedChampion.SkillLevelQ}" +
+                $"\n3. W스킬 LV{GameManager.Instance.selectedChampion.SkillLevelW}" +
+                $"\n4. E스킬 LV{GameManager.Instance.selectedChampion.SkillLevelE}");
                 int input;
                 Enemy enemy;
                 if (int.TryParse(Console.ReadLine(), out input))
