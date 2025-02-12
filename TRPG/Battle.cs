@@ -48,7 +48,7 @@ namespace TRPG
                         Console.ResetColor();
                     }
                 }
-                Console.WriteLine("\n플레이어 상태\n" +
+                Console.WriteLine($"\n{GameManager.Instance.playerName} LV {GameManager.Instance.player.Level}\n" +
                     $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp}" +
                     $"MP: {GameManager.Instance.selectedChampion.mp}/{GameManager.Instance.selectedChampion.MaxMp}" +
                     "\n1. 전투하기" +
