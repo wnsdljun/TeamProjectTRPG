@@ -66,6 +66,8 @@ namespace TRPG
                             int input2;
                             Console.WriteLine("골드를 지불해 체력을 회복 시킵니다. 회복하시겠습니까?\n비용: 100골드\n");
                             Console.WriteLine("================================================\n");
+                            Console.WriteLine($"체력: {GameManager.Instance.player.Championclass.hp}/{GameManager.Instance.player.Championclass.MaxHp}");
+                            Console.WriteLine($"마나: {GameManager.Instance.player.Championclass.mp}/{GameManager.Instance.player.Championclass.MaxMp}");
                             Console.WriteLine($"보유 골드: {GameManager.Instance.player.Gold}골드");
                             Console.WriteLine("1. 회복하기\n2. 나가기");
                             if (int.TryParse(Console.ReadLine(), out input2) && input2 == 1)

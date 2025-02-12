@@ -23,8 +23,8 @@ namespace TRPG
                 Console.WriteLine($"골드: {player.Gold}");
                 Console.WriteLine();
                 Console.WriteLine("--- 챔피언 스탯 ---");
-                Console.WriteLine($"HP: {player.Championclass.hp}");
-                Console.WriteLine($"MP: {player.Championclass.mp}");
+                Console.WriteLine($"HP: {player.Championclass.hp}/{player.Championclass.MaxHp}");
+                Console.WriteLine($"MP: {player.Championclass.mp}/{player.Championclass.MaxMp}");
                 Console.WriteLine($"ATK: {player.Championclass.atk}");
                 Console.WriteLine($"DEF: {player.Championclass.def}");
                 Console.WriteLine("=============================");
