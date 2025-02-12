@@ -89,7 +89,7 @@
                     new(),
                     new("1. 티모",selectable: true ,tip: "버섯깔기!"),
                     new("2. 미스 포춘",selectable: true ,tip: "미스 포춘 쿠키"),
-                    new("3. 블라디미르",selectable: true ,tip: "블라디미르")
+                    new("3. 블라디미르",selectable: true ,tip: "블라디보스토크")
                 });
 
                 ui_SelectChmp.WriteAll();
@@ -195,6 +195,13 @@
 
 
             }// whil
+        }
+        public void SplashScreen()
+        {
+            Console.WriteLine("\r\n _      _____  _                          _  _  _          \r\n| |    |  _  || |                        | |(_)| |         \r\n| |    | | | || |      __ _  _   _   ___ | | _ | | __  ___ \r\n| |    | | | || |     / _` || | | | / _ \\| || || |/ / / _ \\\r\n| |____\\ \\_/ /| |____| (_| || |_| ||  __/| || ||   < |  __/\r\n\\_____/ \\___/ \\_____/ \\__, | \\__,_| \\___||_||_||_|\\_\\ \\___|\r\n                       __/ |                               \r\n                      |___/                                \r\n");
+            Console.WriteLine("\n잠시후 게임으로 넘어갑니다...");
+            Thread.Sleep(4000);
+            Console.Clear();
         }
     }
 }

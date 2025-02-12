@@ -6,6 +6,7 @@ namespace TRPG
     {
         static void Main(string[] args)
         {
+            GameManager.Instance.SplashScreen();
             GameManager.Instance.shop.ShopItem_Add();
             GameManager.Instance.inven.BaseItemAdd();
             GameManager.Instance.Chi_Champion();

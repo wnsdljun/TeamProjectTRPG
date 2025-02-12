@@ -213,22 +213,12 @@
                 ui.WriteAll();
                 int input = ui.UserUIControl();
 
-                if (enemies.Count > input)
-                {
-                    for (int i = 0; i < enemies.Count; i++)
-                    {
-                        if (enemies[i].hp > 0) continue;
-                        else
-                        {
-                            if (input <= i) break;
-                            input++;
-                        }
-                    }
-                }
+                List<Enemy> aliveEnemy = enemies.Where(x => x.hp > 0).ToList();
 
-                if (input < list.Count - 2) //스킬 선택
+
+                if (input < aliveEnemy.Count) //스킬 선택
                 {
-                    attackedEnemy = ui_BattleAttackSkill(input); //적 공격하고 공격 여부 받아옴.
+                    attackedEnemy = ui_BattleAttackSkill(aliveEnemy[input]); //적 공격하고 공격 여부 받아옴.
                     if (attackedEnemy) return true; //적을 공격했다면 돌아가기
                     else continue;//다른 적을 선택하기로 하고 돌아왔으니까 반복문 다시.
                 }
@@ -236,9 +226,9 @@
             }
         }
 
-        public bool ui_BattleAttackSkill(int enemyIndex)
+        public bool ui_BattleAttackSkill(Enemy e)
         {
-            string enemy = $"{enemies[enemyIndex].name}\t|\tHp: {enemies[enemyIndex].hp}";
+            string enemy = $"{e.name}\t|\tHp: {e.hp}";
             int playerMp = GameManager.Instance.player.Championclass.mp;
             int sklreqMpQ = GameManager.Instance.player.Championclass.Q_MANA_COST;
             int sklreqMpW = GameManager.Instance.player.Championclass.W_MANA_COST;
@@ -271,32 +261,37 @@
             ui.WriteAll();
             int input = ui.UserUIControl();
 
-            //스킬 사용불가일때 입력받은 값에 1 더해서 인덱스 맞춤
+
             bool[] bools = new bool[] { sklavblQ, sklavblW, sklavblE };
-            if (input != 0)
-            {
-                if (!sklavblQ && input == 1) input++;
-                if (!sklavblW && input == 2) input++;
-                if (!sklavblE && input == 3) input++;
-            }
+            int availableSkillCount = bools.Where(x => true).Count();
+
+            List<int> mapping = new List<int>();
+            mapping.Add(0);
+            if (sklavblQ) mapping.Add(1);
+            if (sklavblW) mapping.Add(2);
+            if (sklavblE) mapping.Add(3);
+            mapping.Add(4);
+
+            input = mapping[input];
 
             switch (input)
             {
                 case 0:
                     //평타
-                    GameManager.Instance.player.Championclass.BaseAttack(enemies[enemyIndex]);
+                    GameManager.Instance.player.Championclass.BaseAttack(e);
                     return true;
                 case 1: //Q
-                    GameManager.Instance.player.Championclass.UseSkill_Q(enemies[enemyIndex], enemies);
+                    GameManager.Instance.player.Championclass.UseSkill_Q(e, enemies);
                     return true;
                 case 2: //W
-                    GameManager.Instance.player.Championclass.UseSkill_W(enemies[enemyIndex], enemies);
+                    GameManager.Instance.player.Championclass.UseSkill_W(e, enemies);
                     return true;
                 case 3: //E
-                    GameManager.Instance.player.Championclass.UseSkill_E(enemies[enemyIndex], enemies);
+                    GameManager.Instance.player.Championclass.UseSkill_E(e, enemies);
                     return true;
                 case 4: //다른 적 선택
                     return false;
+
             }
             return false;
         }
