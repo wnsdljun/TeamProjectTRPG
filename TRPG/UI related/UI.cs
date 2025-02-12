@@ -44,11 +44,8 @@ namespace TRPG
         }
         public void WriteAll(string waitMessage,int waitingTime)
         {
-            Console.Clear();
-            foreach (UIElement element in elements)
-            {
-                element.Write();
-            }
+            WriteAll();
+
                 Console.SetCursorPosition(0, Console.WindowHeight - 3); //밑에서 3번째줄
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, Console.WindowHeight - 3);
@@ -64,6 +61,13 @@ namespace TRPG
                 waitingTime -= waitingTime%1000;
                 waitingTime -= 1000;
             }
+        }
+        public void WriteAtBottom(string text)
+        {
+            Console.SetCursorPosition(0, Console.WindowHeight - 2); //밑에서 2번째줄
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, Console.WindowHeight - 2);
+            Console.Write(text);
         }
         public int UserUIControl()
         {

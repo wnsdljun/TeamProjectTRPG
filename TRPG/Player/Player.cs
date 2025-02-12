@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//
-namespace TRPG
+﻿namespace TRPG
 {
     internal class Player
     {
@@ -37,7 +31,8 @@ namespace TRPG
 
             while (Exp >= GetRequiredExp())
             {
-                LevelUp();
+                //LevelUp();
+                ui_LevelUp();
             }
         }
         private int GetRequiredExp()
@@ -56,7 +51,7 @@ namespace TRPG
             bool bool_skill = false;
             while (!bool_skill)
             {
-                Console.WriteLine($"어떤 스킬을 찍으시겠습니까? Q =1 / W =2 / E=3");
+                Console.WriteLine($"어떤 스킬을 찍으시겠습니까? Q = 1 / W = 2 / E = 3");
                 Console.Write(">>>");
 
                 int skillnum;
@@ -68,7 +63,7 @@ namespace TRPG
                             GameManager.Instance.selectedChampion.LevelUpSkillQ();
                             Console.WriteLine("Q스킬을 배웠습니다");
                             Thread.Sleep(1000);
-                            bool_skill= true;
+                            bool_skill = true;
                             break;
                         case 2:
                             GameManager.Instance.selectedChampion.LevelUpSkillW();
@@ -95,6 +90,58 @@ namespace TRPG
                     Thread.Sleep(1000);
                 }
 
+            }
+        }
+
+        public void ui_LevelUp()
+        {
+            Exp -= GetRequiredExp();
+            Level++;
+            //레벨업시 챔피언의 능력치 상승
+            Championclass.LevelUpAbility();
+            //Console.WriteLine($"{Championclass.Name}이(가) 레벨업 했습니다! (Lv.{Level})");
+            //레벨업시 스킬레벨 증가
+
+            bool bool_skill = false;
+            while (!bool_skill)
+            {
+                UI uI = new UI(new List<UIElement>
+                {
+                    new($"{Championclass.Name}이(가) 레벨업 했습니다! (Lv.{Level})"),
+                    new(),
+                    new(),
+                    new($"레벨업 할 스킬을 선택해 주세요."),
+                    new($"{Championclass.skillInfoQ.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoQ.Split(':')[1]}"),
+                    new($"{Championclass.skillInfoW.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoW.Split(':')[1]}"),
+                    new($"{Championclass.skillInfoE.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoE.Split(':')[1]}")
+                });
+
+                uI.WriteAll();
+                int skillnum = uI.UserUIControl();
+                string str;
+                switch (skillnum)
+                {
+                    case 0:
+                        GameManager.Instance.selectedChampion.LevelUpSkillQ();
+                        str = "Q스킬을 배웠습니다";
+                        bool_skill = true;
+                        break;
+                    case 1:
+                        GameManager.Instance.selectedChampion.LevelUpSkillW();
+                        str = "W스킬을 배웠습니다";
+                        bool_skill = true;
+                        break;
+                    case 2:
+                        GameManager.Instance.selectedChampion.LevelUpSkillE();
+                        str = "E스킬을 배웠습니다";
+                        bool_skill = true;
+                        break;
+                    default:
+                        str = "";
+                        break;
+                }
+
+                uI.WriteAll(str, 3000);
             }
         }
     }

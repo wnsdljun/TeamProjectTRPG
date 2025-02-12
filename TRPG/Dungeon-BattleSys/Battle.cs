@@ -4,7 +4,7 @@ namespace TRPG
 {
     //internal class Battle
     //{
-    //    public BattleEnemies battleEnemies = new BattleEnemies(); 
+    //    public BattleEnemies battleEnemies = new BattleEnemies(); <- 이렇게 사용하면 BattleEnemies 클래스가 초기화 되지 않음
     //    public Enemyskill enemyskill = new Enemyskill();
     //}
     internal class BattleSystem //: Battle
@@ -89,6 +89,21 @@ namespace TRPG
             }
         }
 
+        public void TargetingReset()
+        {
+            while (true)
+            {
+                Target = Targeting();
+                if (Target != null)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
         public void PlayerAttack()
         {
             bool Turn = true;
@@ -105,8 +120,7 @@ namespace TRPG
                     switch (input)
                     {
                         case 1:
-                            TargetingReset();
-                            //enemy = Targeting();
+                            Target = Targeting();
                             GameManager.Instance.selectedChampion.BaseAttack(Target);
                             Turn = false;
                             break;
@@ -115,8 +129,7 @@ namespace TRPG
                             { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
                             else if(GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
-                                TargetingReset();
-                                //enemy = Targeting();
+                                Target = Targeting();
                                 GameManager.Instance.selectedChampion.UseSkill_Q(Target, enemies);
                                 Turn = false;
                             }
@@ -193,7 +206,7 @@ namespace TRPG
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;
-            if (int.TryParse(Console.ReadLine(), out target) && enemies.Count >= target && target > 0)
+            if (int.TryParse(Console.ReadLine(), out target) && target <= enemies.Count && target > 0)
             {
                 if (enemies[target - 1].hp >= 0)
                 {
@@ -221,22 +234,6 @@ namespace TRPG
                 Console.WriteLine("잘못된 입력입니다.");
                 Console.ResetColor();
                 return null;
-            }
-
-        }
-        public void TargetingReset()
-        {
-            while (true)
-            {
-                Target = Targeting();
-                if (Target != null)
-                {
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
             }
         }
         public void GameOver()
@@ -276,7 +273,7 @@ namespace TRPG
             else
             {
 
-                GameManager.Instance.dungeon.DungeonForward();
+                //GameManager.Instance.dungeon.DungeonForward();
             }
 
         }
@@ -291,7 +288,7 @@ namespace TRPG
             switch (stageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
-                    enemies = battleEnemies.wave1;
+                    enemies =  battleEnemies.wave1;
                     break;
                 case 2:
                     enemies = battleEnemies.wave2;
@@ -321,7 +318,7 @@ namespace TRPG
         {
             wave1 = new List<Enemy>
             {
-
+                
                 enemyfactory.MeleeMinion()
             };
 

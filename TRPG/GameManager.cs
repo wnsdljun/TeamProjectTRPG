@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class GameManager
     {
@@ -12,7 +6,8 @@ namespace TRPG
         public Inven inven;
         public Shop shop;
         public Champion selectedChampion;
-        public Dungeon dungeon = new Dungeon();
+        //public Dungeon dungeon = new Dungeon();
+        public New_Dungeon dungeon = new New_Dungeon();
         public List<InvenItem> inventoryItems;
         public List<ShopItem> items_list_shop;
         private static GameManager instance = null;
@@ -146,6 +141,7 @@ namespace TRPG
 
         public void MainMenu()
         {
+            MainMenu:
             //Player player = new Player();
             //Inven inven = new Inven();
             //Shop shop = new Shop();
@@ -182,8 +178,9 @@ namespace TRPG
                         SampleClass.ShowShop();
                         break;
                     case 3:
-                        dungeon.DungeonStart();
+                        //dungeon.DungeonStart();
                         //SampleClass.SampleLobby();
+                        dungeon.ui_Lobby();
                         break;
                     case 4:
                         //goto myloc;
