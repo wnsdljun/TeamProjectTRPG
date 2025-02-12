@@ -89,7 +89,7 @@
                     new(),
                     new("1. 티모",selectable: true ,tip: "버섯깔기!"),
                     new("2. 미스 포춘",selectable: true ,tip: "미스 포춘 쿠키"),
-                    new("3. 블라디미르",selectable: true ,tip: "블라디미르")
+                    new("3. 블라디미르",selectable: true ,tip: "블라디보스토크")
                 });
 
                 ui_SelectChmp.WriteAll();
