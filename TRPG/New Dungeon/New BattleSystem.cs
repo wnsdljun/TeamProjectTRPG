@@ -218,7 +218,11 @@
                     for (int i = 0; i < enemies.Count; i++)
                     {
                         if (enemies[i].hp > 0) continue;
-                        else input++;
+                        else
+                        {
+                            if (input <= i) break;
+                            input++;
+                        }
                     }
                 }
 
