@@ -263,7 +263,7 @@ namespace TRPG
             else
             {
 
-                GameManager.Instance.dungeon.DungeonForward();
+                //GameManager.Instance.dungeon.DungeonForward();
             }
 
         }
