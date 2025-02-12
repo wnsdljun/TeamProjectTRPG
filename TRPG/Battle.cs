@@ -114,7 +114,9 @@
                             Turn = false;
                             break;
                         case 2:
-                            if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
+                            if (GameManager.Instance.player.Championclass.mp < GameManager.Instance.player.Championclass.Q_MANA_COST)
+                            { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
+                            else if(GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
                                 enemy = Targeting();
                                 GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
@@ -128,7 +130,9 @@
                             }
                             break;
                         case 3:
-                            if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
+                            if (GameManager.Instance.player.Championclass.mp < GameManager.Instance.player.Championclass.W_MANA_COST)
+                            { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
+                            else if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
                             {
                                 TargetingReset();
                                 GameManager.Instance.selectedChampion.UseSkill_W(Target, enemies);
@@ -142,7 +146,9 @@
                             }
                             break;
                         case 4:
-                            if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
+                            if (GameManager.Instance.player.Championclass.mp < GameManager.Instance.player.Championclass.E_MANA_COST)
+                            { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
+                            else if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
                             {
                                 TargetingReset();
                                 GameManager.Instance.selectedChampion.UseSkill_E(Target, enemies);
@@ -225,9 +231,7 @@
             GameManager.Instance.player.Gold /= 2;
             Console.WriteLine("패배….");
             Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
-            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
-            Console.ReadLine();
-            GameManager.Instance.MainMenu();
+            GameManager.Instance.dungeon.DungeonForward();
         }
         public void StageClear()
         {
