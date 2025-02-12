@@ -6,7 +6,7 @@
 
         public Inven()
         {
-           // this.gameManager = manager;
+            // this.gameManager = manager;
         }
 
         public void ShowInven(Player _player)
@@ -84,19 +84,19 @@
                         //장착하면 E 버튼 생성 
                         item_Find.Installed = true;
                         //아이템 스텟에 추가    
-                        StatusSetting(item_Find,'+');
+                        StatusSetting(item_Find, '+');
                     }
                     else  // 해제
                     {
                         //해제하면 E버튼 없애기
                         item_Find.Installed = false;
                         //아이템 스텟 해제
-                        StatusSetting(item_Find,'-');
+                        StatusSetting(item_Find, '-');
                     }
 
 
                 }
-                else if (int.Parse(answer) ==0)
+                else if (int.Parse(answer) == 0)
                 {
                     bool_1 = true;
                 }
@@ -143,7 +143,7 @@
         {
             InvenItem foundItem = GameManager.Instance.inventoryItems.Find(Item => Item.itemName == itemName);
             //스텟을 감소시키기
-            StatusSetting(foundItem,'-');
+            StatusSetting(foundItem, '-');
             //삭제
             //items.Remove(foundItem);
         }
@@ -165,15 +165,15 @@
         /// 아이템에 대한 수치마큼 스텟에서  '+' or '-'
         /// </summary>
         /// <param name="foundItem"></param>
-        public void StatusSetting(InvenItem foundItem,char _char)
+        public void StatusSetting(InvenItem foundItem, char _char)
         {
             //player의 스텟이 구성되면 그 구성된 수치에서 제외시켜주기 
             if (_char == '+')
             {
-                GameManager.Instance.selectedChampion.hp +=foundItem.hp;
+                GameManager.Instance.selectedChampion.hp += foundItem.hp;
                 GameManager.Instance.selectedChampion.mp += foundItem.mp;
                 GameManager.Instance.selectedChampion.atk += foundItem.atk;
-                GameManager.Instance.selectedChampion.def +=foundItem.def;
+                GameManager.Instance.selectedChampion.def += foundItem.def;
             }
             else if (_char == '-')
             {
@@ -189,6 +189,10 @@
 
         }
 
+        public void BaseItemAdd()
+        {
+            GameManager.Instance.inventoryItems.Add(new InvenItem(false, "몽둥이", 1000, ItemType.Weapon, 0, 0, 10, 0));
+        }
 
 
 

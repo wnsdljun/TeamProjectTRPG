@@ -26,7 +26,7 @@ namespace TRPG
 
             // Q 스킬의 기본 데미지와 공격력 계수 적용
             int[] qBaseDamageValues = { 30, 50, 70, 90, 110 };
-            double qScalingCoefficient = 0.5; // 공격력의 50% 추가
+            double qScalingCoefficient = 1.1; // 공격력의 50% 추가
             int baseDamage = qBaseDamageValues[Math.Min(SkillLevelQ - 1, qBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * qScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage - enemy.def;
@@ -66,7 +66,7 @@ namespace TRPG
             mp -= W_MANA_COST;
 
             int[] wBaseDamageValues = { 40, 60, 80, 100, 120 };
-            double wScalingCoefficient = 0.4; // 공격력의 40% 추가
+            double wScalingCoefficient = 0.9; // 공격력의 40% 추가
             int baseDamage = wBaseDamageValues[Math.Min(SkillLevelW - 1, wBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * wScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage - enemy.def;
@@ -91,7 +91,7 @@ namespace TRPG
             mp -= E_MANA_COST;
 
             int[] eBaseDamageValues = { 80, 110, 140, 170, 200 };
-            double eScalingCoefficient = 0.3; // 공격력의 30% 추가
+            double eScalingCoefficient = 0.7; // 공격력의 30% 추가
             int baseDamage = eBaseDamageValues[Math.Min(SkillLevelE - 1, eBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * eScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage - enemy.def;

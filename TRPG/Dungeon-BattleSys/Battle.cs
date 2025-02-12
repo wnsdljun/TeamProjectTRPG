@@ -9,15 +9,22 @@ namespace TRPG
     //}
     internal class BattleSystem //: Battle
     {
-        public BattleEnemies battleEnemies = new BattleEnemies();
+        //public BattleEnemies battleEnemies = new BattleEnemies();
         public Enemyskill enemyskill = new Enemyskill();
         public int StageWave = 1;//각 웨이브별 적을 불러오기 위한 변수
+        public bool bool_stage = false;
         public List<Enemy> enemies;
         public Enemy Target;
-        public void BattleStart()
+        public BattleEnemies battleEnemies;
+        public void BattleStart(bool bool_stage)
         {
             Console.WriteLine("적이 나타났습니다. \n");
-            StageSet();
+            if (bool_stage)
+            {
+                StageWave= 1;
+                battleEnemies = new BattleEnemies();
+            }
+            StageSet(battleEnemies, StageWave);
             while (enemies.Exists(e => e.hp > 0))
             {
                 Thread.Sleep(1500);
@@ -27,7 +34,7 @@ namespace TRPG
             }
             if (enemies.Exists(e => e.hp > 0) == false)
             {
-                StageClear();
+                StageClear(ref bool_stage);
             }
         }
         public void PlayerTurn()
@@ -49,8 +56,8 @@ namespace TRPG
                     }
                 }
                 Console.WriteLine($"\n{GameManager.Instance.playerName} LV {GameManager.Instance.player.Level}\n" +
-                    $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp} " +
-                    $"MP: {GameManager.Instance.selectedChampion.mp}/{GameManager.Instance.selectedChampion.MaxMp}" +
+                    $"HP: {GameManager.Instance.player.Championclass.hp}/{GameManager.Instance.player.Championclass.MaxHp} " +
+                    $"MP: {GameManager.Instance.player.Championclass.mp}/{GameManager.Instance.player.Championclass.MaxMp}" +
                     "\n1. 전투하기" +
                     "\n2. 도망가기");
                 int input;
@@ -237,7 +244,7 @@ namespace TRPG
             Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
             GameManager.Instance.dungeon.DungeonEnd();
         }
-        public void StageClear()
+        public void StageClear(ref bool bool_stage)
         {
             Random random = new Random();
             int goldAdd = 0;
@@ -256,6 +263,7 @@ namespace TRPG
             else if (comment == 4) { Console.WriteLine("미쳐 날뛰고 있습니다."); }
             else { Console.WriteLine("전장의 화신!"); }
             StageWave++;
+            bool_stage = true;
             Console.WriteLine($"골드 {goldAdd} 획득! 경험치 {expAdd} 획득!\n");
             GameManager.Instance.player.GainExp(expAdd);
             if (StageWave == 6)
@@ -275,9 +283,9 @@ namespace TRPG
             Console.WriteLine("승리!");
             GameManager.Instance.dungeon.DungeonEnd();
         }
-        public void StageSet()
+        public void StageSet(BattleEnemies battleEnemies, int stageWave)
         {
-            switch (StageWave)//웨이브 마다 리스트에 들어가는 적 배치
+            switch (stageWave)//웨이브 마다 리스트에 들어가는 적 배치
             {
                 case 1:
                     enemies =  battleEnemies.wave1;
