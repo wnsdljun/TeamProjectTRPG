@@ -1,4 +1,6 @@
-﻿namespace TRPG
+﻿using System.Numerics;
+
+namespace TRPG
 {
     //internal class Battle
     //{
@@ -25,6 +27,8 @@
             StageSet(battleEnemies, StageWave);
             while (enemies.Exists(e => e.hp > 0))
             {
+                Thread.Sleep(1500);
+                Console.Clear();
                 PlayerTurn();
                 EnemyTurn();
             }
@@ -46,12 +50,14 @@
                     }
                     else
                     {
-                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.", ConsoleColor.Gray);//사망한 적은 회색으로 표시
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"{i + 1}. {enemies[i].name} |  사망.");//사망한 적은 회색으로 표시
+                        Console.ResetColor();
                     }
                 }
-                Console.WriteLine("\n플레이어 상태\n" +
-                    $"HP: {GameManager.Instance.selectedChampion.hp} " +
-                    $"MP: {GameManager.Instance.selectedChampion.mp}" +
+                Console.WriteLine($"\n{GameManager.Instance.playerName} LV {GameManager.Instance.player.Level}\n" +
+                    $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp} " +
+                    $"MP: {GameManager.Instance.selectedChampion.mp}/{GameManager.Instance.selectedChampion.MaxMp}" +
                     "\n1. 전투하기" +
                     "\n2. 도망가기");
                 int input;
@@ -89,11 +95,11 @@
             while (Turn)
             {
                 Console.WriteLine("1. 기본 공격" +
-                "\n2. Q스킬" +
-                "\n3. W스킬" +
-                "\n4. E스킬");
+                $"\n2. Q스킬 LV{GameManager.Instance.selectedChampion.SkillLevelQ}" +
+                $"\n3. W스킬 LV{GameManager.Instance.selectedChampion.SkillLevelW}" +
+                $"\n4. E스킬 LV{GameManager.Instance.selectedChampion.SkillLevelE}");
                 int input;
-                Enemy enemy;
+                //Enemy enemy;
                 if (int.TryParse(Console.ReadLine(), out input))
                 {
                     switch (input)
@@ -105,7 +111,9 @@
                             Turn = false;
                             break;
                         case 2:
-                            if (GameManager.Instance.selectedChampion.SkillLevelQ != 0)
+                            if (GameManager.Instance.player.Championclass.mp < GameManager.Instance.player.Championclass.Q_MANA_COST)
+                            { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
+                            else if(GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
                                 TargetingReset();
                                 //enemy = Targeting();
@@ -120,7 +128,9 @@
                             }
                             break;
                         case 3:
-                            if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
+                            if (GameManager.Instance.player.Championclass.mp < GameManager.Instance.player.Championclass.W_MANA_COST)
+                            { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
+                            else if (GameManager.Instance.selectedChampion.SkillLevelW != 0)
                             {
                                 TargetingReset();
                                 GameManager.Instance.selectedChampion.UseSkill_W(Target, enemies);
@@ -134,7 +144,9 @@
                             }
                             break;
                         case 4:
-                            if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
+                            if (GameManager.Instance.player.Championclass.mp < GameManager.Instance.player.Championclass.E_MANA_COST)
+                            { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
+                            else if (GameManager.Instance.selectedChampion.SkillLevelE != 0)
                             {
                                 TargetingReset();
                                 GameManager.Instance.selectedChampion.UseSkill_E(Target, enemies);
@@ -177,7 +189,7 @@
                 }
             }
         }
-        public Enemy Targeting()
+        public Enemy Targeting()//메서드 Enemy가 되어 무조건 값을 반환해야 함
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;
@@ -233,9 +245,7 @@
             GameManager.Instance.player.Gold /= 2;
             Console.WriteLine("패배….");
             Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
-            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
-            Console.ReadLine();
-            GameManager.Instance.MainMenu();
+            GameManager.Instance.dungeon.DungeonEnd();
         }
         public void StageClear(ref bool bool_stage)
         {
@@ -274,9 +284,7 @@
         {
             StageWave = 1;
             Console.WriteLine("승리!");
-            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
-            Console.ReadLine();
-            GameManager.Instance.MainMenu();
+            GameManager.Instance.dungeon.DungeonEnd();
         }
         public void StageSet(BattleEnemies battleEnemies, int stageWave)
         {
