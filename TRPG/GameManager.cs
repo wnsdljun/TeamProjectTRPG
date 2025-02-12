@@ -6,7 +6,8 @@
         public Inven inven;
         public Shop shop;
         public Champion selectedChampion;
-        public Dungeon dungeon = new Dungeon();
+        //public Dungeon dungeon = new Dungeon();
+        public New_Dungeon dungeon = new New_Dungeon();
         public List<InvenItem> inventoryItems;
         public List<ShopItem> items_list_shop;
         private static GameManager instance = null;
@@ -176,7 +177,7 @@
                         SampleClass.ShowShop();
                         break;
                     case 3:
-                        dungeon.DungeonStart();
+                        //dungeon.DungeonStart();
                         SampleClass.SampleLobby();
                         break;
                     case 4:
