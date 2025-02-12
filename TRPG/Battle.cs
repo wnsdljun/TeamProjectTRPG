@@ -20,6 +20,8 @@ namespace TRPG
             StageSet();
             while (enemies.Exists(e => e.hp > 0))
             {
+                Thread.Sleep(1500);
+                Console.Clear();
                 PlayerTurn();
                 EnemyTurn();
             }
@@ -180,7 +182,7 @@ namespace TRPG
                 }
             }
         }
-        public Enemy Targeting()
+        public Enemy Targeting()//메서드 Enemy가 되어 무조건 값을 반환해야 함
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;

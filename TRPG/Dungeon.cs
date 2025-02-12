@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using System;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class Dungeon
     {
@@ -30,6 +27,9 @@ namespace TRPG
                         case 2:
                             DungeonEnd();
                             Turn = false;
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
                             break;
                     }
                 }
@@ -118,7 +118,7 @@ namespace TRPG
             battleSystem.StageWave = 1;
             GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
             GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
-            Console.ReadLine();
+            Thread.Sleep(3000);
             GameManager.Instance.MainMenu();
         }
     }
