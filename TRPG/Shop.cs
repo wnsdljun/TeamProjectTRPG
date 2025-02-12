@@ -22,7 +22,7 @@ namespace TRPG
             GameManager.Instance.items_list_shop.Add(new ShopItem(false, "얼어붙은심장", 2000, ItemType.Armor, 50, 0, 0, 30));
             GameManager.Instance.items_list_shop.Add(new ShopItem(false, "가시갑옷", 2500, ItemType.Armor, 40, 0, 0, 40));
             GameManager.Instance.items_list_shop.Add(new ShopItem(false, "광전사의군화", 1500, ItemType.Shoes, 0, 0, 15, 0));
-            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "판금장화", 1500, ItemType.Weapon, 0, 0, 0, 18));
+            GameManager.Instance.items_list_shop.Add(new ShopItem(false, "판금장화", 1500, ItemType.Shoes, 0, 0, 0, 18));
         }
 
         public void ShowShop(Player _player, Inven _inven)
