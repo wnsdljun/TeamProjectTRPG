@@ -27,7 +27,7 @@ namespace TRPG
             // Q 스킬 기본 데미지 배열: {80, 100, 120, 140, 160}
             // 공격력의 60% 추가
             int[] qBaseDamageValues = { 80, 100, 120, 140, 160 };
-            double qScalingCoefficient = 0.6;
+            double qScalingCoefficient = 1.3;
             int baseDamage = qBaseDamageValues[Math.Min(SkillLevelQ - 1, qBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * qScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage;
@@ -66,7 +66,7 @@ namespace TRPG
             // W 스킬 기본 데미지 배열: {50, 75, 100, 125, 150}
             // 공격력의 70% 추가 (계수 0.7)
             int[] wBaseDamageValues = { 50, 75, 100, 125, 150 };
-            double wScalingCoefficient = 0.7;
+            double wScalingCoefficient = 1.4;
             int baseDamage = wBaseDamageValues[Math.Min(SkillLevelW - 1, wBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * wScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage;
@@ -105,7 +105,7 @@ namespace TRPG
             // E 스킬 기본 데미지 배열: {60, 90, 120, 150, 180}
             // 공격력의 80% 추가
             int[] eBaseDamageValues = { 60, 90, 120, 150, 180 };
-            double eScalingCoefficient = 0.8;
+            double eScalingCoefficient = 1.5;
             int baseDamage = eBaseDamageValues[Math.Min(SkillLevelE - 1, eBaseDamageValues.Length - 1)];
             int scalingDamage = (int)(atk * eScalingCoefficient);
             int totalDamage = baseDamage + scalingDamage;

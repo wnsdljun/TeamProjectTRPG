@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using System;
-
-namespace TRPG
+﻿namespace TRPG
 {
     internal class Dungeon
     {
@@ -24,12 +21,15 @@ namespace TRPG
                         case 1:
                             Console.WriteLine("협곡으로 들어갑니다.");
                             GameManager.Instance.dungeon.battleSystem = new();//새로운 배틀시스템 생성 enemies를 초기화 시킨다. 없으면 이전 적들이 남아있음(죽어도)
-                            battleSystem.BattleStart();
+                            battleSystem.BattleStart(true);
                             Turn = false;
                             break;
                         case 2:
                             DungeonEnd();
                             Turn = false;
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
                             break;
                     }
                 }
@@ -55,7 +55,7 @@ namespace TRPG
                     switch (input)
                     {
                         case 1:
-                            battleSystem.BattleStart();
+                            battleSystem.BattleStart(false);
                             Turn = false;
                             break;
                         case 2:
@@ -118,7 +118,7 @@ namespace TRPG
             battleSystem.StageWave = 1;
             GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
             GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
-            Console.ReadLine();
+            Thread.Sleep(3000);
             GameManager.Instance.MainMenu();
         }
     }
