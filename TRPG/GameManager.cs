@@ -43,6 +43,14 @@ namespace TRPG
             inven = new Inven();
             
             // 다른 초기화 코드
+            if (File.Exists("savefile.json"))
+            {
+                //파일이 존재할 때
+            }
+            else
+            {
+                //존재하지 않을 때
+            }
         }
 
         public void Chi_Champion()
@@ -166,13 +174,16 @@ namespace TRPG
                         Program.ShowStatus(player);
                         break;
                     case 1:
-                        inven.ShowInven(player);
+                        //inven.ShowInven(player);
+                        SampleClass.ShowInven();
                         break;
                     case 2:
-                        shop.ShowShop(player, inven);
+                        //shop.ShowShop(player, inven);
+                        SampleClass.ShowShop();
                         break;
                     case 3:
                         dungeon.DungeonStart();
+                        //SampleClass.SampleLobby();
                         break;
                     case 4:
                         //goto myloc;

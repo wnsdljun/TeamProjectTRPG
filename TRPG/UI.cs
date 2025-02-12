@@ -8,10 +8,10 @@ namespace TRPG
         List<UIElement> selectableE = new();
         int selectedLine = -1;
         int lastSelectedLine = -1;
+        int i = 0;
         
         public UI(List<UIElement> elements)
         {
-            int i = 0;
             foreach (UIElement element in elements)
             {
                 element.lineIndex = i++;
@@ -19,13 +19,50 @@ namespace TRPG
             }
             this.elements = elements;
         }
-
+        public void AddElement(UIElement element)
+        {
+            element.lineIndex = i++;
+            if (element.isSelectable) selectableE.Add(element);
+            elements.Add(element);
+        }
+        public void AddElement(List<UIElement> elements)
+        {
+            foreach (UIElement element in elements)
+            {
+                element.lineIndex = i++;
+                if (element.isSelectable) selectableE.Add(element);
+                this.elements.Add(element);
+            }
+        }
         public void WriteAll()
         {
             Console.Clear();
             foreach (UIElement element in elements)
             {
                 element.Write();
+            }
+        }
+        public void WriteAll(string waitMessage,int waitingTime)
+        {
+            Console.Clear();
+            foreach (UIElement element in elements)
+            {
+                element.Write();
+            }
+                Console.SetCursorPosition(0, Console.WindowHeight - 3); //밑에서 3번째줄
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, Console.WindowHeight - 3);
+                Console.WriteLine(waitMessage);
+
+            while (waitingTime > 0)
+            {
+                Console.SetCursorPosition(0, Console.WindowHeight - 2); //밑에서 2번째줄
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                Console.Write($"{waitingTime / 1000} 초 뒤 계속됩니다...");
+                Thread.Sleep(1000);
+                waitingTime -= waitingTime%1000;
+                waitingTime -= 1000;
             }
         }
         public int UserUIControl()
@@ -40,7 +77,7 @@ namespace TRPG
                 if (key == ConsoleKey.DownArrow) MoveSelection(1);
                 //if (key == ConsoleKey.RightArrow) ;
                 //if (key == ConsoleKey.LeftArrow) ;
-                if (key == ConsoleKey.Enter) return ConfirmAnim(selectedLine);
+                if (selectedLine != -1 && key == ConsoleKey.Enter) return ConfirmAnim(selectedLine);
                 if (selectedLine != -1 && key == ConsoleKey.Escape)
                 {
                     selectableE[selectedLine].isHighlighted = false;

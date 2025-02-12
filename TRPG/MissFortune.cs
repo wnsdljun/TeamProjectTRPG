@@ -1,5 +1,4 @@
-﻿using System;
-//
+﻿//
 namespace TRPG
 {
     internal class MissFortune : Champion
@@ -30,13 +29,38 @@ namespace TRPG
             Console.WriteLine($"첫 번째 적에게 {totalDamage} 데미지를 입힙니다.");
             damage.PlayerSkillDamage(totalDamage, enemy);
             // 예시로 첫 번째 적 처치 시 두 번째 적에게 추가 피해
-            if (enemy.hp <= 0)
+            while (true)
             {
-                Console.WriteLine("첫 번째 적이 처치되었습니다! 두 번째 적에게 추가 데미지를 입힙니다!");
-                Console.Write($"두 번째로 ");
-                battleSystem.Targeting();
-                damage.PlayerSkillDamage(totalDamage * 2, battleSystem.Target);
-                //Console.WriteLine($"두 번째 적에게 {totalDamage * 2} 데미지를 입힙니다.");
+                Random random = new Random();
+                int N = random.Next(0, enemies.Count);
+                if (enemy.hp <= 0)
+                {
+                    if (enemies[N].hp > 0)
+                    {
+                        Console.WriteLine("첫 번째 적이 처치되었습니다! 두 번째 적에게 추가 데미지를 입힙니다!");
+                        damage.PlayerSkillDamage(totalDamage * 3, enemies[N]);
+                        break;
+                    }
+                    else if (enemies[N].hp <= 0)
+                    {
+                        Console.WriteLine("탄환이 두 번째 적을 찾지 못했습니다.");
+                        break;
+                    }
+                }
+                else
+                {
+                    if (enemies[N].hp > 0)
+                    {
+                        Console.WriteLine("탄환이 첫 번째 적을 관통합니다! 두 번째 적도 공격합니다.");
+                        damage.PlayerSkillDamage(totalDamage, enemies[N]);
+                        break;
+                    }
+                    else if (enemies[N].hp <= 0)
+                    {
+                        Console.WriteLine("탄환이 두 번째 적을 찾지 못했습니다.");
+                        break;
+                    }
+                }
             }
         }
 

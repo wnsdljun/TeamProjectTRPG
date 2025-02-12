@@ -20,7 +20,8 @@
                     {
                         case 1:
                             Console.WriteLine("협곡으로 들어갑니다.");
-                            battleSystem.BattleStart(true);
+                            GameManager.Instance.dungeon.battleSystem = new();//새로운 배틀시스템 생성 enemies를 초기화 시킨다. 없으면 이전 적들이 남아있음(죽어도)
+                            battleSystem.BattleStart();
                             Turn = false;
                             break;
                         case 2:
@@ -72,6 +73,7 @@
                                     {
                                         GameManager.Instance.player.Gold -= 100;
                                         GameManager.Instance.player.Championclass.hp += 300;
+                                        GameManager.Instance.player.Championclass.mp += 100;
                                     }
                                     else
                                     {
@@ -86,10 +88,6 @@
                                     {
                                         GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
                                     }
-                                }
-                                else
-                                {
-                                    DungeonForward();
                                 }
                             }
                             else
