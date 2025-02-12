@@ -26,16 +26,14 @@
             ui_DungeonLobby.WriteAll();
             int input = ui_DungeonLobby.UserUIControl();
 
-            if (input == 1)
-            {
-                ui_DungeonLobbyExit.WriteAll("마을로 돌아가는중...", 5900);
-                return;
-            }
-            else
+            if (input == 0)
             {
                 GameManager.Instance.dungeon.battleSystem = new();
-                battleSystem.
+                battleSystem.BattleStart();
             }
+
+            ui_DungeonLobbyExit.WriteAll("마을로 돌아가는중...", 5900);
+            return;
         }
 
         public static void ui_Rest()
@@ -65,7 +63,7 @@
                 {
                     if (canRest) //돈이 충분. 쉬기
                     {
-                        
+
                     }
                     else
                     {
@@ -80,5 +78,8 @@
         }
 
         public void DungeonEnd()
+        {
+
+        }
     }
 }

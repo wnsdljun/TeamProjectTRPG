@@ -141,6 +141,7 @@
 
         public void MainMenu()
         {
+            MainMenu:
             //Player player = new Player();
             //Inven inven = new Inven();
             //Shop shop = new Shop();
@@ -178,7 +179,8 @@
                         break;
                     case 3:
                         //dungeon.DungeonStart();
-                        SampleClass.SampleLobby();
+                        //SampleClass.SampleLobby();
+                        dungeon.ui_Lobby();
                         break;
                     case 4:
                         //goto myloc;

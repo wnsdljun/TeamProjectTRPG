@@ -120,8 +120,8 @@ namespace TRPG
                     switch (input)
                     {
                         case 1:
-                            enemy = Targeting();
-                            GameManager.Instance.selectedChampion.BaseAttack(enemy);
+                            Target = Targeting();
+                            GameManager.Instance.selectedChampion.BaseAttack(Target);
                             Turn = false;
                             break;
                         case 2:
@@ -129,8 +129,8 @@ namespace TRPG
                             { Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다."); }
                             else if(GameManager.Instance.selectedChampion.SkillLevelQ != 0)
                             {
-                                enemy = Targeting();
-                                GameManager.Instance.selectedChampion.UseSkill_Q(enemy, enemies);
+                                Target = Targeting();
+                                GameManager.Instance.selectedChampion.UseSkill_Q(Target, enemies);
                                 Turn = false;
                             }
                             else
@@ -273,7 +273,7 @@ namespace TRPG
             else
             {
 
-                GameManager.Instance.dungeon.DungeonForward();
+                //GameManager.Instance.dungeon.DungeonForward();
             }
 
         }
