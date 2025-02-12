@@ -90,7 +90,7 @@ namespace TRPG
                 $"\n3. W스킬 LV{GameManager.Instance.selectedChampion.SkillLevelW}" +
                 $"\n4. E스킬 LV{GameManager.Instance.selectedChampion.SkillLevelE}");
                 int input;
-                Enemy enemy;
+                //Enemy enemy;
                 if (int.TryParse(Console.ReadLine(), out input))
                 {
                     switch (input)
