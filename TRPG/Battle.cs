@@ -236,7 +236,7 @@ namespace TRPG
             GameManager.Instance.player.Gold /= 2;
             Console.WriteLine("패배….");
             Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
-            GameManager.Instance.dungeon.DungeonForward();
+            GameManager.Instance.dungeon.DungeonEnd();
         }
         public void StageClear()
         {
@@ -274,9 +274,7 @@ namespace TRPG
         {
             StageWave = 1;
             Console.WriteLine("승리!");
-            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
-            Console.ReadLine();
-            GameManager.Instance.MainMenu();
+            GameManager.Instance.dungeon.DungeonEnd();
         }
         public void StageSet()
         {
