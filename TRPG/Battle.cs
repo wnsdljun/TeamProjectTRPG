@@ -1,4 +1,6 @@
-﻿namespace TRPG
+﻿using System.Numerics;
+
+namespace TRPG
 {
     //internal class Battle
     //{
@@ -18,6 +20,8 @@
             StageSet();
             while (enemies.Exists(e => e.hp > 0))
             {
+                Thread.Sleep(1500);
+                Console.Clear();
                 PlayerTurn();
                 EnemyTurn();
             }
@@ -45,8 +49,8 @@
                     }
                 }
                 Console.WriteLine("\n플레이어 상태\n" +
-                    $"HP: {GameManager.Instance.selectedChampion.hp} " +
-                    $"MP: {GameManager.Instance.selectedChampion.mp}" +
+                    $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp}" +
+                    $"MP: {GameManager.Instance.selectedChampion.mp}/{GameManager.Instance.selectedChampion.MaxMp}" +
                     "\n1. 전투하기" +
                     "\n2. 도망가기");
                 int input;
@@ -99,11 +103,11 @@
             while (Turn)
             {
                 Console.WriteLine("1. 기본 공격" +
-                "\n2. Q스킬" +
-                "\n3. W스킬" +
-                "\n4. E스킬");
+                $"\n2. Q스킬 LV{GameManager.Instance.selectedChampion.SkillLevelQ}" +
+                $"\n3. W스킬 LV{GameManager.Instance.selectedChampion.SkillLevelW}" +
+                $"\n4. E스킬 LV{GameManager.Instance.selectedChampion.SkillLevelE}");
                 int input;
-                Enemy enemy;
+                //Enemy enemy;
                 if (int.TryParse(Console.ReadLine(), out input))
                 {
                     switch (input)
@@ -191,7 +195,7 @@
                 }
             }
         }
-        public Enemy Targeting()
+        public Enemy Targeting()//메서드 Enemy가 되어 무조건 값을 반환해야 함
         {
             Console.WriteLine("공격할 적을 선택하세요.");
             int target;
@@ -231,7 +235,7 @@
             GameManager.Instance.player.Gold /= 2;
             Console.WriteLine("패배….");
             Console.WriteLine($"골드를 절반 잃었습니다. 남은 골드는 {GameManager.Instance.player.Gold}입니다.");
-            GameManager.Instance.dungeon.DungeonForward();
+            GameManager.Instance.dungeon.DungeonEnd();
         }
         public void StageClear()
         {
@@ -269,9 +273,7 @@
         {
             StageWave = 1;
             Console.WriteLine("승리!");
-            Console.WriteLine("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
-            Console.ReadLine();
-            GameManager.Instance.MainMenu();
+            GameManager.Instance.dungeon.DungeonEnd();
         }
         public void StageSet()
         {
