@@ -78,7 +78,7 @@ namespace TRPG
             }
             mp -= W_MANA_COST;
             double[] attackBoostRatios = { 0.6, 0.7, 0.8, 0.9, 1.0 };
-            double attackBoost = attackBoostRatios[Math.Min(SkillLevelW - 1, attackBoostRatios.Length - 1)] * atk * 1;
+            int attackBoost = (int)(attackBoostRatios[Math.Min(SkillLevelW - 1, attackBoostRatios.Length - 1)] * atk * 1);
             int originalAtk = atk;
             atk += (int)attackBoost;
             Console.WriteLine($"{Name}이(가) '사랑의 한 방' 스킬을 사용합니다!");

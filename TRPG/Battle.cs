@@ -78,6 +78,21 @@
             }
         }
 
+        public void TargetingReset()
+        {
+            while (true)
+            {
+                Target = Targeting();
+                if (Target != null)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
         public void PlayerAttack()
         {
             bool Turn = true;
