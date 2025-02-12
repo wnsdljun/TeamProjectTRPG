@@ -21,7 +21,7 @@
                         case 1:
                             Console.WriteLine("협곡으로 들어갑니다.");
                             GameManager.Instance.dungeon.battleSystem = new();//새로운 배틀시스템 생성 enemies를 초기화 시킨다. 없으면 이전 적들이 남아있음(죽어도)
-                            battleSystem.BattleStart();
+                            battleSystem.BattleStart(true);
                             Turn = false;
                             break;
                         case 2:
