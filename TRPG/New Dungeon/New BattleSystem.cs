@@ -16,6 +16,7 @@
             while (enemies.Exists(e => e.hp > 0)) //살아있는 적이 있음.
             {
                 PlayerTurn();
+                if (gameover) return;
                 gameover = EnemyTurn();
                 if (gameover) return;
             }
@@ -94,6 +95,8 @@
         }
         public bool GameOver()
         {
+            GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
+            GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
             UI ui = new(new List<UIElement>
                 {
                     new("패배!")
@@ -105,27 +108,32 @@
 
         public bool ui_AskContinue()
         {
-            UI ui = new UI(new List<UIElement>
+            while (true)
+            {
+                UI ui = new UI(new List<UIElement>
                 {
                     new($"협곡 - 스테이지 {StageWave} | 턴 {Turn}",null,ConsoleColor.Yellow),
                     new("[승리!]"),
                     new(),
                     new("[아래 동작 선택]"),
                     new("\t다음 스테이지",selectable: true),
+                    new("\t회복하기",selectable: true),
                     new("\t더 도전하지 않고 돌아갑니다.",selectable: true),
                 });
 
-            ui.WriteAll();
-            int input = ui.UserUIControl();
+                ui.WriteAll();
+                int input = ui.UserUIControl();
 
-            if (input == 0)
-            {
-                StageWave++;
-                return true;
-            }
-            else
-            {
-                return false;
+                if (input == 0)
+                {
+                    StageWave++;
+                    return true;
+                }
+                else if (input == 1) New_Dungeon.ui_Rest();
+                else
+                {
+                    return false;
+                }
             }
         }
         public void ui_Battle()
@@ -166,8 +174,7 @@
                         break;
                     case 2:
                         //돔황챠
-                        GameOver();
-                        gameover = true;
+                        gameover = GameOver();
                         return;
                 }
                 if (attacked)
@@ -205,13 +212,16 @@
 
                 ui.WriteAll();
                 int input = ui.UserUIControl();
-                //죽은 적이 있으면 input 값의 범위가 좁아짐.
-                for (int i = 0; i <= input; i++)
+
+                if (enemies.Count > input)
                 {
-                    //입력값까지 반복하며 적이 죽었다면 input의 값을 더해.
-                    if (enemies[i].hp > 0) continue; //살았으니까 패스.
-                    else input++;
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        if (enemies[i].hp > 0) continue;
+                        else input++;
+                    }
                 }
+
                 if (input < list.Count - 2) //스킬 선택
                 {
                     attackedEnemy = ui_BattleAttackSkill(input); //적 공격하고 공격 여부 받아옴.

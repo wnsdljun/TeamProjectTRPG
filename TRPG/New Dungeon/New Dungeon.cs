@@ -39,8 +39,9 @@
         public static void ui_Rest()
         {
             //휴식하기
-            bool canRest = GameManager.Instance.player.Gold <= 100;
-            UIElement temp = new UIElement("1. 네", null, canRest ? null : ConsoleColor.Red, selectable: true, tip: canRest ? "{비용} 골드를 지불하여 체력을 모두 회복합니다." : "골드가 부족합니다.");
+            int restCost = 100;
+            bool canRest = GameManager.Instance.player.Gold >= restCost;
+            UIElement temp = new UIElement("1. 네", null, canRest ? null : ConsoleColor.Red, selectable: true, tip: canRest ? $"{restCost} 골드를 지불하여 체력을 모두 회복합니다." : "골드가 부족합니다.");
             while (true)
             {
                 UI ui_Rest = new UI(new List<UIElement>
@@ -48,7 +49,7 @@
                     new("골드를 지불해 체력을 회복시킵니다."),
                     new(),
                     new("회복하시겠습니까?"),
-                    new("[비용: {비용} 골드"),
+                    new($"[비용: {restCost} 골드]"),
                     new(),
                     temp,
                     new("2. 아니오",selectable: true ,tip: "회복하지 않습니다.")
@@ -63,7 +64,12 @@
                 {
                     if (canRest) //돈이 충분. 쉬기
                     {
+                        GameManager.Instance.player.Gold -= restCost;
+                        GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
+                        GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
 
+                        ui_Rest.WriteAll("충분히 쉰 것 같다.", 3000);
+                        return;
                     }
                     else
                     {
