@@ -1,4 +1,7 @@
-﻿namespace TRPG
+﻿using System.Numerics;
+using System;
+
+namespace TRPG
 {
     internal class Dungeon
     {
@@ -57,7 +60,7 @@
                             break;
                         case 2:
                             //인벤토리
-
+                            GameManager.Instance.inven.ShowInven(GameManager.Instance.player);
                             break;
                         case 3://휴식
                             int input2;
@@ -113,6 +116,7 @@
             battleSystem.StageWave = 1;
             GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
             GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
+            Console.ReadLine();
             GameManager.Instance.MainMenu();
         }
     }
