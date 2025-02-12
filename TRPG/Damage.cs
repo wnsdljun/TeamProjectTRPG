@@ -10,7 +10,6 @@ namespace TRPG
 {
     internal class Damage
     {
-        public BattleSystem? battleSystem;
         int damage;
         int turn = 1;
 
