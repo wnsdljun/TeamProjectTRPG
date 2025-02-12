@@ -49,7 +49,7 @@ namespace TRPG
                     }
                 }
                 Console.WriteLine($"\n{GameManager.Instance.playerName} LV {GameManager.Instance.player.Level}\n" +
-                    $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp}" +
+                    $"HP: {GameManager.Instance.selectedChampion.hp}/{GameManager.Instance.selectedChampion.MaxHp} " +
                     $"MP: {GameManager.Instance.selectedChampion.mp}/{GameManager.Instance.selectedChampion.MaxMp}" +
                     "\n1. 전투하기" +
                     "\n2. 도망가기");
