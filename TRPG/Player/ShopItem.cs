@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TRPG
+﻿namespace TRPG
 {
-    internal class InvenItem : Item
+    internal class ShopItem : Item
     {
-        public InvenItem(bool installed, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
+        public ShopItem(bool purchase, string itemName, int itemPrice, ItemType itemType, int hp, int mp, int atk, int def)
         {
-            Installed = installed;
+            this.purchase = purchase;
             this.itemName = itemName;
             this.itemPrice = itemPrice;
             this.itemType = itemType;
@@ -20,7 +14,7 @@ namespace TRPG
             this.def = def;
         }
 
-        public bool Installed { get; set; }
+        public bool purchase { get; set; }
         public string itemName { get; set; }
         public int itemPrice { get; }
         public ItemType itemType { get; }
@@ -28,6 +22,7 @@ namespace TRPG
         public int mp { get; set; }
         public int atk { get; set; }
         public int def { get; set; }
+
 
     }
 }
