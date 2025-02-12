@@ -20,9 +20,9 @@ namespace TRPG
         public int Championcode { get; private set; }
 
         //스킬 사용에 필요한 MP값은 똑같다
-        protected const int Q_MANA_COST = 40;
-        protected const int W_MANA_COST = 45;
-        protected const int E_MANA_COST = 80;
+        public int Q_MANA_COST = 40;
+        public int W_MANA_COST = 45;
+        public int E_MANA_COST = 80;
 
 
         public int SkillLevelQ { get; set; } = 0;
