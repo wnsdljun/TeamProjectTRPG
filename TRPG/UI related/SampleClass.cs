@@ -2,6 +2,8 @@
 {
     internal class SampleClass
     {
+
+        //ShowSample2에서 각각의 문자에 색을 입히는 방법을 보여주고있음.
         public static void ShowSample2()
         {
             UI ui = new UI(new List<UIElement>
@@ -10,7 +12,7 @@
                 new("샘플?입니다.",ConsoleColor.Green, ConsoleColor.Red),
                 new("색을지정할수있는", new List<UIColorIndex>
                 {
-                    new(1, ConsoleColor.Red, ConsoleColor.Green),
+                    new(1, ConsoleColor.Red, ConsoleColor.Green), //문자열 인덱스, 색, 색 을 리스트로 받음.
                     new(2, ConsoleColor.Green, ConsoleColor.Red)
                 }),
                 new("색을지정할수있는선택가능한", new List<UIColorIndex>
@@ -172,12 +174,17 @@
 
         public static void SampleLobby()
         {
+            //UI 객체 생성. UI 객체는 UIElement를 리스트로 받아 출력하는 기능을 함.
+            //UIElement는 콘솔 창에서 한 줄의 정보를 담고있음.
+            //항목을 선택할 때 각 UIElement가 본인이 선택되었는지를 판단해 색을 바꿔 "나 선택되었소" 하고 티를 냄.
+            //문자열에서 개별 문자의 색을 지정하기 위해 UIChar 클래스를 리스트로 저장.
+            //클래스를 이용한 이유 - 리스트에 담기에 혹시나 수정이 필요하다면 구조체보다 클래스가 수정하기 용이함.
             UI ui_DungeonLobby = new UI(new List<UIElement>
             {
                 new("협곡에 오신 것을 환영합니다."),
                 new("앞으로 나아가시겠습니까?"),
                 new(),
-                new("1. 들어가기",selectable: true ,tip: "협곡에 입장합니다."),
+                new("1. 들어가기",selectable: true ,tip: "협곡에 입장합니다."), //tip: 문자열은 항목이 활성화되었을때 화면 하단에 표시됨.
                 new("2. 나가기",selectable: true ,tip: "마을로 돌아갑니다.")
             });
 
@@ -186,9 +193,11 @@
                 new("마을로 돌아갑니다."),
             });
 
-            ui_DungeonLobby.WriteAll();
-            int input = ui_DungeonLobby.UserUIControl();
+            ui_DungeonLobby.WriteAll(); //콘솔 창에 출력하는 메서드.
+            int input = ui_DungeonLobby.UserUIControl(); //방향키로 항목을 선택하고, 그 인덱스를 반환하는 메서드.
 
+
+            //WriteAll() 메서드 오버로딩으로 화면 하단에도 메시지 출력하고 대기하는 기능도 있음.
             if (input == 1)
             {
                 ui_DungeonLobbyExit.WriteAll("마을로 돌아가는중...", 5900);
