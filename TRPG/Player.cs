@@ -56,7 +56,7 @@ namespace TRPG
             bool bool_skill = false;
             while (!bool_skill)
             {
-                Console.WriteLine($"어떤 스킬을 찍으시겠습니까? Q =1 / W =2 / E=3");
+                Console.WriteLine($"어떤 스킬을 찍으시겠습니까? Q = 1 / W = 2 / E = 3");
                 Console.Write(">>>");
 
                 int skillnum;
