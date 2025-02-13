@@ -110,7 +110,7 @@ namespace TRPG
         public override void DisplaySkillInfo()
         {
             Console.WriteLine("===== 미스 포춘 스킬 설명 =====");
-            Console.WriteLine("Q - 한 발에 두 놈: 두 대상에게 순차적으로 피해를 입힌다.");
+            Console.WriteLine("Q - 한 발에 두 놈: 첫 대상을 공격 후, 랜덤 대상에게 피해를 입힌다.");
             Console.WriteLine("   기본 데미지: 40/60/80/100/120.");
             Console.WriteLine("W - 사랑의 한 방: 단일 대상에게 피해를 입힌다.");
             Console.WriteLine("   기본 데미지: 30/45/60/75/90.");
@@ -127,7 +127,7 @@ namespace TRPG
             //return
         }
 
-        public override string skillInfoQ => "Q - 한 발에 두 놈: 두 대상에게 순차적으로 피해를 입힌다.";
+        public override string skillInfoQ => "Q - 한 발에 두 놈: 첫 대상을 공격 후, 랜덤 대상에게 피해를 입힌다.";
         public override string skillInfoQDetail => "   기본 데미지: 40/60/80/100/120.";
         public override string skillInfoW => "W - 사랑의 한 방: 단일 대상에게 피해를 입힌다.";
         public override string skillInfoWDetail => "   기본 데미지: 30/45/60/75/90.";

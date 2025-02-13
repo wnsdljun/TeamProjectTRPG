@@ -111,7 +111,7 @@
                     new(),
                     new(),
                     new($"레벨업 할 스킬을 선택해 주세요."),
-                    new($"{Championclass.skillInfoQ.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoQ.Split(':')[1]}"),
+                    new($"{Championclass.skillInfoQ.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoQ.Split(':')[1]}"),//:을 기준으로 나눠서 출력함
                     new($"{Championclass.skillInfoW.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoW.Split(':')[1]}"),
                     new($"{Championclass.skillInfoE.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoE.Split(':')[1]}")
                 });

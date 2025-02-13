@@ -6,7 +6,7 @@
         public Inven inven;
         public Shop shop;
         public Champion selectedChampion;
-        //public Dungeon dungeon = new Dungeon();
+        public Damage damage = new Damage();
         public New_Dungeon dungeon = new New_Dungeon();
         public List<InvenItem> inventoryItems;
         public List<ShopItem> items_list_shop;

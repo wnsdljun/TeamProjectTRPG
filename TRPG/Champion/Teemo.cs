@@ -102,7 +102,7 @@ namespace TRPG
         public override void DisplaySkillInfo()
         {
             Console.WriteLine("===== 티모 스킬 설명 =====");
-            Console.WriteLine("Q - 맹독 다트: 단일 대상에게 피해를 입히고, 일정 시간 동안 독 효과를 부여한다.");
+            Console.WriteLine("Q - 맹독 다트: 단일 대상에게 피해를 입히고, 중독 정도에 따라 추가 피해를 입한다.");
             Console.WriteLine("   기본 데미지: 30/50/70/90/110.");
             Console.WriteLine("W - 실명다트: 단일 대상에게 피해를 입힌다.");
             Console.WriteLine("   기본 데미지: 40/60/80/100/120.");
@@ -111,7 +111,7 @@ namespace TRPG
             Console.WriteLine("===========================");
         }
 
-        public override string skillInfoQ => "Q - 맹독 다트: 단일 대상에게 피해를 입히고, 일정 시간 동안 독 효과를 부여한다.";
+        public override string skillInfoQ => $"Q - 맹독 다트: 단일 대상에게 피해를 입히고, 중독 정도에 따라 추가 피해를 입한다. 중독 정도: [{GameManager.Instance.damage.stack}]";
         public override string skillInfoQDetail => "   기본 데미지: 30/50/70/90/110.";
         public override string skillInfoW => "W - 실명다트: 단일 대상에게 피해를 입힌다.";
         public override string skillInfoWDetail => "   기본 데미지: 40/60/80/100/120.";
