@@ -34,8 +34,8 @@ namespace TRPG
     {
         public Enemy MeleeMinion() => new Enemy("전사 미니언", 477, 0, 12, 1, 21, 61, 1);//매번 새로운 객체를 생성하기 위해서 () =>가 필요하다는데 과연 잘 돌아갈까?
         public Enemy CasterMinion() => new Enemy("마법사 미니언", 296, 0, 24, 1, 14, 30, 2);//체력24, 마나0, 공격력24, 방어력1, 골드14, 경험치30, 스킬코드2
-        public Enemy SuperMinion() => new Enemy("슈퍼 미니언", 1600, 0, 230, 10, 60, 97, 3);
-        public Enemy TurretTower() => new Enemy("포탑", 5000, 10, 182, 5, 420, 120, 11);
+        public Enemy SuperMinion() => new Enemy("슈퍼 미니언", 1600, 0, 45, 10, 60, 97, 3);
+        public Enemy TurretTower() => new Enemy("포탑", 5000, 10, 82, 5, 420, 120, 11);
     }
 
     internal class Enemyskill
