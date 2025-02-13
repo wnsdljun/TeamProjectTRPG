@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
-
+using Newtonsoft.Json;
 namespace TRPG
 {
     internal class SaveData
@@ -35,7 +35,7 @@ namespace TRPG
                 items_list_shop = this.items_list_shop
             };
 
-            string json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions { WriteIndented = true });
+            string json = JsonConvert.SerializeObject(saveData, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
             //JsonSerializerOptions { WriteIndented = true } : 예쁘게 쓰기 (?)
             File.WriteAllText(defaultSavePath, json);
         }
@@ -54,7 +54,7 @@ namespace TRPG
             else
             {
                 string json = File.ReadAllText(defaultSavePath);
-                SaveData loadData = JsonSerializer.Deserialize<SaveData>(json)!;
+                SaveData loadData = JsonConvert.DeserializeObject<SaveData>(json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All})!;
                 //if (json != null) { loadData }
                 if (loadData != null)
                 {

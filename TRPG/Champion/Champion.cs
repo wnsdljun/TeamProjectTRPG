@@ -2,7 +2,9 @@
 namespace TRPG
 {
     using System;
+    using System.Text.Json.Serialization;
 
+    
     internal abstract class Champion : IStatus
     {
         //public Damage damage = new Damage();
@@ -35,6 +37,7 @@ namespace TRPG
         protected const int MAX_SKILL_LEVEL_E = 5;
 
 
+        protected Champion() { }
         public Champion(string name, int hp, int mp, int atk, int def, int growthHp, int growthMp, int growthAtk, int growthDef, int code)
         {
             Name = name;
