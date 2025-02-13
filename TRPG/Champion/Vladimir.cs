@@ -43,7 +43,7 @@ namespace TRPG
             }
 
             Console.WriteLine($"{Name}이(가) '수혈' 스킬을 사용합니다!");
-            damage.PlayerSkillDamage(totalDamage, enemy);
+            GameManager.Instance.damage.PlayerSkillDamage(totalDamage, enemy);
             Console.WriteLine($"자신은 {healAmount}의 체력을 회복합니다.");
         }
 
@@ -82,7 +82,7 @@ namespace TRPG
             }
 
             Console.WriteLine($"{Name}이(가) '혈사병' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage,enemies);
+            GameManager.Instance.damage.PlayerAllSkillDamage(totalDamage,enemies);
             Console.WriteLine($"자신은 {healAmount}의 체력을 회복합니다.");
         }
 
@@ -111,7 +111,7 @@ namespace TRPG
             int totalDamage = baseDamage + scalingDamage;
 
             Console.WriteLine($"{Name}이(가) '선혈의 파도' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage, enemies);
+            GameManager.Instance.damage.PlayerAllSkillDamage(totalDamage, enemies);
         }
         public override void DisplaySkillInfo()
         {

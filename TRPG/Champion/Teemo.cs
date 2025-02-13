@@ -35,8 +35,8 @@ namespace TRPG
             int remainder = totalDamage % 3;
 
             Console.WriteLine($"{Name}이(가) '맹독 다트' 스킬을 사용합니다!");
-            damage.PlayerSkillDamage(totalDamage, enemy);
-            damage.TeemoSkillDamage(totalDamage, enemy);
+            GameManager.Instance.damage.PlayerSkillDamage(totalDamage, enemy);
+            GameManager.Instance.damage.TeemoSkillDamage(totalDamage, enemy);
             //Console.WriteLine("독 효과: 매 턴마다 추가 피해가 발생합니다.");
 
             //for (int turn = 1; turn <= 3; turn++)
@@ -72,7 +72,7 @@ namespace TRPG
             int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '실명다트' 스킬을 사용합니다!");
-            damage.PlayerSkillDamage(totalDamage, enemy);
+            GameManager.Instance.damage.PlayerSkillDamage(totalDamage, enemy);
         }
 
         // E 스킬: 유독성 함정 → 사용 시 즉시 광역 피해 적용
@@ -97,7 +97,7 @@ namespace TRPG
             int totalDamage = baseDamage + scalingDamage - enemy.def;
 
             Console.WriteLine($"{Name}이(가) '유독성 함정' 스킬을 사용합니다!");
-            damage.PlayerAllSkillDamage(totalDamage,enemies);
+            GameManager.Instance.damage.PlayerAllSkillDamage(totalDamage,enemies);
         }
         public override void DisplaySkillInfo()
         {
