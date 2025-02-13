@@ -24,7 +24,7 @@ namespace TRPG
 
     partial class GameManager
     {
-        string defaultSavePath = "savefile.json";
+        public static string defaultSavePath = "savefile.json";
         public void SaveGame()
         {
             //SaveData에 현재 게임 데이터를 넣고, SaveData를 json 문자열로 변환, 문자열을 파일에 쓰기.
@@ -63,6 +63,49 @@ namespace TRPG
                     items_list_shop = loadData.items_list_shop!;
                 }
             }
+        }
+    }
+    public class SaveLoad
+    {
+        public static void ui_Save()
+        {
+            UI ui = new UI(new List<UIElement>
+            {
+                new("게임을 저장하시겠습니까?"),
+                new(),
+                new("네",selectable: true, tip: "진행 상황을 저장합니다."),
+                new("아니옹",selectable: true, tip: "저장하지 않고 돌아갑니다.")
+            });
+
+            ui.WriteAll();
+            int input = ui.UserUIControl();
+
+            if (input == 1) return;
+            
+            GameManager.Instance.SaveGame();
+        }
+        public static void ui_LoadAtStart()
+        {
+            UI ui = new UI(new List<UIElement>
+            {
+                new("세이브파일이 감지되었습니다."),
+                new("세이브파일을 불러오시겠습니까?"),
+                new(),
+                new("네",selectable: true, tip: "이어서 플레이 합니다."),
+                new("아니옹",selectable: true, tip: "처음부터 다시 플레이 합니다.")
+            });
+
+            ui.WriteAll();
+            int input = ui.UserUIControl();
+
+            if (input == 1)
+            {
+                GameManager.Instance.shop.ShopItem_Add();
+                GameManager.Instance.inven.BaseItemAdd();
+                GameManager.Instance.Chi_Champion();
+                return;
+            }
+            GameManager.Instance.LoadGame();
         }
     }
 }
