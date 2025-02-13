@@ -132,6 +132,8 @@
                 else if (input == 1) New_Dungeon.ui_Rest();
                 else
                 {
+                    GameManager.Instance.player.Championclass.hp = GameManager.Instance.player.Championclass.MaxHp;
+                    GameManager.Instance.player.Championclass.mp = GameManager.Instance.player.Championclass.MaxMp;
                     return false;
                 }
             }

@@ -62,7 +62,6 @@
         ////////////////////////////////////////////////////
 
         //챔피언 선택 화면
-        //myloc:
             Champion selectedChampion;
 
             while (true)
