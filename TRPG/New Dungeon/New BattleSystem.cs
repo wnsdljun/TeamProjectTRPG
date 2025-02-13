@@ -251,9 +251,9 @@
 
             ui.AddElement(new UIElement()); //빈칸
             ui.AddElement(new UIElement("\t평타", selectable: true));
-            ui.AddElement(new UIElement($"\tQ 스킬{(sklvlQ == 0 ? "" : $"[{sklvlQ}]")}", null, sklavblQ ? null : ConsoleColor.Red, selectable: sklavblQ));
-            ui.AddElement(new UIElement($"\tW 스킬{(sklvlW == 0 ? "" : $"[{sklvlW}]")}", null, sklavblW ? null : ConsoleColor.Red, selectable: sklavblW));
-            ui.AddElement(new UIElement($"\tE 스킬{(sklvlE == 0 ? "" : $"[{sklvlE}]")}", null, sklavblE ? null : ConsoleColor.Red, selectable: sklavblE));
+            ui.AddElement(new UIElement($"\tQ 스킬{(sklvlQ == 0 ? "" : $"[{sklvlQ}]")}", null, sklavblQ ? null : ConsoleColor.Red, selectable: sklavblQ, tip:GameManager.Instance.player.Championclass.skillInfoQ));
+            ui.AddElement(new UIElement($"\tW 스킬{(sklvlW == 0 ? "" : $"[{sklvlW}]")}", null, sklavblW ? null : ConsoleColor.Red, selectable: sklavblW, tip: GameManager.Instance.player.Championclass.skillInfoW));
+            ui.AddElement(new UIElement($"\tE 스킬{(sklvlE == 0 ? "" : $"[{sklvlE}]")}", null, sklavblE ? null : ConsoleColor.Red, selectable: sklavblE, tip: GameManager.Instance.player.Championclass.skillInfoE));
             ui.AddElement(new UIElement());
             ui.AddElement(new UIElement("\t다른 적을 선택할래요", selectable: true, tip: "다른 적을 선택합니다."));
 
@@ -315,5 +315,7 @@
             //고정 2줄
             return list;
         }
+
+       
     }
 }
