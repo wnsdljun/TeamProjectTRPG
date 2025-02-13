@@ -2,11 +2,11 @@
 {
     internal partial class Player
     {
-        public string PlayerName { get; private set; }
+        public string PlayerName { get; set; }
         public int Level { get; set; } = 1;
         public int Exp { get; set; } = 0;
         public int Gold { get; set; } = 4500;
-        public Champion Championclass { get; private set; }
+        public Champion Championclass { get; set; }
 
         //public Player() { }
         public Player()
