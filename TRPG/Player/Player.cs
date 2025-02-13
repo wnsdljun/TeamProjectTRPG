@@ -1,6 +1,6 @@
 ﻿namespace TRPG
 {
-    internal class Player
+    internal partial class Player
     {
         public string PlayerName { get; private set; }
         public int Level { get; set; } = 1;
@@ -60,19 +60,19 @@
                     switch (skillnum)
                     {
                         case 1:
-                            GameManager.Instance.selectedChampion.LevelUpSkillQ();
+                            GameManager.Instance.player.Championclass.LevelUpSkillQ();
                             Console.WriteLine("Q스킬을 배웠습니다");
                             Thread.Sleep(1000);
                             bool_skill = true;
                             break;
                         case 2:
-                            GameManager.Instance.selectedChampion.LevelUpSkillW();
+                            GameManager.Instance.player.Championclass.LevelUpSkillW();
                             Console.WriteLine("W스킬을 배웠습니다");
                             Thread.Sleep(1000);
                             bool_skill = true;
                             break;
                         case 3:
-                            GameManager.Instance.selectedChampion.LevelUpSkillE();
+                            GameManager.Instance.player.Championclass.LevelUpSkillE();
                             Console.WriteLine("E스킬을 배웠습니다");
                             Thread.Sleep(1000);
                             bool_skill = true;
@@ -115,24 +115,24 @@
                     new($"{Championclass.skillInfoW.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoW.Split(':')[1]}"),
                     new($"{Championclass.skillInfoE.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoE.Split(':')[1]}")
                 });
-
+               
                 uI.WriteAll();
                 int skillnum = uI.UserUIControl();
                 string str;
                 switch (skillnum)
                 {
                     case 0:
-                        GameManager.Instance.selectedChampion.LevelUpSkillQ();
+                        GameManager.Instance.player.Championclass.LevelUpSkillQ();
                         str = "Q스킬을 배웠습니다";
                         bool_skill = true;
                         break;
                     case 1:
-                        GameManager.Instance.selectedChampion.LevelUpSkillW();
+                        GameManager.Instance.player.Championclass.LevelUpSkillW();
                         str = "W스킬을 배웠습니다";
                         bool_skill = true;
                         break;
                     case 2:
-                        GameManager.Instance.selectedChampion.LevelUpSkillE();
+                        GameManager.Instance.player.Championclass.LevelUpSkillE();
                         str = "E스킬을 배웠습니다";
                         bool_skill = true;
                         break;

@@ -170,17 +170,17 @@
             //player의 스텟이 구성되면 그 구성된 수치에서 제외시켜주기 
             if (_char == '+')
             {
-                GameManager.Instance.selectedChampion.hp += foundItem.hp;
-                GameManager.Instance.selectedChampion.mp += foundItem.mp;
-                GameManager.Instance.selectedChampion.atk += foundItem.atk;
-                GameManager.Instance.selectedChampion.def += foundItem.def;
+                GameManager.Instance.player.Championclass.hp += foundItem.hp;
+                GameManager.Instance.player.Championclass.mp += foundItem.mp;
+                GameManager.Instance.player.Championclass.atk += foundItem.atk;
+                GameManager.Instance.player.Championclass.def += foundItem.def;
             }
             else if (_char == '-')
             {
-                GameManager.Instance.selectedChampion.hp -= foundItem.hp;
-                GameManager.Instance.selectedChampion.mp -= foundItem.mp;
-                GameManager.Instance.selectedChampion.atk -= foundItem.atk;
-                GameManager.Instance.selectedChampion.def -= foundItem.def;
+                GameManager.Instance.player.Championclass.hp -= foundItem.hp;
+                GameManager.Instance.player.Championclass.mp -= foundItem.mp;
+                GameManager.Instance.player.Championclass.atk -= foundItem.atk;
+                GameManager.Instance.player.Championclass.def -= foundItem.def;
             }
             else
             {
