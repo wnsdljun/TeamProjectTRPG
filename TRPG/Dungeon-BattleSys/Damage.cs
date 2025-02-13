@@ -11,7 +11,7 @@ namespace TRPG
     internal class Damage
     {
         int damage;
-        int turn = 1;
+        public int stack = 1;
 
         public void EnemtAttackDamage(Enemy enemy, int damage)
         {
@@ -55,13 +55,13 @@ namespace TRPG
         public void TeemoSkillDamage(int NewDamage, Enemy enemy)
         {
             Random random = new Random();
-            damage = NewDamage/2 * turn++;
+            damage = NewDamage/2 * stack++;
             int Randomdamage = random.Next(damage - (damage / 10), damage + (damage / 10 + 1));
             Console.WriteLine($"{enemy.name}은 {Randomdamage}의 추가 독 피해를 받았습니다.\n");
             enemy.hp -= Randomdamage;
-            if (turn >= 5)
+            if (stack >= 5)
             {
-                turn = 1;
+                stack = 1;
             }
         }
     }
