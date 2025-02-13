@@ -1,6 +1,6 @@
 ﻿namespace TRPG
 {
-    internal class GameManager
+    internal partial class GameManager
     {
         public Player player;
         public Inven inven;
@@ -141,7 +141,6 @@
 
         public void MainMenu()
         {
-            MainMenu:
             //Player player = new Player();
             //Inven inven = new Inven();
             //Shop shop = new Shop();
