@@ -1,6 +1,6 @@
 ﻿namespace TRPG
 {
-    internal class Player
+    internal partial class Player
     {
         public string PlayerName { get; private set; }
         public int Level { get; set; } = 1;
@@ -115,7 +115,7 @@
                     new($"{Championclass.skillInfoW.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoW.Split(':')[1]}"),
                     new($"{Championclass.skillInfoE.Split(':')[0]}", selectable: true, tip: $"{Championclass.skillInfoE.Split(':')[1]}")
                 });
-
+               
                 uI.WriteAll();
                 int skillnum = uI.UserUIControl();
                 string str;

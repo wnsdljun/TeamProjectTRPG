@@ -1,6 +1,6 @@
 ﻿namespace TRPG
 {
-    internal class GameManager
+    internal partial class GameManager
     {
         public Player player;
         public Inven inven;
@@ -36,16 +36,6 @@
             player = new Player();
             shop = new Shop();
             inven = new Inven();
-            
-            // 다른 초기화 코드
-            if (File.Exists("savefile.json"))
-            {
-                //파일이 존재할 때
-            }
-            else
-            {
-                //존재하지 않을 때
-            }
         }
 
         public void Chi_Champion()
@@ -141,7 +131,6 @@
 
         public void MainMenu()
         {
-            MainMenu:
             //Player player = new Player();
             //Inven inven = new Inven();
             //Shop shop = new Shop();
@@ -158,6 +147,8 @@
                     new("2. 인벤토리 확인",selectable: true ,tip: ""),
                     new("3. 상점",selectable: true ,tip: ""),
                     new("4. 협곡",selectable: true ,tip: ""),
+                    new(),
+                    new("5. 진행상황 저장", selectable:true, tip: ""),
                     new(),
                     new("종료",selectable: true ,tip: "")
                 });
@@ -183,7 +174,9 @@
                         dungeon.ui_Lobby();
                         break;
                     case 4:
-                        //goto myloc;
+                        SaveLoad.ui_Save();
+                        break;
+                    case 5:
                         exitMenu = true;
                         break;
                     default:
